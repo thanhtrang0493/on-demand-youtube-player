@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.google.android.youtube.player.YouTubePlayerView
+        android:id="@+id/youtubePlayerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ebeff2" />
+
+    <LinearLayout
+        android:id="@+id/llVideoControl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#444"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:weightSum="10">
+
+        <ImageButton
+            android:id="@+id/btnPlayVideo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1.2"
+            android:background="@null"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_play" />
+
+        <SeekBar
+            android:id="@+id/sbVideoSeekbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="6.8"
+            android:max="100"
+            android:progress="0" />
+
+        <TextView
+            android:id="@+id/txtPlayTime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="2"
+            android:text="--:--"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+</LinearLayout>
