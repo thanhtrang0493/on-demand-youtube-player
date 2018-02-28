@@ -5,9 +5,12 @@ import android.support.v7.widget.RecyclerView;
 
 import com.vcoders.on_demand_youtube_player.R;
 import com.vcoders.on_demand_youtube_player.adapter.ChannelsAdapter;
+import com.vcoders.on_demand_youtube_player.architecture.ApplicationModule;
 import com.vcoders.on_demand_youtube_player.architecture.BaseActivity;
+import com.vcoders.on_demand_youtube_player.architecture.BaseComponent;
 import com.vcoders.on_demand_youtube_player.architecture.BasePresenter;
 import com.vcoders.on_demand_youtube_player.architecture.BaseRouter;
+import com.vcoders.on_demand_youtube_player.enums.TypeActionBar;
 import com.vcoders.on_demand_youtube_player.features.playlist.PlaylistActivity;
 import com.vcoders.on_demand_youtube_player.model.Channel;
 import com.vcoders.on_demand_youtube_player.utils.Constant;
@@ -28,8 +31,27 @@ public class ChannelsActivity extends BaseActivity implements ChannelsView {
     @BindView(R.id.rvChannels)
     RecyclerView rvChannels;
 
+    ChannelsActivityComponent channelsActivityComponent;
+
     @Override
-    protected void initializeView() {
+    protected BasePresenter getPresenter() {
+        return channelsPresenter;
+    }
+
+    @Override
+    protected void inject() {
+        channelsActivityComponent = DaggerChannelsActivityComponent.builder()
+                .applicationModule(new ApplicationModule(this)).build();
+        channelsActivityComponent.inject(this);
+    }
+
+    @Override
+    protected BaseComponent getActivityComponent() {
+        return null;
+    }
+
+    @Override
+    protected void initializeView(Bundle savedInstanceState) {
         //init channel adapter
         channelsAdapter = channelsPresenter.initChannelAdapter(rvChannels, channels, this);
 
@@ -39,13 +61,18 @@ public class ChannelsActivity extends BaseActivity implements ChannelsView {
     }
 
     @Override
-    protected int setViewResource() {
+    protected int getViewResource() {
         return R.layout.activity_channels;
     }
 
     @Override
-    protected BasePresenter getPresenter() {
-        return channelsPresenter;
+    protected String getTitleActionBar() {
+        return null;
+    }
+
+    @Override
+    protected TypeActionBar[] getTypeActionBar() {
+        return new TypeActionBar[0];
     }
 
     @Override

@@ -1,12 +1,15 @@
 package com.vcoders.on_demand_youtube_player.features.playlist;
 
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 
 import com.vcoders.on_demand_youtube_player.R;
 import com.vcoders.on_demand_youtube_player.adapter.VideoYoutubeAdapter;
 import com.vcoders.on_demand_youtube_player.architecture.BaseActivity;
+import com.vcoders.on_demand_youtube_player.architecture.BaseComponent;
 import com.vcoders.on_demand_youtube_player.architecture.BasePresenter;
 import com.vcoders.on_demand_youtube_player.architecture.BaseRouter;
+import com.vcoders.on_demand_youtube_player.enums.TypeActionBar;
 import com.vcoders.on_demand_youtube_player.model.VideoYoutube;
 import com.vcoders.on_demand_youtube_player.utils.Constant;
 import com.vcoders.on_demand_youtube_player.utils.Utils;
@@ -27,8 +30,29 @@ public class PlaylistActivity extends BaseActivity implements PlaylistView {
     @BindView(R.id.rvVideoYoutube)
     RecyclerView rvVideoYoutube;
 
+    private void getBundle() {
+        if (getIntent().getExtras() != null) {
+            playlistId = getIntent().getExtras().getString(Constant.PLAYLIST_ID);
+        }
+    }
+
     @Override
-    protected void initializeView() {
+    protected BasePresenter getPresenter() {
+        return playlistPresenter;
+    }
+
+    @Override
+    protected void inject() {
+
+    }
+
+    @Override
+    protected BaseComponent getActivityComponent() {
+        return null;
+    }
+
+    @Override
+    protected void initializeView(Bundle savedInstanceState) {
         getBundle();
 
         //init video youtube recycler view
@@ -38,20 +62,19 @@ public class PlaylistActivity extends BaseActivity implements PlaylistView {
         playlistPresenter.getVideoYoutubeFromPlaylistId(playlistId);
     }
 
-    private void getBundle() {
-        if (getIntent().getExtras() != null) {
-            playlistId = getIntent().getExtras().getString(Constant.PLAYLIST_ID);
-        }
-    }
-
     @Override
-    protected int setViewResource() {
+    protected int getViewResource() {
         return R.layout.activity_playlist;
     }
 
     @Override
-    protected BasePresenter getPresenter() {
-        return playlistPresenter;
+    protected String getTitleActionBar() {
+        return null;
+    }
+
+    @Override
+    protected TypeActionBar[] getTypeActionBar() {
+        return new TypeActionBar[0];
     }
 
     @Override

@@ -1,3 +1,14 @@
 <resources>
+
+    <!-- ==============================FONT====================================== -->
+    <string name="regular">Roboto-Regular.ttf</string>
+    <string name="bold">Roboto-Bold.ttf</string>
+    <string name="light">Roboto-Light.ttf</string>
+    <string name="medium">Roboto-Medium.ttf</string>
+    <!-- ==============================FONT====================================== -->
+
     <string name="app_name">on-demand-youtube-player</string>
+    <string name="please_choose_favorite_topics">Please choose your favorite topics</string>
+    <string name="skip">Skip</string>
+    <string name="next">Next</string>
 </resources>
