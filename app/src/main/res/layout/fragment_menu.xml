@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/black_footer"
+                android:padding="@dimen/d10">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/imgUserName"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="@dimen/d80"
+                        android:layout_height="@dimen/d80"
+                        android:src="@mipmap/topic_music" />
+
+                    <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+                        style="@style/TextSize_15dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/d20"
+                        android:text="@string/username"
+                        android:textColor="@color/gray_E2" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/imgUserName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/ic_menu" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/d20">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/ic_menu" />
+
+                    <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+                        style="@style/TextSize_15dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/d20"
+                        android:text="@string/settings"
+                        android:textColor="@color/gray_E2"
+                        android:textSize="@dimen/d18" />
+
+                    <LinearLayout
+                        style="@style/line"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/d1"
+                        android:layout_marginLeft="@dimen/d20" />
+                </LinearLayout>
+
+                <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+                    style="@style/TextSize_15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/d10"
+                    android:text="@string/audio_and_headphone"
+                    android:textColor="@color/gray_E2"
+                    android:textSize="@dimen/d16" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/d10">
+
+                    <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+                        style="@style/TextSize_15dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/automatically_play_audio"
+                        android:textSize="@dimen/d13" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/ic_menu" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/d10">
+
+                    <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+                        style="@style/TextSize_15dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/pause_on_headset_disconnect"
+                        android:textSize="@dimen/d13" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/ic_menu" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/d10">
+
+                    <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+                        style="@style/TextSize_15dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/resume_on_headset_connect"
+                        android:textSize="@dimen/d13" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/ic_menu" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/d10"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/ic_menu" />
+
+                    <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+                        style="@style/TextSize_15dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/d20"
+                        android:text="@string/app_info"
+                        android:textColor="@color/gray_E2"
+                        android:textSize="@dimen/d18" />
+
+                    <LinearLayout
+                        style="@style/line"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/d1"
+                        android:layout_marginLeft="@dimen/d20" />
+                </LinearLayout>
+
+                <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+                    style="@style/TextSize_15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/d10"
+                    android:text="@string/about_us"
+                    android:textColor="@color/gray_E2"
+                    android:textSize="@dimen/d16" />
+
+                <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+                    style="@style/TextSize_15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/d5"
+                    android:text="@string/lorem_ipsum_dolor"
+                    android:textSize="@dimen/d13" />
+
+                <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+                    style="@style/TextSize_15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/d10"
+                    android:text="@string/app_version"
+                    android:textColor="@color/gray_E2"
+                    android:textSize="@dimen/d16" />
+
+                <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+                    style="@style/TextSize_15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/d5"
+                    android:text="V 1.0.1"
+                    android:textSize="@dimen/d13" />
+
+                <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+                    style="@style/TextSize_15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/d10"
+                    android:text="@string/app_rating"
+                    android:textColor="@color/gray_E2"
+                    android:textSize="@dimen/d16" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -1,9 +1,12 @@
 package com.vcoders.on_demand_youtube_player.model;
 
 
-public class Topic {
+import java.io.Serializable;
+
+public class Topic implements Serializable{
     private String id;
     private String name;
+    private boolean isSelect;
 
     public Topic(){}
 
@@ -25,5 +28,13 @@ public class Topic {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isSelect() {
+        return isSelect;
+    }
+
+    public void setSelect(boolean select) {
+        isSelect = select;
     }
 }

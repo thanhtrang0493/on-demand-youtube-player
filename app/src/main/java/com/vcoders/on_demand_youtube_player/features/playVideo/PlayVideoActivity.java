@@ -16,7 +16,7 @@ public class PlayVideoActivity extends BaseYoutubeActivity implements PlayVideoV
 
     private String videoYoutubeId;
     private PlayVideoPresenter playVideoPresenter = new PlayVideoPresenter(this);
-    private PlayVideoRouter playVideoRouter = new PlayVideoRouter();
+    private PlayVideoRouter playVideoRouter = new PlayVideoRouter(this);
 
     @BindView(R.id.mYoutubePlayerView)
     YoutubePlayerViewCustom youtubePlayerView;

@@ -14,4 +14,14 @@
     <color name="gray_unselected">#9B9B9B</color>
     <color name="gray_line">#464646</color>
     <color name="gray_E2">#E2E2E2</color>
+    <color name="line_onboarding">#E8E8E8</color>
+    <color name="gray_skip">#898989</color>
+    <color name="circle_unselect">#969696</color>
+    <color name="circle_select">#D7D7D7</color>
+    <color name="transparent">#00791e1e</color>
+    <color name="gray_header">#444444</color>
+    <color name="black_footer">#1C1C1C</color>
+    <color name="brown">#514B37</color>
+    <color name="gray_8e">#8E8E8D</color>
+    <color name="transparent_black">#D8000000</color>
 </resources>

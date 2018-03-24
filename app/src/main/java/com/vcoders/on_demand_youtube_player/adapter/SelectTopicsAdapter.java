@@ -18,6 +18,7 @@ public class SelectTopicsAdapter extends RecyclerView.Adapter<SelectTopicsAdapte
 
     Context context;
     public List<Topic[]> listTopic;
+    public List<Topic> listSelectTopic = new ArrayList<>();
 
     public SelectTopicsAdapter(Context context, List<Topic> topics) {
         this.context = context;
@@ -31,8 +32,8 @@ public class SelectTopicsAdapter extends RecyclerView.Adapter<SelectTopicsAdapte
             int i = 0;
             for (Topic item : topics) {
                 arrTopics[i] = item;
+                i++;
                 if (i < 5) {
-                    i++;
                 } else {
                     listTopic.add(arrTopics);
                     i = 0;
@@ -56,12 +57,96 @@ public class SelectTopicsAdapter extends RecyclerView.Adapter<SelectTopicsAdapte
     public void onBindViewHolder(SelectTopicsHolder holder, int position) {
         Topic[] topics = listTopic.get(position);
         if (topics != null) {
-            for (int i = 0; i < topics.length; i++) {
-                Topic topic = topics[i];
-                holder.listTextViewTopic.get(i).setText(topic.getName());
-                holder.listTextViewTopic.get(i).setVisibility(View.VISIBLE);
-            }
+            bindData(holder, topics);
+            setEventClick(holder, position, topics);
         }
+    }
+
+    private void bindData(SelectTopicsHolder holder, Topic[] topics) {
+        for (int i = 0; i < topics.length; i++) {
+            Topic topic = topics[i];
+            holder.listTextViewTopic.get(i).setText(topic.getName());
+            holder.listTextViewTopic.get(i).setVisibility(View.VISIBLE);
+        }
+    }
+
+    private boolean isAddTopic(Topic[] topics, int position) {
+        Topic topic = topics[position];
+        if (listSelectTopic.contains(topic)) {
+            listSelectTopic.remove(topic);
+            return false;
+        } else {
+            listSelectTopic.add(topic);
+            return true;
+        }
+    }
+
+    private void setEventClick(final SelectTopicsHolder holder, int position, final Topic[] topics) {
+
+        holder.txtTopic1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isAddTopic(topics, 0)) {
+                    selectTopic(holder.txtTopic1);
+                } else {
+                    unSelectTopic(holder.txtTopic1);
+                }
+            }
+        });
+
+        holder.txtTopic2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isAddTopic(topics, 1)) {
+                    selectTopic(holder.txtTopic2);
+                } else {
+                    unSelectTopic(holder.txtTopic2);
+                }
+            }
+        });
+
+        holder.txtTopic3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isAddTopic(topics, 2)) {
+                    selectTopic(holder.txtTopic3);
+                } else {
+                    unSelectTopic(holder.txtTopic3);
+                }
+            }
+        });
+
+        holder.txtTopic4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isAddTopic(topics, 3)) {
+                    selectTopic(holder.txtTopic4);
+                } else {
+                    unSelectTopic(holder.txtTopic4);
+                }
+            }
+        });
+
+        holder.txtTopic5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isAddTopic(topics, 4)) {
+                    selectTopic(holder.txtTopic5);
+                } else {
+                    unSelectTopic(holder.txtTopic5);
+                }
+            }
+        });
+    }
+
+    private void selectTopic(TextView textView) {
+        textView.setBackgroundResource(R.drawable.border_corner_gradient_blue);
+        textView.setTextColor(context.getResources().getColor(R.color.white));
+    }
+
+    private void unSelectTopic(TextView textView) {
+        textView.setBackgroundResource(R.drawable.border_gray_bg_transparent);
+        textView.setTextColor(context.getResources().getColor(R.color.gray_unselected));
     }
 
     @Override

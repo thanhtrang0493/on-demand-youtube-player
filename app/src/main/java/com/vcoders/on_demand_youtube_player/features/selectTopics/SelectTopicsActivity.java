@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.vcoders.on_demand_youtube_player.R;
 import com.vcoders.on_demand_youtube_player.adapter.SelectTopicsAdapter;
+import com.vcoders.on_demand_youtube_player.architecture.ApplicationModule;
 import com.vcoders.on_demand_youtube_player.architecture.BaseActivity;
 import com.vcoders.on_demand_youtube_player.architecture.BaseComponent;
 import com.vcoders.on_demand_youtube_player.architecture.BasePresenter;
@@ -16,7 +17,10 @@ import com.vcoders.on_demand_youtube_player.model.Topic;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class SelectTopicsActivity extends BaseActivity {
 
@@ -24,6 +28,13 @@ public class SelectTopicsActivity extends BaseActivity {
     RecyclerView rvSelectTopics;
 
     SelectTopicsAdapter adapter;
+    SelectTopicsComponent selectTopicsComponent;
+
+    @Inject
+    SelectTopicsPresenter selectTopicsPresenter;
+
+    @Inject
+    SelectTopicsRouter selectTopicsRouter;
 
     @Override
     protected void initializeView(Bundle savedInstanceState) {
@@ -31,31 +42,11 @@ public class SelectTopicsActivity extends BaseActivity {
     }
 
     private void initSelectTopicsAdapter() {
-        List<Topic> topicList = getListTopic();
+        List<Topic> topicList = selectTopicsPresenter.getListTopic();
         adapter = new SelectTopicsAdapter(this, topicList);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         rvSelectTopics.setLayoutManager(manager);
         rvSelectTopics.setAdapter(adapter);
-    }
-
-    private List<Topic> getListTopic() {
-        List<Topic> topicList = new ArrayList<>();
-        topicList.add(new Topic("Travel"));
-        topicList.add(new Topic("Music"));
-        topicList.add(new Topic("Movies"));
-        topicList.add(new Topic("Health"));
-        topicList.add(new Topic("Education"));
-        topicList.add(new Topic("Pets"));
-        topicList.add(new Topic("News"));
-        topicList.add(new Topic("Drama"));
-        topicList.add(new Topic("Shows"));
-        topicList.add(new Topic("Technology"));
-        topicList.add(new Topic("Trailers"));
-        topicList.add(new Topic("How-To"));
-        topicList.add(new Topic("Kids"));
-        topicList.add(new Topic("Netflix"));
-        topicList.add(new Topic("Meditation"));
-        return topicList;
     }
 
     @Override
@@ -75,21 +66,29 @@ public class SelectTopicsActivity extends BaseActivity {
 
     @Override
     protected BaseRouter getRouter() {
-        return null;
+        return selectTopicsRouter;
     }
 
     @Override
     protected BasePresenter getPresenter() {
-        return null;
+        return selectTopicsPresenter;
     }
 
     @Override
     protected void inject() {
-
+        selectTopicsComponent = DaggerSelectTopicsComponent.builder()
+                .applicationModule(new ApplicationModule(this)).build();
+        selectTopicsComponent.inject(this);
     }
 
     @Override
     protected BaseComponent getActivityComponent() {
-        return null;
+        return selectTopicsComponent;
+    }
+
+    @OnClick(R.id.txtNext)
+    public void onTxtNextClick() {
+        List<Topic> selectTopics = adapter.listSelectTopic;
+        selectTopicsPresenter.toHome(selectTopics);
     }
 }

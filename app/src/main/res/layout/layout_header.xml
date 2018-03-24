@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/gray_header"
+    android:orientation="horizontal"
+    android:weightSum="1">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.2"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/d20">
+
+        <LinearLayout
+            android:id="@+id/llBack"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="left|center_vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_menu" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:paddingVertical="@dimen/d15"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.6"
+        android:gravity="center"
+        android:id="@+id/llActionBar"
+        android:orientation="vertical">
+        <EditText
+            android:id="@+id/edtSearch"
+            android:visibility="gone"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:hint="@string/search_youtube_video" />
+        <!--<AutoCompleteTextView-->
+            <!--android:visibility="gone"-->
+            <!--android:id="@+id/edtSearch"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:background="@null"-->
+            <!--android:hint="@string/search_youtube_video"-->
+            <!--android:drawablePadding="@dimen/d5"-->
+            <!--android:dropDownAnchor="@+id/llActionBar"-->
+            <!--android:dropDownWidth="wrap_content"-->
+            <!--android:textColorHint="@color/gray"/>-->
+
+        <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+            android:id="@+id/txtTitle"
+            style="@style/TextSize_15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Home" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.2"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingRight="@dimen/d20">
+
+        <LinearLayout
+            android:id="@+id/llSearch"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="right|center_vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_menu" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llClose"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="right|center_vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_home" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

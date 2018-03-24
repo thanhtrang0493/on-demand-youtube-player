@@ -24,7 +24,7 @@ import butterknife.BindView;
 public class ChannelsActivity extends BaseActivity implements ChannelsView {
 
     private ChannelsPresenter channelsPresenter = new ChannelsPresenter(this);
-    private ChannelsRouter channelsRouter = new ChannelsRouter();
+    private ChannelsRouter channelsRouter = new ChannelsRouter(this);
     private List<Channel> channels = new ArrayList<>();
     private ChannelsAdapter channelsAdapter;
 

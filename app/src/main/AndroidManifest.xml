@@ -11,16 +11,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".features.playlist.PlaylistActivity"></activity>
+        <activity android:name=".features.playlist.PlaylistActivity" />
         <activity android:name=".features.playVideo.PlayVideoActivity" />
-        <activity android:name=".features.channels.ChannelsActivity">
+        <activity android:name=".features.channels.ChannelsActivity" />
+        <activity android:name=".features.selectTopics.SelectTopicsActivity" />
+        <activity android:name=".features.splashScreen.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".features.selectTopics.SelectTopicsActivity"></activity>
+        <activity android:name=".features.onBoarding.OnBoardingActivity" />
+        <activity android:name=".features.home.HomeActivity" />
+        <activity android:name=".features.signup.SignUpActivity" />
+        <activity android:name=".features.login.LoginActivity" />
+        <activity android:name=".features.passwordRecovery.PasswordRecoveryActivity" />
+        <activity android:name=".features.setTimer.SetTimerActivity"></activity>
     </application>
 
 </manifest>

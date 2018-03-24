@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/llItemVideo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/d5">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/d20">
+
+                <RelativeLayout
+                    android:layout_width="@dimen/d150"
+                    android:layout_height="@dimen/d80"
+                    android:background="@mipmap/topic_music">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_margin="@dimen/d5"
+                        android:background="@color/black_footer"
+                        android:orientation="vertical">
+
+                        <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+                            style="@style/TextSize_15dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:paddingHorizontal="@dimen/d5"
+                            android:paddingVertical="@dimen/d2"
+                            android:text="6:07"
+                            android:textSize="@dimen/d13" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/d15">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+                            style="@style/TextSize_15dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Hello Adele"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/d16" />
+
+                        <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+                            style="@style/TextSize_15dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/d3"
+                            android:text="AdeleVEVO"
+                            android:textColor="@color/gray_unselected"
+                            android:textSize="@dimen/d12" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+                                style="@style/TextSize_15dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/d3"
+                                android:text="2 years ago"
+                                android:textColor="@color/gray_unselected"
+                                android:textSize="@dimen/d12" />
+
+                            <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+                                style="@style/TextSize_15dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/d10"
+                                android:layout_marginTop="@dimen/d3"
+                                android:text="2.1B views"
+                                android:textColor="@color/gray_unselected"
+                                android:textSize="@dimen/d12" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/imgMore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="@dimen/d10"
+                        android:src="@mipmap/img_dot_selected" />
+                </RelativeLayout>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+</LinearLayout>

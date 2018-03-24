@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:foo="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/brown"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="@dimen/d20"
+    tools:context="com.vcoders.on_demand_youtube_player.features.signup.SignUpActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+                style="@style/TextSize_15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/d30"
+                android:text="LOGO"
+                android:textColor="@color/white"
+                android:textSize="@dimen/d30" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/boder_width_1_gray_8e"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/d20">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_home" />
+
+                <com.vcoders.on_demand_youtube_player.customView.EditTextPlus
+                    style="@style/TextSize_15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/d15"
+                    android:background="@null"
+                    android:hint="@string/username" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/d20"
+                android:background="@drawable/boder_width_1_gray_8e"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/d20">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_home" />
+
+                <com.vcoders.on_demand_youtube_player.customView.EditTextPlus
+                    style="@style/TextSize_15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/d15"
+                    android:background="@null"
+                    android:hint="@string/email" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/d20"
+                android:background="@drawable/boder_width_1_gray_8e"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/d20">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_home" />
+
+                <com.vcoders.on_demand_youtube_player.customView.EditTextPlus
+                    style="@style/TextSize_15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/d15"
+                    android:background="@null"
+                    android:hint="@string/password" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/d20"
+                android:background="@drawable/bg_gradient_blue"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/d20">
+
+                <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+                    style="@style/TextSize_15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:hint="@string/create_new_account"
+                    android:textColor="@color/white"
+                    foo:customFont="@string/medium" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/d20"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/d30"
+                android:weightSum="1">
+
+                <LinearLayout
+                    style="@style/line"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/d1"
+                    android:layout_weight="0.4"
+                    android:background="@color/gray_8e" />
+
+                <com.vcoders.on_demand_youtube_player.customView.EditTextPlus
+                    style="@style/TextSize_15dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:hint="@string/or" />
+
+                <LinearLayout
+                    style="@style/line"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/d1"
+                    android:layout_weight="0.4"
+                    android:background="@color/gray_8e" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/d30"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/d20">
+
+                <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+                    style="@style/TextSize_15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/sign_in_with_fb"
+                    android:textColor="@color/blue_end"
+                    android:textStyle="bold"
+                    foo:customFont="@string/medium" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/d20"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/d20">
+
+                <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+                    style="@style/TextSize_15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/already_have_an_account"
+                    android:textStyle="bold" />
+
+                <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+                    style="@style/TextSize_15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/d20"
+                    android:text="@string/login"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    foo:customFont="@string/medium" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/d10"
+    android:paddingVertical="@dimen/d10">
+
+    <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+        style="@style/TextSize_15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/d20"
+        android:text="Hello Adele" />
+</LinearLayout>

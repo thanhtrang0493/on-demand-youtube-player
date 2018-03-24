@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.vcoders.on_demand_youtube_player.features.setTimer.SetTimerActivity">
+
+    <include
+        android:id="@+id/llHeader"
+        layout="@layout/layout_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/d20">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+                    style="@style/TextSize_15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/llDefaultTimer"
+                    android:text="@string/default_timer"
+                    android:textSize="@dimen/d16" />
+
+                <LinearLayout
+                    android:id="@+id/llDefaultTimer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+                        style="@style/TextSize_15dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="00:59" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/d20"
+                        android:src="@mipmap/ic_menu" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/d30"
+                android:orientation="horizontal"
+                android:weightSum="4">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/ic_menu" />
+
+                    <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+                        style="@style/TextSize_15dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/d10"
+                        android:text="@string/p_30" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/ic_menu" />
+
+                    <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+                        style="@style/TextSize_15dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/d10"
+                        android:text="@string/p_60" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/ic_menu" />
+
+                    <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+                        style="@style/TextSize_15dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/d10"
+                        android:text="@string/p_90" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/ic_menu" />
+
+                    <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+                        style="@style/TextSize_15dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/d10"
+                        android:text="@string/p_120" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/line"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/d1"
+                android:layout_marginVertical="@dimen/d30" />
+
+            <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+                style="@style/TextSize_15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/input_new_timer"
+                android:textSize="@dimen/d16" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/d10">
+
+                <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+                    style="@style/TextSize_15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00:00:00"
+                    android:textSize="@dimen/d40" />
+
+                <LinearLayout
+                    android:layout_width="@dimen/d200"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/d10"
+                    android:background="@drawable/bg_gradient_blue"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingVertical="@dimen/d10">
+
+                    <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+                        style="@style/TextSize_15dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/start"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/line"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/d1"
+                android:layout_marginVertical="@dimen/d20" />
+
+            <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+                style="@style/TextSize_15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/previous_added_timer"
+                android:textSize="@dimen/d16" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/d10">
+
+                <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+                    style="@style/TextSize_15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00:25:00"
+                    android:textSize="@dimen/d40" />
+
+                <LinearLayout
+                    android:layout_width="@dimen/d200"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/d10"
+                    android:background="@drawable/bg_gradient_blue"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingVertical="@dimen/d10">
+
+                    <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+                        style="@style/TextSize_15dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/restart"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

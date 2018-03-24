@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/d10">
+
+    <LinearLayout
+        android:id="@+id/llItemPlaylist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="@dimen/d150"
+            android:layout_height="@dimen/d150"
+            android:src="@mipmap/topic_music" />
+
+        <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+            style="@style/TextSize_15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Top 50 songs today" />
+
+        <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+            style="@style/TextSize_15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/d5"
+            android:text="50 videos"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/d13" />
+    </LinearLayout>
+</LinearLayout>

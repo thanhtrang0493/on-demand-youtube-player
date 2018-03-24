@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:paddingRight="@dimen/d15"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="@dimen/d150"
+        android:layout_height="@dimen/d80"
+        android:background="@mipmap/topic_music">
+
+        <LinearLayout
+            android:layout_width="@dimen/d50"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@color/transparent_black"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+                style="@style/TextSize_15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/d10"
+                android:text="100"
+                android:textColor="@color/gray_unselected" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/d10"
+                android:src="@mipmap/ic_menu" />
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

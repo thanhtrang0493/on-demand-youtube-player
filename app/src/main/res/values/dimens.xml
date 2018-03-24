@@ -100,4 +100,6 @@
     <dimen name="d98">98dp</dimen>
     <dimen name="d99">99dp</dimen>
     <dimen name="d100">100dp</dimen>
+    <dimen name="d150">150dp</dimen>
+    <dimen name="d200">200dp</dimen>
 </resources>

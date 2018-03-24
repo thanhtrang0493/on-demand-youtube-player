@@ -22,4 +22,14 @@ public class YoutubeAPI {
         return "https://www.googleapis.com/youtube/v3/playlists?part=snippet&channelId=" +
                 channelId + "&key=" + API_KEY + "&maxResults=50";
     }
+
+    public String urlGetChannelIDByName(String name) {
+        return "https://www.googleapis.com/youtube/v3/search?part=snippet&q=" + name + "&type=channel" +
+                "&key=" + API_KEY + "&maxResults=50";
+    }
 }
+
+
+//https://www.googleapis.com/youtube/v3/search?part=snippet&q=music&type=channel&key=AIzaSyBENTkoHFtO8tDHGC5Mcuzya9kT00kIusg&maxResults=50
+//
+//        https://www.googleapis.com/youtube/v3/playlists?part=snippet&channelId=UC-9-kyTW8ZkZNDHQJ6FgpwQ&key=AIzaSyBENTkoHFtO8tDHGC5Mcuzya9kT00kIusg&maxResults=50

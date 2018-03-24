@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingVertical="@dimen/d10"
+    android:background="@color/black_footer"
+    android:orientation="horizontal"
+    android:weightSum="3">
+
+    <LinearLayout
+        android:id="@+id/llHome"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_menu" />
+
+        <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+            style="@style/TextSize_15dp"
+            android:layout_marginTop="@dimen/d5"
+            android:layout_width="wrap_content"
+            android:id="@+id/txtHome"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="@string/home" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llMyPlaylist"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_menu" />
+
+        <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+            style="@style/TextSize_15dp"
+            android:layout_marginTop="@dimen/d5"
+            android:id="@+id/txtMyPlaylist"
+            android:textColor="@color/gray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/my_playlist" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llMenu"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_menu" />
+
+        <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+            style="@style/TextSize_15dp"
+            android:layout_marginTop="@dimen/d5"
+            android:id="@+id/txtMenu"
+            android:textColor="@color/gray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/menu" />
+    </LinearLayout>
+</LinearLayout>

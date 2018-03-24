@@ -9,12 +9,13 @@ import com.vcoders.on_demand_youtube_player.features.playVideo.PlayVideoActivity
 import com.vcoders.on_demand_youtube_player.utils.Constant;
 import com.vcoders.on_demand_youtube_player.utils.Utils;
 
+import javax.inject.Inject;
+
 public class PlaylistRouter extends BaseRouter {
 
-    private Context context;
-
+    @Inject
     public PlaylistRouter(Context context) {
-        this.context = context;
+        super(context);
     }
 
     public void toPlayVideo(Context context, String videoYoutubeId) {
