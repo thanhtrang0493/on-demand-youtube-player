@@ -5,8 +5,8 @@ import android.content.Context;
 
 import com.android.volley.VolleyError;
 import com.vcoders.on_demand_youtube_player.architecture.InteractorYoutube;
-import com.vcoders.on_demand_youtube_player.architecture.YoutubePlayerListener;
-import com.vcoders.on_demand_youtube_player.architecture.YoutubePlayerResponse;
+import com.vcoders.on_demand_youtube_player.architecture.RequestAPIListener;
+import com.vcoders.on_demand_youtube_player.architecture.RequestAPIResponse;
 import com.vcoders.on_demand_youtube_player.model.VideoYoutube;
 import com.vcoders.on_demand_youtube_player.services.YoutubeAPI;
 
@@ -29,11 +29,11 @@ public class GetVideoFromPlaylist extends InteractorYoutube {
         return ourInstance;
     }
 
-    private YoutubePlayerListener<List<VideoYoutube>> listener;
+    private RequestAPIListener<List<VideoYoutube>> listener;
 
     private String playlistId;
 
-    private YoutubePlayerResponse<List<VideoYoutube>> youtubePlayerResponse = new YoutubePlayerResponse<>();
+    private RequestAPIResponse<List<VideoYoutube>> requestAPIResponse = new RequestAPIResponse<>();
 
     public GetVideoFromPlaylist getVideoFromPlaylist(Context context, String playlistId) {
         this.playlistId = playlistId;
@@ -43,7 +43,7 @@ public class GetVideoFromPlaylist extends InteractorYoutube {
         return this;
     }
 
-    public GetVideoFromPlaylist onResponse(YoutubePlayerListener<List<VideoYoutube>> listener) {
+    public GetVideoFromPlaylist onResponse(RequestAPIListener<List<VideoYoutube>> listener) {
         this.listener = listener;
         return this;
     }
@@ -69,8 +69,8 @@ public class GetVideoFromPlaylist extends InteractorYoutube {
 
                 VideoYoutube videoYoutube = new VideoYoutube();
                 videoYoutube.setTitle(title);
-                videoYoutube.setThumbnail(url);
-                videoYoutube.setVideoId(idVideo);
+                videoYoutube.setThumbnails(url);
+                videoYoutube.setId(idVideo);
                 videoYoutubes.add(videoYoutube);
             }
         } catch (JSONException e) {
@@ -87,9 +87,9 @@ public class GetVideoFromPlaylist extends InteractorYoutube {
     @Override
     public void error(VolleyError error) {
         if (listener != null) {
-            youtubePlayerResponse.setErrorCode(error.networkResponse.statusCode);
-            youtubePlayerResponse.setErrorMessage(error.getMessage());
-            listener.onResponse(youtubePlayerResponse);
+            requestAPIResponse.setErrorCode(error.networkResponse.statusCode);
+            requestAPIResponse.setErrorMessage(error.getMessage());
+            listener.onResponse(requestAPIResponse);
         }
     }
 
@@ -97,8 +97,8 @@ public class GetVideoFromPlaylist extends InteractorYoutube {
     public void response(JSONObject response) {
         if (listener != null) {
             List<VideoYoutube> videoYoutubes = readJsonResponse(response);
-            youtubePlayerResponse.setData(videoYoutubes);
-            listener.onResponse(youtubePlayerResponse);
+            requestAPIResponse.setData(videoYoutubes);
+            listener.onResponse(requestAPIResponse);
         }
     }
 }

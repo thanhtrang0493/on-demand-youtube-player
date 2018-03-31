@@ -2,20 +2,17 @@ package com.vcoders.on_demand_youtube_player.features.playlist;
 
 
 import android.content.Context;
-import android.net.Uri;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.vcoders.on_demand_youtube_player.adapter.VideoYoutubeAdapter;
 import com.vcoders.on_demand_youtube_player.architecture.BasePresenter;
-import com.vcoders.on_demand_youtube_player.architecture.YoutubePlayerListener;
-import com.vcoders.on_demand_youtube_player.architecture.YoutubePlayerResponse;
+import com.vcoders.on_demand_youtube_player.architecture.RequestAPIListener;
+import com.vcoders.on_demand_youtube_player.architecture.RequestAPIResponse;
 import com.vcoders.on_demand_youtube_player.interactor.GetVideoFromPlaylist;
 import com.vcoders.on_demand_youtube_player.model.VideoYoutube;
 
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class PlaylistPresenter extends BasePresenter<PlaylistView, PlaylistRouter> {
 
@@ -28,9 +25,9 @@ public class PlaylistPresenter extends BasePresenter<PlaylistView, PlaylistRoute
     public void getVideoYoutubeFromPlaylistId(String playlistId) {
         getView().showLoading(true);
         GetVideoFromPlaylist.getInstance().getVideoFromPlaylist(context, playlistId)
-                .onResponse(new YoutubePlayerListener<List<VideoYoutube>>() {
+                .onResponse(new RequestAPIListener<List<VideoYoutube>>() {
                     @Override
-                    public void onResponse(YoutubePlayerResponse<List<VideoYoutube>> response) {
+                    public void onResponse(RequestAPIResponse<List<VideoYoutube>> response) {
                         if (response.getErrorMessage() == null) {
                             getView().getVideoYoutubeSuccess(response.getData());
                             getView().showLoading(false);
@@ -52,7 +49,7 @@ public class PlaylistPresenter extends BasePresenter<PlaylistView, PlaylistRoute
     }
 
     public void playVideoYoutube(int position, List<VideoYoutube> videoYoutubes) {
-        getRouter().toPlayVideo(context, videoYoutubes.get(position).getVideoId());
+        getRouter().toPlayVideo(context, videoYoutubes.get(position).getId());
     }
 
 

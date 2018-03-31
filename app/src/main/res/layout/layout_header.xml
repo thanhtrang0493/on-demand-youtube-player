@@ -23,7 +23,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_menu" />
+                android:src="@mipmap/img_back" />
         </LinearLayout>
     </LinearLayout>
 
@@ -44,24 +44,13 @@
             android:layout_height="match_parent"
             android:background="@null"
             android:hint="@string/search_youtube_video" />
-        <!--<AutoCompleteTextView-->
-            <!--android:visibility="gone"-->
-            <!--android:id="@+id/edtSearch"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:background="@null"-->
-            <!--android:hint="@string/search_youtube_video"-->
-            <!--android:drawablePadding="@dimen/d5"-->
-            <!--android:dropDownAnchor="@+id/llActionBar"-->
-            <!--android:dropDownWidth="wrap_content"-->
-            <!--android:textColorHint="@color/gray"/>-->
 
         <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
             android:id="@+id/txtTitle"
             style="@style/TextSize_15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Home" />
+            android:text="" />
     </LinearLayout>
 
     <LinearLayout
@@ -81,7 +70,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_menu" />
+                android:src="@mipmap/icon_search" />
         </LinearLayout>
 
         <LinearLayout
@@ -94,7 +83,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_home" />
+                android:src="@mipmap/img_close" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

@@ -47,7 +47,7 @@ public class VideoYoutubeAdapter extends RecyclerView.Adapter<VideoYoutubeAdapte
     public void onBindViewHolder(VideoYoutubeAdapter.VideoYoutubeHolder holder, final int position) {
         VideoYoutube videoYoutube = videoYoutubes.get(position);
         holder.tvTitle.setText(videoYoutube.getTitle());
-        Picasso.with(context).load(videoYoutube.getThumbnail()).into(holder.imgThumbnail);
+        Picasso.with(context).load(videoYoutube.getThumbnails()).into(holder.imgThumbnail);
         holder.llVideoYoutube.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -19,15 +19,15 @@
             android:orientation="vertical"
             android:paddingRight="@dimen/d10">
 
-            <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+            <me.grantland.widget.AutofitTextView
                 android:id="@+id/txtTopic1"
                 style="@style/TextSize_15dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/d42"
                 android:background="@drawable/border_gray_bg_transparent"
                 android:gravity="center"
+                android:lines="1"
                 android:paddingHorizontal="@dimen/d26"
-                android:paddingVertical="@dimen/d11"
                 android:text="Travel"
                 android:textColor="@color/gray_unselected" />
         </LinearLayout>
@@ -40,15 +40,15 @@
             android:orientation="vertical"
             android:paddingHorizontal="@dimen/d10">
 
-            <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+            <me.grantland.widget.AutofitTextView
                 android:id="@+id/txtTopic2"
                 style="@style/TextSize_15dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/d42"
                 android:background="@drawable/border_gray_bg_transparent"
                 android:gravity="center"
                 android:paddingHorizontal="@dimen/d26"
-                android:paddingVertical="@dimen/d11"
+                android:lines="1"
                 android:text="Music"
                 android:textColor="@color/gray_unselected" />
         </LinearLayout>
@@ -61,16 +61,16 @@
             android:orientation="vertical"
             android:paddingLeft="@dimen/d10">
 
-            <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+            <me.grantland.widget.AutofitTextView
                 android:id="@+id/txtTopic3"
                 style="@style/TextSize_15dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/d42"
                 android:background="@drawable/border_gray_bg_transparent"
                 android:gravity="center"
                 android:paddingHorizontal="@dimen/d26"
-                android:paddingVertical="@dimen/d11"
                 android:text="Movies"
+                android:lines="1"
                 android:textColor="@color/gray_unselected" />
         </LinearLayout>
     </LinearLayout>
@@ -90,15 +90,15 @@
             android:orientation="vertical"
             android:paddingRight="@dimen/d10">
 
-            <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+            <me.grantland.widget.AutofitTextView
                 android:id="@+id/txtTopic4"
                 style="@style/TextSize_15dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/d42"
                 android:background="@drawable/border_gray_bg_transparent"
                 android:gravity="center"
+                android:lines="1"
                 android:paddingHorizontal="@dimen/d26"
-                android:paddingVertical="@dimen/d11"
                 android:text="Health"
                 android:textColor="@color/gray_unselected" />
         </LinearLayout>
@@ -111,15 +111,15 @@
             android:orientation="vertical"
             android:paddingLeft="@dimen/d10">
 
-            <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+            <me.grantland.widget.AutofitTextView
                 android:id="@+id/txtTopic5"
+                android:lines="1"
                 style="@style/TextSize_15dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/d42"
                 android:background="@drawable/border_gray_bg_transparent"
                 android:gravity="center"
                 android:paddingHorizontal="@dimen/d26"
-                android:paddingVertical="@dimen/d11"
                 android:text="Education"
                 android:textColor="@color/gray_unselected" />
         </LinearLayout>

@@ -91,4 +91,10 @@ public class SelectTopicsActivity extends BaseActivity {
         List<Topic> selectTopics = adapter.listSelectTopic;
         selectTopicsPresenter.toHome(selectTopics);
     }
+
+    @OnClick(R.id.txtSkip)
+    public void onTxtSkipClick() {
+        List<Topic> selectTopics = new ArrayList<>();
+        selectTopicsPresenter.toHome(selectTopics);
+    }
 }

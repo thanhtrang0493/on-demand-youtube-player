@@ -24,7 +24,7 @@ public abstract class InteractorYoutube {
         String url = setUrlYoutubeService();
 
         RequestQueue requestQueue = Volley.newRequestQueue(context);
-        final YoutubePlayerResponse<List<VideoYoutube>> youtubePlayerResponse = new YoutubePlayerResponse<>();
+        final RequestAPIResponse<List<VideoYoutube>> requestAPIResponse = new RequestAPIResponse<>();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {

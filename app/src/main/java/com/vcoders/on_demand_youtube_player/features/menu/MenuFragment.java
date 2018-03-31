@@ -6,6 +6,7 @@ import android.os.Bundle;
 import com.vcoders.on_demand_youtube_player.R;
 import com.vcoders.on_demand_youtube_player.architecture.BaseFragment;
 import com.vcoders.on_demand_youtube_player.architecture.BasePresenter;
+import com.vcoders.on_demand_youtube_player.architecture.BaseRouter;
 import com.vcoders.on_demand_youtube_player.enums.TypeActionBar;
 import com.vcoders.on_demand_youtube_player.features.home.HomeComponent;
 
@@ -32,6 +33,11 @@ public class MenuFragment extends BaseFragment<HomeComponent> {
 
     @Override
     protected BasePresenter getPresenter() {
+        return null;
+    }
+
+    @Override
+    protected BaseRouter getRouter() {
         return null;
     }
 

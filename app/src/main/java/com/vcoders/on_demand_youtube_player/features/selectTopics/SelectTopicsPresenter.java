@@ -22,21 +22,21 @@ public class SelectTopicsPresenter extends BasePresenter<SelectTopicsView, Selec
 
     public List<Topic> getListTopic() {
         List<Topic> topicList = new ArrayList<>();
-        topicList.add(new Topic("Travel"));
-        topicList.add(new Topic("Music"));
-        topicList.add(new Topic("Movies"));
-        topicList.add(new Topic("Health"));
-        topicList.add(new Topic("Education"));
-        topicList.add(new Topic("Pets"));
-        topicList.add(new Topic("News"));
-        topicList.add(new Topic("Drama"));
-        topicList.add(new Topic("Shows"));
-        topicList.add(new Topic("Technology"));
-        topicList.add(new Topic("Trailers"));
-        topicList.add(new Topic("How-To"));
-        topicList.add(new Topic("Kids"));
-        topicList.add(new Topic("Netflix"));
-        topicList.add(new Topic("Meditation"));
+        topicList.add(new Topic("UCg6gzoAckLMBZIJ4Fw5yBiQ", "Travel"));
+        topicList.add(new Topic("UC-9-kyTW8ZkZNDHQJ6FgpwQ", "Music"));
+        topicList.add(new Topic("UCdCefhp41oki2DHptq_5rRQ", "Movies"));
+        topicList.add(new Topic("UCbqgDzBvusOKtSWvoePrjLA", "Health"));
+        topicList.add(new Topic("UC3yA8nDwraeOfnYfBWun83g", "Education"));
+        topicList.add(new Topic("UCPIvT-zcQl2H0vabdXJGcpg", "Pets"));
+        topicList.add(new Topic("UCYfdidRxbB8Qhf0Nx7ioOYw", "News"));
+        topicList.add(new Topic("UC6Vn29fE39QcxEX0yX6p1fQ", "Drama"));
+        topicList.add(new Topic("UCDfxwuwJQYqh1t9vYfsBuRw", "Shows"));
+        topicList.add(new Topic("UCiDF_uaU1V00dAc8ddKvNxA", "Technology"));
+        topicList.add(new Topic("UCi8e0iOVk1fEOogdfu4YgfA", "Trailers"));
+        topicList.add(new Topic("UCsP7Bpw36J666Fct5M8u-ZA", "How-To"));
+        topicList.add(new Topic("UC5ezaYrzZpyItPSRG27MLpg", "Kids"));
+        topicList.add(new Topic("UCWOA1ZGywLbqmigxE4Qlvuw", "Netflix"));
+        topicList.add(new Topic("UCM0YvsRfYfsniGAhjvYFOSA", "Meditation"));
         return topicList;
     }
 

@@ -61,4 +61,9 @@
     <string name="lorem_ipsum_dolor">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</string>
     <string name="app_version">App Version</string>
     <string name="app_rating">App Rating</string>
+    <string name="videos">videos</string>
+    <string name="years_ago">years ago</string>
+    <string name="days_ago">days ago</string>
+    <string name="today">today</string>
+    <string name="views">views</string>
 </resources>

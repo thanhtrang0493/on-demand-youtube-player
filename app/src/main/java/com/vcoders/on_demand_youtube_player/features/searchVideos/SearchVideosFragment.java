@@ -13,12 +13,15 @@ import android.widget.TextView;
 
 import com.vcoders.on_demand_youtube_player.R;
 import com.vcoders.on_demand_youtube_player.adapter.SearchVideoAdapter;
+import com.vcoders.on_demand_youtube_player.architecture.BaseActivity;
 import com.vcoders.on_demand_youtube_player.architecture.BaseFragment;
 import com.vcoders.on_demand_youtube_player.architecture.BasePresenter;
+import com.vcoders.on_demand_youtube_player.architecture.BaseRouter;
 import com.vcoders.on_demand_youtube_player.enums.TypeActionBar;
 import com.vcoders.on_demand_youtube_player.features.home.HomeActivity;
 import com.vcoders.on_demand_youtube_player.features.home.HomeComponent;
 import com.vcoders.on_demand_youtube_player.model.VideoYoutube;
+import com.vcoders.on_demand_youtube_player.utils.DialogLoading;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,10 +31,10 @@ import javax.inject.Inject;
 import butterknife.BindView;
 
 
-public class SearchVideosFragment extends BaseFragment<HomeComponent> {
+public class SearchVideosFragment extends BaseFragment<HomeComponent> implements SearchVideosView {
 
     SearchVideoAdapter adapter;
-    List<VideoYoutube> listVideo;
+    List<String> nameList;
     EditText edtSearch;
 
     @Inject
@@ -40,19 +43,50 @@ public class SearchVideosFragment extends BaseFragment<HomeComponent> {
     @BindView(R.id.rvSearchVideos)
     RecyclerView rvSearchVideos;
 
+    @Inject
+    SearchVideosRouter searchVideosRouter;
+
+    @Inject
+    DialogLoading dialogLoading;
+
     @Override
     protected void initializeView(Bundle savedInstanceState) {
         if ((HomeActivity) getActivity() != null)
             edtSearch = ((HomeActivity) getActivity()).getEdtSearch();
 
-        listVideo = new ArrayList<>();
+        nameList = new ArrayList<>();
         initSearchVideo();
         initOnKeyListener();
         initSearchVideosAdapter();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        hideLLClose();
+        setEventClickLLClose();
+    }
+
+    private void hideLLClose() {
+        boolean isShow = false;
+        if (edtSearch != null && !edtSearch.getText().toString().isEmpty())
+            isShow = true;
+        ((BaseActivity) getActivity()).showLLClose(isShow);
+    }
+
+    private void setEventClickLLClose() {
+        ((BaseActivity) getActivity()).getLLClose().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                edtSearch.setText("");
+                nameList = new ArrayList<>();
+                adapter.updateAdapter(nameList);
+            }
+        });
+    }
+
     private void initSearchVideosAdapter() {
-        adapter = new SearchVideoAdapter(getActivity(), listVideo);
+        adapter = new SearchVideoAdapter(getActivity(), nameList, this);
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         rvSearchVideos.setLayoutManager(manager);
         rvSearchVideos.setAdapter(adapter);
@@ -69,8 +103,14 @@ public class SearchVideosFragment extends BaseFragment<HomeComponent> {
 
                 @Override
                 public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    listVideo = searchVideosPresenter.searchVideosByName(charSequence.toString());
-                    adapter.updateAdapter(listVideo);
+                    if ((BaseActivity) getActivity() != null) {
+                        if (charSequence.toString().isEmpty())
+                            ((BaseActivity) getActivity()).showLLClose(false);
+                        else
+                            ((BaseActivity) getActivity()).showLLClose(true);
+                    }
+
+                    searchVideosPresenter.searchSuggestName(charSequence.toString());
                 }
 
                 @Override
@@ -86,12 +126,11 @@ public class SearchVideosFragment extends BaseFragment<HomeComponent> {
             edtSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                 @Override
                 public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                    if ( (actionId == EditorInfo.IME_ACTION_DONE) || ((event.getKeyCode() == KeyEvent.KEYCODE_ENTER) &&
-                            (event.getAction() == KeyEvent.ACTION_DOWN ))   && !edtSearch.getText().toString().isEmpty()){
-                        searchVideosPresenter.toDisplayListVideo(listVideo);
+                    if ((actionId == EditorInfo.IME_ACTION_DONE) || ((event.getKeyCode() == KeyEvent.KEYCODE_ENTER) &&
+                            (event.getAction() == KeyEvent.ACTION_DOWN)) && !edtSearch.getText().toString().isEmpty()) {
+                        searchVideosPresenter.searchVideoByName(edtSearch.getText().toString());
                         return true;
-                    }
-                    else{
+                    } else {
                         return false;
                     }
                 }
@@ -112,7 +151,7 @@ public class SearchVideosFragment extends BaseFragment<HomeComponent> {
 
     @Override
     protected TypeActionBar[] getTypeActionBar() {
-        return new TypeActionBar[0];
+        return new TypeActionBar[]{TypeActionBar.BACK, TypeActionBar.SEARCH_VIDEO};
     }
 
     @Override
@@ -121,8 +160,38 @@ public class SearchVideosFragment extends BaseFragment<HomeComponent> {
     }
 
     @Override
+    protected BaseRouter getRouter() {
+        return searchVideosRouter;
+    }
+
+    @Override
     protected void inject() {
         ((HomeComponent) getAcitivyComponent()).inject(this);
     }
 
+    @Override
+    public void showError(String error) {
+
+    }
+
+    @Override
+    public void showLoading(boolean isShow) {
+        dialogLoading.show(isShow);
+    }
+
+    @Override
+    public void searchVideoSuccess(List<VideoYoutube> videoList, String search) {
+        searchVideosPresenter.toDisplayListVideo(videoList, search);
+    }
+
+    @Override
+    public void searchSuggestNameSuccess(List<String> nameList) {
+        this.nameList = nameList;
+        adapter.updateAdapter(this.nameList);
+    }
+
+    @Override
+    public void onSelectItemSuggestName(int position) {
+        searchVideosPresenter.searchVideoByName(nameList.get(position));
+    }
 }

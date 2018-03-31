@@ -1,7 +1,7 @@
 package com.vcoders.on_demand_youtube_player.architecture;
 
 
-public class YoutubePlayerResponse<Type> {
+public class RequestAPIResponse<Type> {
     private Type data;
     private String errorMessage;
     private int errorCode;

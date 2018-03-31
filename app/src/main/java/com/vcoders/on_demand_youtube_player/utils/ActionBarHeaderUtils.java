@@ -1,6 +1,7 @@
 package com.vcoders.on_demand_youtube_player.utils;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.View;
 import android.widget.EditText;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import com.vcoders.on_demand_youtube_player.R;
 import com.vcoders.on_demand_youtube_player.architecture.BaseActivity;
+import com.vcoders.on_demand_youtube_player.enums.TypeActionBar;
 
 import javax.inject.Inject;
 
@@ -27,7 +29,7 @@ public class ActionBarHeaderUtils {
     LinearLayout llSearch;
 
     @BindView(R.id.llClose)
-    LinearLayout llClose;
+    public LinearLayout llClose;
 
     @BindView(R.id.llBack)
     LinearLayout llBack;
@@ -42,6 +44,41 @@ public class ActionBarHeaderUtils {
 
     public void setView(View view) {
         ButterKnife.bind(this, view);
+    }
+
+    private void hideActionbar() {
+        llBack.setVisibility(View.GONE);
+        llSearch.setVisibility(View.GONE);
+        llClose.setVisibility(View.GONE);
+        edtSearch.setVisibility(View.GONE);
+        txtTitle.setVisibility(View.VISIBLE);
+    }
+
+    public void setTitle(String title) {
+        txtTitle.setText(title);
+    }
+
+    public void showTypeActionbar(TypeActionBar[] typeActionBars) {
+        hideActionbar();
+        if (typeActionBars != null) {
+            for (TypeActionBar type : typeActionBars) {
+                switch (type) {
+                    case BACK:
+                        llBack.setVisibility(View.VISIBLE);
+                        break;
+                    case CLOSE:
+                        llClose.setVisibility(View.VISIBLE);
+                        break;
+                    case SEARCH:
+                        llSearch.setVisibility(View.VISIBLE);
+                        break;
+                    case SEARCH_VIDEO:
+                        edtSearch.setVisibility(View.VISIBLE);
+                        txtTitle.setVisibility(View.GONE);
+                        break;
+                }
+            }
+        }
     }
 
     @OnClick(R.id.llSearch)
@@ -65,6 +102,20 @@ public class ActionBarHeaderUtils {
 
         if ((BaseActivity) context != null) {
             ((BaseActivity) context).onCloseClick();
+        }
+    }
+
+    @OnClick(R.id.llBack)
+    public void onLLBackClick() {
+        ((Activity) context).onBackPressed();
+    }
+
+    public void showLLClose(boolean isShow) {
+        if (llClose != null) {
+            if (isShow)
+                llClose.setVisibility(View.VISIBLE);
+            else
+                llClose.setVisibility(View.GONE);
         }
     }
 }

@@ -7,16 +7,18 @@ import android.support.v7.widget.RecyclerView;
 import com.vcoders.on_demand_youtube_player.R;
 import com.vcoders.on_demand_youtube_player.adapter.ListPlayListAdapter;
 import com.vcoders.on_demand_youtube_player.adapter.ListTopicAdapter;
+import com.vcoders.on_demand_youtube_player.architecture.BaseActivity;
 import com.vcoders.on_demand_youtube_player.architecture.BaseFragment;
 import com.vcoders.on_demand_youtube_player.architecture.BasePresenter;
+import com.vcoders.on_demand_youtube_player.architecture.BaseRouter;
 import com.vcoders.on_demand_youtube_player.enums.TypeActionBar;
-import com.vcoders.on_demand_youtube_player.features.home.HomeActivity;
 import com.vcoders.on_demand_youtube_player.features.home.HomeComponent;
-import com.vcoders.on_demand_youtube_player.features.playlistDetail.PlaylistDetailFragment;
 import com.vcoders.on_demand_youtube_player.model.PlayList;
 import com.vcoders.on_demand_youtube_player.model.Topic;
 import com.vcoders.on_demand_youtube_player.utils.Constant;
+import com.vcoders.on_demand_youtube_player.utils.DialogLoading;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -34,22 +36,30 @@ public class PlaylistByTopicFragment extends BaseFragment<HomeComponent> impleme
     @Inject
     PlaylistByTopicPresenter playlistByTopicPresenter;
 
+    @Inject
+    PlaylistByTopicRouter playlistByTopicRouter;
+
     @BindView(R.id.rvTopics)
     RecyclerView rvTopics;
 
     @BindView(R.id.rvPlayList)
     RecyclerView rvPlayList;
 
+    @Inject
+    DialogLoading dialogLoading;
+
     @Override
     protected void initializeView(Bundle savedInstanceState) {
         getBundle();
-        playLists = playlistByTopicPresenter.getListPlayList();
+        playLists = new ArrayList<>();
         initListTopicAdapter();
         initPlayListAdapter();
     }
 
     private void getBundle() {
         topics = (List<Topic>) getArguments().getSerializable(Constant.TOPICS);
+        if (topics == null)
+            topics = new ArrayList<>();
     }
 
 
@@ -68,6 +78,9 @@ public class PlaylistByTopicFragment extends BaseFragment<HomeComponent> impleme
         rvTopics.setLayoutManager(manager);
         rvTopics.setNestedScrollingEnabled(false);
         rvTopics.setAdapter(listTopicAdapter);
+
+        if (topics.size() > 0)
+            playlistByTopicPresenter.getPlaylistByChannelId(topics.get(0).getId());
     }
 
     @Override
@@ -77,17 +90,22 @@ public class PlaylistByTopicFragment extends BaseFragment<HomeComponent> impleme
 
     @Override
     protected String getTitleActionBar() {
-        return null;
+        return getActivity().getResources().getString(R.string.home);
     }
 
     @Override
     protected TypeActionBar[] getTypeActionBar() {
-        return new TypeActionBar[0];
+        return new TypeActionBar[]{TypeActionBar.BACK, TypeActionBar.SEARCH};
     }
 
     @Override
     protected BasePresenter getPresenter() {
         return playlistByTopicPresenter;
+    }
+
+    @Override
+    protected BaseRouter getRouter() {
+        return playlistByTopicRouter;
     }
 
     @Override
@@ -102,15 +120,26 @@ public class PlaylistByTopicFragment extends BaseFragment<HomeComponent> impleme
 
     @Override
     public void showLoading(boolean isShow) {
-
+        dialogLoading.show(isShow);
     }
 
     @Override
     public void changeTopic(int position) {
-
+        playlistByTopicPresenter.getPlaylistByChannelId(topics.get(position).getId());
     }
 
     @Override
     public void onSelectPlayList(int position) {
+    }
+
+    @Override
+    public void onMorePlayList(int position) {
+
+    }
+
+    @Override
+    public void getPlaylistSuccessed(List<PlayList> playLists) {
+        this.playLists = playLists;
+        playListAdapter.updateAdapter(this.playLists);
     }
 }

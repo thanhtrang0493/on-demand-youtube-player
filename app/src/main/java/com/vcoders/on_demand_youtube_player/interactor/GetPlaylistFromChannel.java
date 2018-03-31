@@ -5,9 +5,9 @@ import android.content.Context;
 
 import com.android.volley.VolleyError;
 import com.vcoders.on_demand_youtube_player.architecture.InteractorYoutube;
-import com.vcoders.on_demand_youtube_player.architecture.YoutubePlayerListener;
-import com.vcoders.on_demand_youtube_player.architecture.YoutubePlayerResponse;
-import com.vcoders.on_demand_youtube_player.model.Channel;
+import com.vcoders.on_demand_youtube_player.architecture.RequestAPIListener;
+import com.vcoders.on_demand_youtube_player.architecture.RequestAPIResponse;
+import com.vcoders.on_demand_youtube_player.model.PlayList;
 import com.vcoders.on_demand_youtube_player.services.YoutubeAPI;
 
 import org.json.JSONArray;
@@ -21,8 +21,8 @@ public class GetPlaylistFromChannel extends InteractorYoutube {
 
     private Context context;
     private String channelId;
-    private YoutubePlayerListener<List<Channel>> listener;
-    private YoutubePlayerResponse<List<Channel>> youtubePlayerResponse = new YoutubePlayerResponse<>();
+    private RequestAPIListener<List<PlayList>> listener;
+    private RequestAPIResponse<List<PlayList>> requestAPIResponse = new RequestAPIResponse<>();
 
     private static final GetPlaylistFromChannel ourInstance = new GetPlaylistFromChannel();
 
@@ -41,7 +41,7 @@ public class GetPlaylistFromChannel extends InteractorYoutube {
         return this;
     }
 
-    public GetPlaylistFromChannel onResponse(YoutubePlayerListener<List<Channel>> listener) {
+    public GetPlaylistFromChannel onResponse(RequestAPIListener<List<PlayList>> listener) {
         this.listener = listener;
         return this;
     }
@@ -54,29 +54,31 @@ public class GetPlaylistFromChannel extends InteractorYoutube {
     @Override
     public void error(VolleyError error) {
         if (listener != null) {
-            youtubePlayerResponse.setErrorCode(error.networkResponse.statusCode);
-            youtubePlayerResponse.setErrorMessage(error.getMessage());
-            listener.onResponse(youtubePlayerResponse);
+            requestAPIResponse.setErrorCode(error.networkResponse.statusCode);
+            requestAPIResponse.setErrorMessage(error.getMessage());
+            listener.onResponse(requestAPIResponse);
         }
     }
 
     @Override
     public void response(JSONObject response) {
         if (listener != null) {
-            List<Channel> channels = readJsonResponse(response);
-            youtubePlayerResponse.setData(channels);
-            listener.onResponse(youtubePlayerResponse);
+            List<PlayList> playLists = readJsonResponse(response);
+            requestAPIResponse.setData(playLists);
+            listener.onResponse(requestAPIResponse);
         }
     }
 
-    private List<Channel> readJsonResponse(JSONObject response) {
-        List<Channel> channels = new ArrayList<>();
+    private List<PlayList> readJsonResponse(JSONObject response) {
+        List<PlayList> playLists = new ArrayList<>();
         try {
             JSONArray jsonItems = response.getJSONArray("items");
             String playlistId = "";
             String thumbnails = "";
             String title = "";
             String description = "";
+            String videoCount = "";
+            String localized = "";
             for (int i = 0; i < jsonItems.length(); i++) {
                 JSONObject jsonItem = jsonItems.getJSONObject(i);
                 playlistId = jsonItem.getString("id");
@@ -86,17 +88,24 @@ public class GetPlaylistFromChannel extends InteractorYoutube {
                 thumbnails = jsonMedium.getString("url");
                 title = jsonSnippet.getString("title");
                 description = jsonSnippet.getString("description");
+                JSONObject jsonContentDetails = jsonItem.getJSONObject("contentDetails");
+                videoCount = jsonContentDetails.getString("itemCount");
+                JSONObject jsonLocalized = jsonSnippet.getJSONObject("localized");
+                localized = jsonLocalized.getString("title");
 
-                Channel channel = new Channel();
-                channel.setPlaylistId(playlistId);
-                channel.setThumbnails(thumbnails);
-                channel.setTitle(title);
-                channel.setDescription(description);
-                channels.add(channel);
+                PlayList playList = new PlayList();
+                playList.setChannelId(channelId);
+                playList.setId(playlistId);
+                playList.setThumbnails(thumbnails);
+                playList.setTitle(title);
+                playList.setDescription(description);
+                playList.setVideoCount(videoCount);
+                playList.setLocalized(localized);
+                playLists.add(playList);
             }
         } catch (JSONException e) {
 
         }
-        return channels;
+        return playLists;
     }
 }

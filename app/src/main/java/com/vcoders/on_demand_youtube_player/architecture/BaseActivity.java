@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import com.vcoders.on_demand_youtube_player.R;
 import com.vcoders.on_demand_youtube_player.enums.TypeActionBar;
@@ -28,7 +29,7 @@ public abstract class BaseActivity extends FragmentActivity {
     ActionBarFooterUtils actionBarFooterUtils;
 
     @Inject
-    ActionBarHeaderUtils actionBarHeaderUtils;
+    public ActionBarHeaderUtils actionBarHeaderUtils;
 
     @Nullable
     @BindView(R.id.llHeader)
@@ -55,25 +56,41 @@ public abstract class BaseActivity extends FragmentActivity {
 
         inject();
 
-        setupActionbar();
-
         initializeView(savedInstanceState);
+
+        setupActionbar();
     }
 
 
     public void changeFragment(Fragment fragment, Bundle bundle) {
-        if (frContainer != null) {
+        String backStateName = fragment.getClass().getName();
+        boolean fragmentPopped = getSupportFragmentManager().popBackStackImmediate(backStateName, 0);
+        if (frContainer != null && !fragmentPopped) {
             fragment.setArguments(bundle);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.frContainer, fragment);
-            transaction.addToBackStack(null);
+            transaction.addToBackStack(backStateName);
             transaction.commit();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
+            finish();
+        } else {
+//            FragmentManager fm = getActivity()
+//                    .getSupportFragmentManager();
+//            fm.popBackStack ("fragB", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            super.onBackPressed();
         }
     }
 
     private void setupActionbar() {
         if (llHeader != null) {
             actionBarHeaderUtils.setView(llHeader);
+            actionBarHeaderUtils.showTypeActionbar(getTypeActionBar());
+            actionBarHeaderUtils.setTitle(getTitleActionBar());
         }
 
         if (llFooter != null) {
@@ -82,6 +99,10 @@ public abstract class BaseActivity extends FragmentActivity {
             //change fragment playlist
             actionBarFooterUtils.onLLHomeClick();
         }
+    }
+
+    public LinearLayout getLLClose() {
+        return actionBarHeaderUtils.llClose;
     }
 
     @Override
@@ -121,6 +142,11 @@ public abstract class BaseActivity extends FragmentActivity {
         } catch (Exception e) {
 
         }
+    }
+
+    public void showLLClose(boolean isShow) {
+        if (actionBarHeaderUtils != null)
+            actionBarHeaderUtils.showLLClose(isShow);
     }
 
     protected abstract void initializeView(Bundle savedInstanceState);

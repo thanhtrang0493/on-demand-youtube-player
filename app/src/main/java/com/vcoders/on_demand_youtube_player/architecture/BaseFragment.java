@@ -26,11 +26,32 @@ public abstract class BaseFragment<ActivityComponent> extends Fragment {
             ButterKnife.bind(this, view);
 
             inject();
+            setupPresenter();
 
             //init view
             initializeView(savedInstanceState);
         }
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setupActionbar();
+    }
+
+    private void setupPresenter() {
+        if (getPresenter() != null) {
+            getPresenter().setView(this);
+            getPresenter().setRouter(getRouter());
+        }
+    }
+
+    private void setupActionbar() {
+        if (((BaseActivity) getActivity()).actionBarHeaderUtils != null) {
+            ((BaseActivity) getActivity()).actionBarHeaderUtils.showTypeActionbar(getTypeActionBar());
+            ((BaseActivity) getActivity()).actionBarHeaderUtils.setTitle(getTitleActionBar());
+        }
     }
 
     @Override
@@ -42,10 +63,6 @@ public abstract class BaseFragment<ActivityComponent> extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        if (getPresenter() != null) {
-            getPresenter().setView(this);
-            getPresenter().setRouter(((BaseActivity) getActivity()).getRouter());
-        }
     }
 
     protected ActivityComponent getAcitivyComponent() {
@@ -61,6 +78,8 @@ public abstract class BaseFragment<ActivityComponent> extends Fragment {
     protected abstract TypeActionBar[] getTypeActionBar();
 
     protected abstract BasePresenter getPresenter();
+
+    protected abstract BaseRouter getRouter();
 
     protected abstract void inject();
 }

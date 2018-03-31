@@ -7,10 +7,11 @@ import android.support.v7.widget.RecyclerView;
 
 import com.vcoders.on_demand_youtube_player.adapter.ChannelsAdapter;
 import com.vcoders.on_demand_youtube_player.architecture.BasePresenter;
-import com.vcoders.on_demand_youtube_player.architecture.YoutubePlayerListener;
-import com.vcoders.on_demand_youtube_player.architecture.YoutubePlayerResponse;
+import com.vcoders.on_demand_youtube_player.architecture.RequestAPIListener;
+import com.vcoders.on_demand_youtube_player.architecture.RequestAPIResponse;
 import com.vcoders.on_demand_youtube_player.interactor.GetPlaylistFromChannel;
 import com.vcoders.on_demand_youtube_player.model.Channel;
+import com.vcoders.on_demand_youtube_player.model.PlayList;
 
 import java.util.List;
 
@@ -25,11 +26,11 @@ public class ChannelsPresenter extends BasePresenter<ChannelsView, ChannelsRoute
     public void getPlaylistFromChannelId(String channelId) {
         getView().showLoading(true);
         GetPlaylistFromChannel.getInstance().getPlaylistFromChannel(context, channelId)
-                .onResponse(new YoutubePlayerListener<List<Channel>>() {
+                .onResponse(new RequestAPIListener<List<PlayList>>() {
                     @Override
-                    public void onResponse(YoutubePlayerResponse<List<Channel>> response) {
+                    public void onResponse(RequestAPIResponse<List<PlayList>> response) {
                         if (response.getErrorMessage() == null) {
-                            getView().getPlaylistSuccess(response.getData());
+//                            getView().getPlaylistSuccess(response.getData());
                             getView().showLoading(false);
                         } else {
                             getView().showError(response.getErrorMessage());

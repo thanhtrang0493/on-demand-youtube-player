@@ -11,6 +11,7 @@ import com.vcoders.on_demand_youtube_player.adapter.ListPlayListAdapter;
 import com.vcoders.on_demand_youtube_player.adapter.RecentlyPlayedAdapter;
 import com.vcoders.on_demand_youtube_player.architecture.BaseFragment;
 import com.vcoders.on_demand_youtube_player.architecture.BasePresenter;
+import com.vcoders.on_demand_youtube_player.architecture.BaseRouter;
 import com.vcoders.on_demand_youtube_player.enums.TypeActionBar;
 import com.vcoders.on_demand_youtube_player.features.home.HomeActivity;
 import com.vcoders.on_demand_youtube_player.features.home.HomeComponent;
@@ -29,6 +30,9 @@ public class MyPlaylistFragment extends BaseFragment<HomeComponent> implements M
 
     @Inject
     MyPlaylistPresenter myPlaylistPresenter;
+
+    @Inject
+    MyPlaylistRouter myPlaylistRouter;
 
     @BindView(R.id.rvRecentlyPlayed)
     RecyclerView rvRecentlyPlayed;
@@ -96,6 +100,11 @@ public class MyPlaylistFragment extends BaseFragment<HomeComponent> implements M
     }
 
     @Override
+    protected BaseRouter getRouter() {
+        return myPlaylistRouter;
+    }
+
+    @Override
     protected void inject() {
         ((HomeComponent) getAcitivyComponent()).inject(this);
     }
@@ -123,5 +132,10 @@ public class MyPlaylistFragment extends BaseFragment<HomeComponent> implements M
     @Override
     public void onSelectPlayList(int position) {
         ((HomeActivity) getActivity()).changeFragment(new PlaylistDetailFragment(), null);
+    }
+
+    @Override
+    public void onMorePlayList(int position) {
+
     }
 }

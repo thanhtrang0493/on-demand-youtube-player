@@ -4,11 +4,13 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.vcoders.on_demand_youtube_player.R;
 import com.vcoders.on_demand_youtube_player.adapter.ListVideoAdapter;
 import com.vcoders.on_demand_youtube_player.architecture.BaseFragment;
 import com.vcoders.on_demand_youtube_player.architecture.BasePresenter;
+import com.vcoders.on_demand_youtube_player.architecture.BaseRouter;
 import com.vcoders.on_demand_youtube_player.enums.TypeActionBar;
 import com.vcoders.on_demand_youtube_player.features.home.HomeComponent;
 import com.vcoders.on_demand_youtube_player.model.VideoYoutube;
@@ -25,6 +27,9 @@ public class PlayerFragment extends BaseFragment<HomeComponent> implements Playe
 
     @Inject
     PlayerPresenter playerPresenter;
+
+    @Inject
+    PlayerRouter playerRouter;
 
     ListVideoAdapter adapter;
     List<VideoYoutube> listVideo;
@@ -78,6 +83,11 @@ public class PlayerFragment extends BaseFragment<HomeComponent> implements Playe
     }
 
     @Override
+    protected BaseRouter getRouter() {
+        return playerRouter;
+    }
+
+    @Override
     protected void inject() {
         ((HomeComponent) getAcitivyComponent()).inject(this);
     }
@@ -98,7 +108,7 @@ public class PlayerFragment extends BaseFragment<HomeComponent> implements Playe
     }
 
     @Override
-    public void selectedMoreItem(int position, ImageView imageView) {
+    public void selectedMoreItem(int position, LinearLayout layout) {
 
     }
 }

@@ -3,15 +3,17 @@ package com.vcoders.on_demand_youtube_player.model;
 
 import java.io.Serializable;
 
-public class Topic implements Serializable{
+public class Topic implements Serializable {
     private String id;
     private String name;
     private boolean isSelect;
 
-    public Topic(){}
+    public Topic() {
+    }
 
-    public Topic(String name){
-        this.name=name;
+    public Topic(String id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
     public String getId() {

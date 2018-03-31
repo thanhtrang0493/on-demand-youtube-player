@@ -18,12 +18,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="@dimen/d20">
+                android:paddingVertical="@dimen/d20">
 
                 <RelativeLayout
                     android:layout_width="@dimen/d150"
                     android:layout_height="@dimen/d80"
-                    android:background="@mipmap/topic_music">
+                    android:layout_marginLeft="@dimen/d20">
+
+                    <ImageView
+                        android:id="@+id/imgThumbnails"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/topic_music" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -35,6 +43,7 @@
                         android:orientation="vertical">
 
                         <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+                            android:id="@+id/txtTime"
                             style="@style/TextSize_15dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -52,20 +61,27 @@
                     android:layout_marginLeft="@dimen/d15">
 
                     <LinearLayout
+                        android:layout_toLeftOf="@+id/llMore"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
 
                         <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+                            android:id="@+id/txtTitle"
                             style="@style/TextSize_15dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Hello Adele"
+                            android:maxLines="2"
+                            android:ellipsize="end"
                             android:textColor="@color/white"
                             android:textSize="@dimen/d16" />
 
                         <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+                            android:id="@+id/txtChannelTitle"
                             style="@style/TextSize_15dp"
+                            android:maxLines="1"
+                            android:ellipsize="end"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/d3"
@@ -79,6 +95,7 @@
                             android:orientation="horizontal">
 
                             <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+                                android:id="@+id/txtPublishedAt"
                                 style="@style/TextSize_15dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -88,6 +105,7 @@
                                 android:textSize="@dimen/d12" />
 
                             <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+                                android:id="@+id/txtViewCount"
                                 style="@style/TextSize_15dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -99,13 +117,20 @@
                         </LinearLayout>
                     </LinearLayout>
 
-                    <ImageView
-                        android:id="@+id/imgMore"
+                    <LinearLayout
+                        android:id="@+id/llMore"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
-                        android:layout_marginTop="@dimen/d10"
-                        android:src="@mipmap/img_dot_selected" />
+                        android:orientation="vertical"
+                        android:paddingRight="@dimen/d20"
+                        android:paddingTop="@dimen/d8">
+
+                        <include
+                            layout="@layout/layout_three_dot_gray"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
                 </RelativeLayout>
             </LinearLayout>
         </android.support.v7.widget.CardView>

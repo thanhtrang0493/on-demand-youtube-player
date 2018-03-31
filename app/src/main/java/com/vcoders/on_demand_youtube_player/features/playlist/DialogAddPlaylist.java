@@ -35,7 +35,7 @@ public class DialogAddPlaylist extends BaseDialog {
 
     @Override
     protected void setupDialog() {
-        setupDialogRight();
+        setupDialogCenter();
     }
 
     private void setupDialogRight() {
@@ -64,4 +64,18 @@ public class DialogAddPlaylist extends BaseDialog {
 //        getWindow().setAttributes(lp);
     }
 
+    private void setupDialogCenter() {
+        getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        getWindow().setGravity(Gravity.CENTER);
+        setCancelable(true);
+
+        //The below code is EXTRA - to dim the parent view by 70%
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.dimAmount = 0.5f;
+        lp.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+        getWindow().setAttributes(lp);
+    }
 }

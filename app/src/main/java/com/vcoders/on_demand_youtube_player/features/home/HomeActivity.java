@@ -3,6 +3,7 @@ package com.vcoders.on_demand_youtube_player.features.home;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.widget.LinearLayout;
 
 import com.vcoders.on_demand_youtube_player.R;
 import com.vcoders.on_demand_youtube_player.architecture.ApplicationModule;
@@ -102,6 +103,5 @@ public class HomeActivity extends BaseActivity implements HomeView {
     @Override
     public void onCloseClick() {
         super.onCloseClick();
-        onBackPressed();
     }
 }
