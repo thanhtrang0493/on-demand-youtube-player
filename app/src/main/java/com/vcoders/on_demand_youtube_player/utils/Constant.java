@@ -7,4 +7,5 @@ public class Constant {
     public static String TOPICS = "topics";
     public static String VIDEOS = "videos";
     public static String SEARCH_NAME = "name";
+    public static String POSITION = "position";
 }

@@ -2,25 +2,36 @@ package com.vcoders.on_demand_youtube_player.features.playlist;
 
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.Window;
 import android.view.WindowManager;
 
 import com.vcoders.on_demand_youtube_player.R;
+import com.vcoders.on_demand_youtube_player.adapter.ListMyPlaylistAdapter;
 import com.vcoders.on_demand_youtube_player.architecture.BaseDialog;
+import com.vcoders.on_demand_youtube_player.interfaces.ISelectItem;
+import com.vcoders.on_demand_youtube_player.model.PlayList;
+import com.vcoders.on_demand_youtube_player.utils.Utils;
+import com.vcoders.on_demand_youtube_player.utils.UtilsConfig;
+
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 
 
-public class DialogAddPlaylist extends BaseDialog {
+public class DialogAddPlaylist extends BaseDialog implements ISelectItem {
 
     Context context;
-    int x;
-    int y;
+    List<PlayList> playLists;
+    ListMyPlaylistAdapter adapter;
 
-    public DialogAddPlaylist(Context context, int x, int y) {
+    public DialogAddPlaylist(Context context, List<PlayList> playLists) {
         super(context);
         this.context = context;
-        this.x = x;
-        this.y = y;
+        this.playLists = playLists;
     }
 
     @Override
@@ -30,52 +41,32 @@ public class DialogAddPlaylist extends BaseDialog {
 
     @Override
     protected void initializeView() {
-
+        initMyPlaylistAdapter();
     }
 
     @Override
     protected void setupDialog() {
-        setupDialogCenter();
+        UtilsConfig.getInstance().configDialogCenter(this);
     }
 
-    private void setupDialogRight() {
-        getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+    @BindView(R.id.rvMyPlaylist)
+    RecyclerView rvMyPlaylist;
 
-        Window window = getWindow();
-        window.setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
-//        window.setGravity(Gravity.RIGHT);
-//        getWindow().getAttributes().gravity = Gravity.RIGHT;
-
-        WindowManager.LayoutParams wmlp = getWindow().getAttributes();
-//        wmlp.gravity = Gravity.RIGHT;
-        wmlp.x = x;
-        wmlp.y = y;
-        getWindow().setAttributes(wmlp);
-
-//        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
-//        getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-//        getWindow().setGravity(Gravity.RIGHT);
-        setCancelable(true);
-
-        //The below code is EXTRA - to dim the parent view by 70%
-        WindowManager.LayoutParams lp = window.getAttributes();
-//        lp.dimAmount = 1f;
-        lp.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
-//        getWindow().setAttributes(lp);
+    @OnClick(R.id.llCreateNewPlaylist)
+    public void onLlCreateNewPlaylistClick() {
+        this.dismiss();
+        new DialogAddNewPlaylist(context).show();
     }
 
-    private void setupDialogCenter() {
-        getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+    private void initMyPlaylistAdapter() {
+        adapter = new ListMyPlaylistAdapter(context, playLists, this);
+        LinearLayoutManager manager = new LinearLayoutManager(context);
+        rvMyPlaylist.setLayoutManager(manager);
+        rvMyPlaylist.setAdapter(adapter);
+    }
 
-        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
-        getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-        getWindow().setGravity(Gravity.CENTER);
-        setCancelable(true);
+    @Override
+    public void onSelectedItem(int position) {
 
-        //The below code is EXTRA - to dim the parent view by 70%
-        WindowManager.LayoutParams lp = getWindow().getAttributes();
-        lp.dimAmount = 0.5f;
-        lp.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
-        getWindow().setAttributes(lp);
     }
 }

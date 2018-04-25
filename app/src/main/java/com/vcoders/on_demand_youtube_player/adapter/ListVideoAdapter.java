@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -55,7 +56,7 @@ public class ListVideoAdapter extends RecyclerView.Adapter<ListVideoAdapter.List
         holder.llItemVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listener.selectedItemVideo(position);
+                listener.selectPlayVideo(position);
             }
         });
     }
@@ -106,7 +107,7 @@ public class ListVideoAdapter extends RecyclerView.Adapter<ListVideoAdapter.List
             txtTime = (TextView) itemView.findViewById(R.id.txtTime);
             txtTitle = (TextView) itemView.findViewById(R.id.txtTitle);
             txtChannelTitle = (TextView) itemView.findViewById(R.id.txtChannelTitle);
-            txtPublishedAt = (TextView) itemView.findViewById(R.id.txtPublishedAt);
+            txtPublishedAt = (TextView) itemView.findViewById(R.id.txtPublishAt);
             txtViewCount = (TextView) itemView.findViewById(R.id.txtViewCount);
         }
     }

@@ -6,35 +6,15 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/d200"
-        android:background="@mipmap/topic_music_1">
+        android:layout_height="@dimen/d200">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:padding="@dimen/d20"
-            android:src="@mipmap/img_dot_selected" />
+        <com.vcoders.on_demand_youtube_player.customView.YoutubePlayerViewCustom
+            android:id="@+id/mYoutubePlayerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/ic_menu" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/d60"
-                android:src="@mipmap/ic_home" />
-        </LinearLayout>
-
-        <LinearLayout
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -43,17 +23,56 @@
             android:padding="@dimen/d20">
 
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/d20"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_menu" />
+                android:src="@mipmap/img_clock" />
 
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/d20"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/d30"
-                android:src="@mipmap/ic_home" />
+                android:layout_marginLeft="@dimen/d25"
+                android:src="@mipmap/img_full_screen" />
         </LinearLayout>
     </RelativeLayout>
+
+
+    <!--<RelativeLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="@dimen/d200"-->
+    <!--android:background="@mipmap/topic_music_1">-->
+
+    <!--<ImageView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentRight="true"-->
+    <!--android:padding="@dimen/d20"-->
+    <!--android:src="@mipmap/img_dot_selected" />-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_centerInParent="true"-->
+    <!--android:orientation="horizontal">-->
+
+    <!--<ImageView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:src="@mipmap/img_previous" />-->
+
+    <!--<ImageView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginHorizontal="@dimen/d28"-->
+    <!--android:src="@mipmap/img_pause" />-->
+
+    <!--<ImageView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:src="@mipmap/img_next" />-->
+    <!--</LinearLayout>-->
+
+    <!---->
+    <!--</RelativeLayout>-->
 
     <LinearLayout
         android:layout_width="match_parent"

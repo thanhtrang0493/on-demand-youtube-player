@@ -13,6 +13,10 @@ public class PlayList {
     public PlayList() {
     }
 
+    public PlayList(String title) {
+        this.title = title;
+    }
+
     public String getThumbnails() {
         return thumbnails;
     }

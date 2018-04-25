@@ -102,7 +102,7 @@ public class PlaylistDetailFragment extends BaseFragment<HomeComponent> implemen
     }
 
     @Override
-    public void selectedItemVideo(int position) {
+    public void selectPlayVideo(int position) {
         ((HomeActivity) getActivity()).changeFragment(new PlayerFragment(), null);
     }
 

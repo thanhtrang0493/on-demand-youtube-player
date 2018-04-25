@@ -11,6 +11,7 @@ import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.vcoders.on_demand_youtube_player.R;
 import com.vcoders.on_demand_youtube_player.adapter.ListVideoAdapter;
@@ -22,6 +23,7 @@ import com.vcoders.on_demand_youtube_player.enums.TypeActionBar;
 import com.vcoders.on_demand_youtube_player.features.home.HomeActivity;
 import com.vcoders.on_demand_youtube_player.features.home.HomeComponent;
 import com.vcoders.on_demand_youtube_player.features.playlist.DialogAddPlaylist;
+import com.vcoders.on_demand_youtube_player.model.PlayList;
 import com.vcoders.on_demand_youtube_player.model.VideoYoutube;
 import com.vcoders.on_demand_youtube_player.utils.Constant;
 
@@ -121,7 +123,7 @@ public class ListVideoFragment extends BaseFragment<HomeComponent> implements Li
 
     @Override
     protected BasePresenter getPresenter() {
-        return null;
+        return listVideoPresenter;
     }
 
     @Override
@@ -145,8 +147,8 @@ public class ListVideoFragment extends BaseFragment<HomeComponent> implements Li
     }
 
     @Override
-    public void selectedItemVideo(int position) {
-
+    public void selectPlayVideo(int position) {
+        listVideoPresenter.playVideo(listVideo, position);
     }
 
     @Override
@@ -156,7 +158,12 @@ public class ListVideoFragment extends BaseFragment<HomeComponent> implements Li
 
         int x = imageCordinates[0];
         int y = imageCordinates[1];
-        new DialogAddPlaylist(getActivity(), x, y).show();
+
+        List<PlayList> myPlaylists = new ArrayList<>();
+        myPlaylists.add(new PlayList("Favorite Songs"));
+        myPlaylists.add(new PlayList("How-to"));
+        myPlaylists.add(new PlayList("Education"));
+        new DialogAddPlaylist(getActivity(), myPlaylists).show();
     }
 
 }
