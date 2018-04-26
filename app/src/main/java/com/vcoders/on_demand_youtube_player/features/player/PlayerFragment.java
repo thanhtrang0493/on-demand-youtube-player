@@ -61,7 +61,7 @@ public class PlayerFragment extends BaseFragment<HomeComponent> implements Playe
 
         String youtubeVideoUrl = "https://www.youtube.com/watch?v=4vNZq5U1PmY";
         String videoYoutubeId = getYouTubeVideoId(youtubeVideoUrl);
-        youtubePlayerView.initYoutubePlayerView(this, videoYoutubeId);
+        youtubePlayerView.initYoutubePlayerView(this, videoYoutubeId, getActivity());
     }
 
     public String getYouTubeVideoId(String videoUrl) {

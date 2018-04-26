@@ -25,7 +25,7 @@ public class PlayVideoActivity extends BaseYoutubeActivity implements PlayVideoV
     protected void initializeView() {
         getBundle();
 
-        youtubePlayerView.initYoutubePlayerView(this, videoYoutubeId);
+        youtubePlayerView.initYoutubePlayerView(this, videoYoutubeId, this);
     }
 
     private void getBundle() {

@@ -1,8 +1,10 @@
 package com.vcoders.on_demand_youtube_player.customView;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentActivity;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageButton;
@@ -11,6 +13,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayerFragment;
+import com.google.android.youtube.player.YouTubePlayerSupportFragment;
 import com.google.android.youtube.player.YouTubePlayerView;
 import com.vcoders.on_demand_youtube_player.R;
 import com.vcoders.on_demand_youtube_player.services.YoutubeAPI;
@@ -18,7 +22,7 @@ import com.vcoders.on_demand_youtube_player.services.YoutubeAPI;
 public class YoutubePlayerViewCustom extends LinearLayout implements View.OnClickListener {
 
     private Context context;
-    private YouTubePlayerView youTubePlayerView;
+    private YouTubePlayerFragment youTubePlayerView;
     private View llVideoControl;
     private ImageButton btnPlayVideo;
     private TextView txtPlayTime;
@@ -50,7 +54,6 @@ public class YoutubePlayerViewCustom extends LinearLayout implements View.OnClic
         View view = View.inflate(context, R.layout.layout_youtube_player_view, this);
 
         mHandler = new android.os.Handler();
-        youTubePlayerView = (YouTubePlayerView) view.findViewById(R.id.youtubePlayerView);
         llVideoControl = view.findViewById(R.id.llVideoControl);
         btnPlayVideo = (ImageButton) view.findViewById(R.id.btnPlayVideo);
         btnPlayVideo.setOnClickListener(this);
@@ -100,8 +103,10 @@ public class YoutubePlayerViewCustom extends LinearLayout implements View.OnClic
         }
     };
 
-    public void initYoutubePlayerView(YouTubePlayer.OnInitializedListener onInitializedListener, String videoId) {
-        youTubePlayerView.initialize(YoutubeAPI.getInstance().API_KEY, onInitializedListener);
+    public void initYoutubePlayerView(YouTubePlayer.OnInitializedListener onInitializedListener, String videoId, Activity activity) {
+        youTubePlayerView = (YouTubePlayerFragment) activity.getFragmentManager().findFragmentById(R.id.youtubePlayerView);
+        if (youTubePlayerView != null)
+            youTubePlayerView.initialize(YoutubeAPI.getInstance().API_KEY, onInitializedListener);
         this.videoId = videoId;
     }
 
