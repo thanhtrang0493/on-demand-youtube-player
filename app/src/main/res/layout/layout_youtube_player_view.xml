@@ -1,34 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
+    <!--<fragment-->
+        <!--android:name="com.google.android.youtube.player.YouTubePlayerFragment"-->
+        <!--android:id="@+id/youtubePlayerView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="#ebeff2" />-->
 
-    <fragment
-        android:name="com.google.android.youtube.player.YouTubePlayerFragment"
-        android:id="@+id/youtubePlayerView"
+    <FrameLayout
+        android:id="@+id/youtubeLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#ebeff2" />
+        android:layout_height="wrap_content"/>
 
+    <ImageButton
+        android:id="@+id/btnPlayVideo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@null"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_play" />
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/llVideoControl"
+        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/d45"
         android:background="#444"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:weightSum="10">
 
-        <ImageButton
-            android:id="@+id/btnPlayVideo"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:layout_weight="1.2"
-            android:background="@null"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_play" />
+        <!--<ImageButton-->
+            <!--android:id="@+id/btnPlayVideo"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_margin="5dp"-->
+            <!--android:layout_weight="1.2"-->
+            <!--android:background="@null"-->
+            <!--android:scaleType="centerInside"-->
+            <!--android:src="@drawable/ic_play" />-->
 
         <SeekBar
             android:id="@+id/sbVideoSeekbar"
@@ -48,4 +62,4 @@
             android:text="--:--"
             android:textColor="@android:color/white" />
     </LinearLayout>
-</LinearLayout>
+</RelativeLayout>

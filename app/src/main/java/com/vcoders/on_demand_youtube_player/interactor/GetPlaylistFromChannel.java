@@ -54,8 +54,8 @@ public class GetPlaylistFromChannel extends InteractorYoutube {
     @Override
     public void error(VolleyError error) {
         if (listener != null) {
-            requestAPIResponse.setErrorCode(error.networkResponse.statusCode);
-            requestAPIResponse.setErrorMessage(error.getMessage());
+            requestAPIResponse.setErrorCode(error != null ? error.networkResponse.statusCode : 0);
+            requestAPIResponse.setErrorMessage(error != null ? error.getMessage() : "");
             listener.onResponse(requestAPIResponse);
         }
     }

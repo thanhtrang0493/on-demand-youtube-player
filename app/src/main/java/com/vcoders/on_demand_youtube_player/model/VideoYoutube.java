@@ -1,7 +1,9 @@
 package com.vcoders.on_demand_youtube_player.model;
 
 
-public class VideoYoutube {
+import java.io.Serializable;
+
+public class VideoYoutube implements Serializable {
     private String id;
     private String channelId;
     private String thumbnails;

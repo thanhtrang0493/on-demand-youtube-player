@@ -4,36 +4,28 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.vcoders.on_demand_youtube_player.R;
 import com.vcoders.on_demand_youtube_player.adapter.ListVideoAdapter;
 import com.vcoders.on_demand_youtube_player.architecture.BaseFragment;
 import com.vcoders.on_demand_youtube_player.architecture.BasePresenter;
 import com.vcoders.on_demand_youtube_player.architecture.BaseRouter;
-import com.vcoders.on_demand_youtube_player.architecture.BaseYoutubeActivity;
-import com.vcoders.on_demand_youtube_player.customView.YoutubePlayerViewCustom;
+import com.vcoders.on_demand_youtube_player.customView.YoutubePlayerCustom;
 import com.vcoders.on_demand_youtube_player.enums.TypeActionBar;
 import com.vcoders.on_demand_youtube_player.features.home.HomeComponent;
-import com.vcoders.on_demand_youtube_player.features.playVideo.PlayVideoView;
 import com.vcoders.on_demand_youtube_player.model.VideoYoutube;
 import com.vcoders.on_demand_youtube_player.utils.Constant;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 
-import static android.content.ContentValues.TAG;
 
-
-public class PlayerFragment extends BaseFragment<HomeComponent> implements PlayerView, YouTubePlayer.OnInitializedListener {
+public class PlayerFragment extends BaseFragment<HomeComponent> implements PlayerView {
 
     @Inject
     PlayerPresenter playerPresenter;
@@ -45,23 +37,18 @@ public class PlayerFragment extends BaseFragment<HomeComponent> implements Playe
     List<VideoYoutube> listVideo;
     int positionVideoSelected;
 
-    public int REQUEST_VIDEO = 12334;
-
     @BindView(R.id.rvListVideo)
     RecyclerView rvListVideo;
 
-    @BindView(R.id.mYoutubePlayerView)
-    YoutubePlayerViewCustom youtubePlayerView;
+    @BindView(R.id.youtubePlayerView)
+    YoutubePlayerCustom youtubePlayerView;
 
     @Override
     protected void initializeView(Bundle savedInstanceState) {
         getBundle();
         initListVideoAdapter();
 
-
-        String youtubeVideoUrl = "https://www.youtube.com/watch?v=4vNZq5U1PmY";
-        String videoYoutubeId = getYouTubeVideoId(youtubeVideoUrl);
-        youtubePlayerView.initYoutubePlayerView(this, videoYoutubeId, getActivity());
+        youtubePlayerView.initYoutubePlayer(this, this);
     }
 
     public String getYouTubeVideoId(String videoUrl) {
@@ -139,16 +126,15 @@ public class PlayerFragment extends BaseFragment<HomeComponent> implements Playe
     }
 
     @Override
-    public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
-        youtubePlayerView.initYoutubePlayer(youTubePlayer, b);
+    public void onInitYoutubePlayerSuccess(YouTubePlayer youTubePlayer) {
+        String youtubeVideoUrl = "https://www.youtube.com/watch?v=4vNZq5U1PmY";
+        String videoYoutubeId = getYouTubeVideoId(youtubeVideoUrl);
+
+        youtubePlayerView.playVideo(youTubePlayer, videoYoutubeId);
     }
 
     @Override
-    public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
-        if (youTubeInitializationResult.isUserRecoverableError()) {
-            youTubeInitializationResult.getErrorDialog(getActivity(), REQUEST_VIDEO);
-        } else {
-            Log.d(TAG, "play video error");
-        }
+    public void onInitYoutubePlayerFailure(String errorMessage) {
+        showError(errorMessage);
     }
 }

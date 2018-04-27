@@ -8,10 +8,10 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/d200">
 
-        <com.vcoders.on_demand_youtube_player.customView.YoutubePlayerViewCustom
-            android:id="@+id/mYoutubePlayerView"
+        <com.vcoders.on_demand_youtube_player.customView.YoutubePlayerCustom
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:id="@+id/youtubePlayerView"
+            android:layout_height="match_parent"/>
 
         <LinearLayout
             android:visibility="gone"

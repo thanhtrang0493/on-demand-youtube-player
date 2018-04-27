@@ -1,28 +1,29 @@
 package com.vcoders.on_demand_youtube_player.customView;
 
 
-import android.app.Activity;
+import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerFragment;
 import com.google.android.youtube.player.YouTubePlayerSupportFragment;
-import com.google.android.youtube.player.YouTubePlayerView;
 import com.vcoders.on_demand_youtube_player.R;
 import com.vcoders.on_demand_youtube_player.services.YoutubeAPI;
 
 public class YoutubePlayerViewCustom extends LinearLayout implements View.OnClickListener {
 
     private Context context;
-    private YouTubePlayerFragment youTubePlayerView;
+    //    private YouTubePlayerFragment youTubePlayerView;
     private View llVideoControl;
     private ImageButton btnPlayVideo;
     private TextView txtPlayTime;
@@ -51,6 +52,10 @@ public class YoutubePlayerViewCustom extends LinearLayout implements View.OnClic
     }
 
     private void initView() {
+        ViewGroup parent = (ViewGroup) this.getParent();
+        if (parent != null)
+            parent.removeView(this);
+
         View view = View.inflate(context, R.layout.layout_youtube_player_view, this);
 
         mHandler = new android.os.Handler();
@@ -72,17 +77,17 @@ public class YoutubePlayerViewCustom extends LinearLayout implements View.OnClic
 
         // Start buffering
         if (!wasRestored) {
-            mYoutubePlayer.cueVideo(videoId);
+            mYoutubePlayer.loadVideo(videoId);
+            mYoutubePlayer.play();
         }
 
-        mYoutubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.CHROMELESS);
-        llVideoControl.setVisibility(View.VISIBLE);
+//        mYoutubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.CHROMELESS);
+//        llVideoControl.setVisibility(View.VISIBLE);
 
         // Add listeners to YouTubePlayer instance
-        mYoutubePlayer.setPlayerStateChangeListener(mPlayerStateChangeListener);
-        mYoutubePlayer.setPlaybackEventListener(mPlaybackEventListener);
+//        mYoutubePlayer.setPlayerStateChangeListener(mPlayerStateChangeListener);
+//        mYoutubePlayer.setPlaybackEventListener(mPlaybackEventListener);
 
-        btnPlayVideo.performClick();
     }
 
     SeekBar.OnSeekBarChangeListener onSeekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
@@ -103,10 +108,31 @@ public class YoutubePlayerViewCustom extends LinearLayout implements View.OnClic
         }
     };
 
-    public void initYoutubePlayerView(YouTubePlayer.OnInitializedListener onInitializedListener, String videoId, Activity activity) {
-        youTubePlayerView = (YouTubePlayerFragment) activity.getFragmentManager().findFragmentById(R.id.youtubePlayerView);
-        if (youTubePlayerView != null)
-            youTubePlayerView.initialize(YoutubeAPI.getInstance().API_KEY, onInitializedListener);
+    public void initYoutubePlayerView(final String videoId, Fragment fragment) {
+        YouTubePlayerSupportFragment youTubePlayerFragment = YouTubePlayerSupportFragment.newInstance();
+
+        FragmentTransaction transaction = fragment.getChildFragmentManager().beginTransaction();
+        transaction.add(R.id.youtubeLayout, youTubePlayerFragment).commit();
+
+        if (youTubePlayerFragment != null)
+            youTubePlayerFragment.initialize(YoutubeAPI.getInstance().API_KEY, new YouTubePlayer.OnInitializedListener() {
+                @Override
+                public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
+                   mYoutubePlayer=youTubePlayer;
+                    if (!b && mYoutubePlayer != null) {
+//                        mYoutubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.CHROMELESS);
+
+                        mYoutubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT);
+                        mYoutubePlayer.loadVideo(videoId);
+                        mYoutubePlayer.play();
+                    }
+                }
+
+                @Override
+                public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+
+                }
+            });
         this.videoId = videoId;
     }
 
@@ -184,7 +210,8 @@ public class YoutubePlayerViewCustom extends LinearLayout implements View.OnClic
     };
 
     private void displayCurrentTime() {
-        if (null == mYoutubePlayer) return;
+        if (null == mYoutubePlayer)
+            return;
         String formattedTime = formatTime(mYoutubePlayer.getDurationMillis() - mYoutubePlayer.getCurrentTimeMillis());
         txtPlayTime.setText(formattedTime);
     }
