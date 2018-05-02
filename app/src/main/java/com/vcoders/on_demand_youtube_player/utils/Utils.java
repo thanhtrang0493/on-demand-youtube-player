@@ -49,15 +49,16 @@ public class Utils {
         SimpleDateFormat formatTo = new SimpleDateFormat(
                 "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US);
         formatTo.setTimeZone(TimeZone.getTimeZone("UTC"));
-        try {
-            Date toDate = formatTo.parse(date);
-            Date currentTime = Calendar.getInstance().getTime();
-            long diff = currentTime.getTime() - toDate.getTime();
-            days = (int) TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
-        } catch (ParseException e) {
+        if (date != null && formatTo != null) {
+            try {
+                Date toDate = formatTo.parse(date);
+                Date currentTime = Calendar.getInstance().getTime();
+                long diff = currentTime.getTime() - toDate.getTime();
+                days = (int) TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+            } catch (ParseException e) {
 
+            }
         }
-
         return days;
     }
 

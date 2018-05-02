@@ -47,6 +47,7 @@ public class ListVideoFragment extends BaseFragment<HomeComponent> implements Li
     List<VideoYoutube> listVideo;
     EditText edtSearch;
     String searchName;
+    String playlistId;
 
     @BindView(R.id.rvListVideo)
     RecyclerView rvListVideo;
@@ -55,6 +56,8 @@ public class ListVideoFragment extends BaseFragment<HomeComponent> implements Li
     protected void initializeView(Bundle savedInstanceState) {
         getBundle();
 
+        getVideoFromPlaylistId();
+
         if ((HomeActivity) getActivity() != null) {
             edtSearch = ((HomeActivity) getActivity()).getEdtSearch();
         }
@@ -62,9 +65,16 @@ public class ListVideoFragment extends BaseFragment<HomeComponent> implements Li
         initListVideoAdapter();
     }
 
+    private void getVideoFromPlaylistId() {
+        if (playlistId != null && !playlistId.isEmpty()) {
+            listVideoPresenter.getVideoByPlaylistId(playlistId);
+        }
+    }
+
     private void getBundle() {
         listVideo = (List<VideoYoutube>) getArguments().getSerializable(Constant.VIDEOS);
         searchName = getArguments().getString(Constant.SEARCH_NAME);
+        playlistId = getArguments().getString(Constant.PLAYLIST_ID);
 
         if (searchName == null)
             searchName = "";
@@ -166,4 +176,11 @@ public class ListVideoFragment extends BaseFragment<HomeComponent> implements Li
         new DialogAddPlaylist(getActivity(), myPlaylists).show();
     }
 
+    @Override
+    public void getVideoByPlaylistSuccess(List<VideoYoutube> videoYoutubeList) {
+        if (videoYoutubeList != null) {
+            this.listVideo = videoYoutubeList;
+            adapter.updateAdapter(this.listVideo);
+        }
+    }
 }

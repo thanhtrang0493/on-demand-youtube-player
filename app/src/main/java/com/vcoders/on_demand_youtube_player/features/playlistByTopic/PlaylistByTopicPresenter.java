@@ -45,4 +45,8 @@ public class PlaylistByTopicPresenter extends BasePresenter<PlaylistByTopicView,
                     }
                 });
     }
+
+    public void toListVideo(String playlistId){
+        getRouter().toListVideo(playlistId);
+    }
 }

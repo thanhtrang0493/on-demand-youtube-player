@@ -23,9 +23,8 @@ public class YoutubePlayerCustom extends LinearLayout implements YouTubePlayer.O
     private Context context;
     private IInitYoutubePlayerListener youtubePlayerListener;
     private YouTubePlayer mYoutubePlayer;
-
     private ImageView imgPlay;
-
+//http://stacktips.com/tutorials/android/how-to-customize-youtubeplayer-controls-in-android
     public YoutubePlayerCustom(Context context) {
         super(context);
         this.context = context;
@@ -51,6 +50,7 @@ public class YoutubePlayerCustom extends LinearLayout implements YouTubePlayer.O
 
         View view = View.inflate(context, R.layout.layout_youtube_player_custom, this);
 
+        imgPlay = (ImageView) view.findViewById(R.id.imgPlay);
     }
 
     public void initYoutubePlayer(Fragment fragment, IInitYoutubePlayerListener youtubePlayerListener) {
@@ -67,7 +67,8 @@ public class YoutubePlayerCustom extends LinearLayout implements YouTubePlayer.O
     @Override
     public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
         if (!b) {
-            youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.CHROMELESS);
+//            youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.CHROMELESS);
+//            youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT);
             mYoutubePlayer = youTubePlayer;
             youtubePlayerListener.onInitYoutubePlayerSuccess(youTubePlayer);
         }
@@ -75,7 +76,8 @@ public class YoutubePlayerCustom extends LinearLayout implements YouTubePlayer.O
 
     public void playVideo(YouTubePlayer youTubePlayer, String videoId) {
         if (youTubePlayer != null) {
-            youTubePlayer.loadVideo(videoId);
+//            youTubePlayer.loadVideo(videoId);
+            youTubePlayer.cueVideo(videoId);
             youTubePlayer.play();
         }
     }

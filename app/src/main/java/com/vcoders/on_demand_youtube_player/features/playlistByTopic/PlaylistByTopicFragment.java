@@ -130,6 +130,7 @@ public class PlaylistByTopicFragment extends BaseFragment<HomeComponent> impleme
 
     @Override
     public void onSelectPlayList(int position) {
+        playlistByTopicPresenter.toListVideo(playLists.get(position).getId());
     }
 
     @Override

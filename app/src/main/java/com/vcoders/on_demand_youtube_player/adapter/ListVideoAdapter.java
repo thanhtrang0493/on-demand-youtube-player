@@ -36,6 +36,13 @@ public class ListVideoAdapter extends RecyclerView.Adapter<ListVideoAdapter.List
             this.listVideo = new ArrayList<>();
     }
 
+    public void updateAdapter(List<VideoYoutube> videoYoutubeList) {
+        listVideo = videoYoutubeList;
+        if (this.listVideo == null)
+            this.listVideo = new ArrayList<>();
+        notifyDataSetChanged();
+    }
+
     @Override
     public ListVideoHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_list_video, parent, false);

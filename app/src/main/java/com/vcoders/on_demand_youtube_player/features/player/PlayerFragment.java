@@ -36,6 +36,7 @@ public class PlayerFragment extends BaseFragment<HomeComponent> implements Playe
     ListVideoAdapter adapter;
     List<VideoYoutube> listVideo;
     int positionVideoSelected;
+    YouTubePlayer youTubePlayer;
 
     @BindView(R.id.rvListVideo)
     RecyclerView rvListVideo;
@@ -117,7 +118,7 @@ public class PlayerFragment extends BaseFragment<HomeComponent> implements Playe
 
     @Override
     public void selectPlayVideo(int position) {
-
+        youtubePlayerView.playVideo(youTubePlayer, listVideo.get(position).getId());
     }
 
     @Override
@@ -127,10 +128,9 @@ public class PlayerFragment extends BaseFragment<HomeComponent> implements Playe
 
     @Override
     public void onInitYoutubePlayerSuccess(YouTubePlayer youTubePlayer) {
-        String youtubeVideoUrl = "https://www.youtube.com/watch?v=4vNZq5U1PmY";
-        String videoYoutubeId = getYouTubeVideoId(youtubeVideoUrl);
-
-        youtubePlayerView.playVideo(youTubePlayer, videoYoutubeId);
+        this.youTubePlayer = youTubePlayer;
+        if (listVideo != null && listVideo.size() > 0)
+            youtubePlayerView.playVideo(youTubePlayer, listVideo.get(0).getId());
     }
 
     @Override
