@@ -7,6 +7,7 @@ import com.vcoders.on_demand_youtube_player.architecture.BaseActivity;
 import com.vcoders.on_demand_youtube_player.architecture.BaseRouter;
 import com.vcoders.on_demand_youtube_player.features.listVideo.ListVideoFragment;
 import com.vcoders.on_demand_youtube_player.features.player.PlayerFragment;
+import com.vcoders.on_demand_youtube_player.model.Video;
 import com.vcoders.on_demand_youtube_player.model.VideoYoutube;
 import com.vcoders.on_demand_youtube_player.utils.Constant;
 
@@ -23,7 +24,7 @@ public class SearchVideosRouter extends BaseRouter {
         super(context);
     }
 
-    public void toListVideoFragment(List<VideoYoutube> listVideo, String searchName) {
+    public void toListVideoFragment(List<Video> listVideo, String searchName) {
         if ((BaseActivity) context != null) {
             Bundle bundle = new Bundle();
             bundle.putSerializable(Constant.VIDEOS, (Serializable) listVideo);

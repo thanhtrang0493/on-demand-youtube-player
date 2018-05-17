@@ -1,4 +1,4 @@
-package com.vcoders.on_demand_youtube_player.features.channels;
+package com.vcoders.on_demand_youtube_player.features.example.channels;
 
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;

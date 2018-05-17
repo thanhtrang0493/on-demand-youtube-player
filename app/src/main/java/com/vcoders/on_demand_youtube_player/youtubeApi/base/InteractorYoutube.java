@@ -48,14 +48,14 @@ public abstract class InteractorYoutube<ResultType> {
         return youtubeServiceAPI;
     }
 
-    protected abstract Observable<ResultType> buildObservable();
+    protected abstract Observable<Response<ResultType>> buildObservable();
 
     protected void run() {
         setUpRequest();
         compositeDisposable.add(buildObservable()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((Consumer<? super ResultType>) new Consumer<Response<ResultType>>() {
+                .subscribe(new Consumer<Response<ResultType>>() {
                     @Override
                     public void accept(@NonNull Response<ResultType> resultType) throws Exception {
                         postResponse(resultType);
@@ -119,6 +119,9 @@ public abstract class InteractorYoutube<ResultType> {
     }
 
     private void setUpRequest() {
+        //test
+        setHeader(false);
+
         try {
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
             // set your desired log level

@@ -16,9 +16,9 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-public abstract class InteractorYoutube {
+public abstract class InteractorYoutube1 {
 
-    public InteractorYoutube() {
+    public InteractorYoutube1() {
     }
 
     public void request(Context context) {

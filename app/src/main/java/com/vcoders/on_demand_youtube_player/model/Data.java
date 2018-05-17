@@ -15,12 +15,15 @@ public class Data<T> {
     @SerializedName("nextPageToken")
     @Expose
     private String nextPageToken;
+    @SerializedName("regionCode")
+    @Expose
+    private String regionCode;
     @SerializedName("pageInfo")
     @Expose
     private PageInfo pageInfo;
     @SerializedName("items")
     @Expose
-    private T items = null;
+    private List<T> items = null;
 
     public String getKind() {
         return kind;
@@ -46,11 +49,11 @@ public class Data<T> {
         this.pageInfo = pageInfo;
     }
 
-    public T getItems() {
+    public List<T> getItems() {
         return items;
     }
 
-    public void setItems(T items) {
+    public void setItems(List<T> items) {
         this.items = items;
     }
 
@@ -60,5 +63,13 @@ public class Data<T> {
 
     public void setNextPageToken(String nextPageToken) {
         this.nextPageToken = nextPageToken;
+    }
+
+    public String getRegionCode() {
+        return regionCode;
+    }
+
+    public void setRegionCode(String regionCode) {
+        this.regionCode = regionCode;
     }
 }

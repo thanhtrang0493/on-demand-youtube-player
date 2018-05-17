@@ -4,7 +4,7 @@ package com.vcoders.on_demand_youtube_player.interactor;
 import android.content.Context;
 
 import com.android.volley.VolleyError;
-import com.vcoders.on_demand_youtube_player.architecture.InteractorYoutube;
+import com.vcoders.on_demand_youtube_player.architecture.InteractorYoutube1;
 import com.vcoders.on_demand_youtube_player.youtubeApi.base.RequestAPIListener;
 import com.vcoders.on_demand_youtube_player.youtubeApi.response.ResponseAPIListener;
 import com.vcoders.on_demand_youtube_player.model.Channel;
@@ -17,10 +17,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GetChannelIDByName extends InteractorYoutube {
-    private static final GetChannelIDByName ourInstance = new GetChannelIDByName();
+public class GetChannelIDByName1 extends InteractorYoutube1 {
+    private static final GetChannelIDByName1 ourInstance = new GetChannelIDByName1();
 
-    public static GetChannelIDByName getInstance() {
+    public static GetChannelIDByName1 getInstance() {
         return ourInstance;
     }
 
@@ -29,7 +29,7 @@ public class GetChannelIDByName extends InteractorYoutube {
     RequestAPIListener<List<Channel>> listener;
     ResponseAPIListener<List<Channel>> responseAPIListener;
 
-    public GetChannelIDByName getChannelIDByName(Context context, String name) {
+    public GetChannelIDByName1 getChannelIDByName(Context context, String name) {
         this.context = context;
         this.name = name;
         responseAPIListener = new ResponseAPIListener<>();
@@ -38,7 +38,7 @@ public class GetChannelIDByName extends InteractorYoutube {
         return this;
     }
 
-    public GetChannelIDByName onResponse(RequestAPIListener<List<Channel>> listener) {
+    public GetChannelIDByName1 onResponse(RequestAPIListener<List<Channel>> listener) {
         this.listener = listener;
         return this;
     }

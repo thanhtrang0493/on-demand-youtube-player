@@ -8,22 +8,21 @@ import com.vcoders.on_demand_youtube_player.youtubeApi.base.InteractorYoutube;
 import com.vcoders.on_demand_youtube_player.youtubeApi.base.RequestAPIListener;
 
 
-import java.util.List;
 
 import io.reactivex.Observable;
+import retrofit2.Response;
 
-public class GetVideoFromPlaylist extends InteractorYoutube<Data<List<Video>>> {
+public class GetVideoFromPlaylist extends InteractorYoutube<Data<Video>> {
 
     Context context;
 
     public GetVideoFromPlaylist(Context context) {
         super(context);
         this.context = context;
-        setHeader(false);
     }
 
     @Override
-    protected Observable buildObservable() {
+    protected Observable<Response<Data<Video>>> buildObservable() {
         return getYoutubeService().getVideoFromPlaylistId( body);
     }
 
@@ -35,7 +34,7 @@ public class GetVideoFromPlaylist extends InteractorYoutube<Data<List<Video>>> {
         return this;
     }
 
-    public GetVideoFromPlaylist onListener(RequestAPIListener<Data<List<Video>>> listener) {
+    public GetVideoFromPlaylist onListener(RequestAPIListener<Data<Video>> listener) {
         setRequestAPIListener(listener);
         return this;
     }

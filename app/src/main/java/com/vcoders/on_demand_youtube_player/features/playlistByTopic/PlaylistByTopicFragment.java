@@ -7,14 +7,13 @@ import android.support.v7.widget.RecyclerView;
 import com.vcoders.on_demand_youtube_player.R;
 import com.vcoders.on_demand_youtube_player.adapter.ListPlayListAdapter;
 import com.vcoders.on_demand_youtube_player.adapter.ListTopicAdapter;
-import com.vcoders.on_demand_youtube_player.architecture.BaseActivity;
 import com.vcoders.on_demand_youtube_player.architecture.BaseFragment;
 import com.vcoders.on_demand_youtube_player.architecture.BasePresenter;
 import com.vcoders.on_demand_youtube_player.architecture.BaseRouter;
 import com.vcoders.on_demand_youtube_player.enums.TypeActionBar;
 import com.vcoders.on_demand_youtube_player.features.home.HomeComponent;
-import com.vcoders.on_demand_youtube_player.model.PlayList;
 import com.vcoders.on_demand_youtube_player.model.Topic;
+import com.vcoders.on_demand_youtube_player.model.Video;
 import com.vcoders.on_demand_youtube_player.utils.Constant;
 import com.vcoders.on_demand_youtube_player.utils.DialogLoading;
 
@@ -30,7 +29,7 @@ public class PlaylistByTopicFragment extends BaseFragment<HomeComponent> impleme
 
     List<Topic> topics;
     ListTopicAdapter listTopicAdapter;
-    List<PlayList> playLists;
+    List<Video> playLists;
     ListPlayListAdapter playListAdapter;
 
     @Inject
@@ -130,7 +129,8 @@ public class PlaylistByTopicFragment extends BaseFragment<HomeComponent> impleme
 
     @Override
     public void onSelectPlayList(int position) {
-        playlistByTopicPresenter.toListVideo(playLists.get(position).getId());
+        String id= playLists.get(position).getId().toString();
+        playlistByTopicPresenter.toListVideo(id);
     }
 
     @Override
@@ -139,7 +139,7 @@ public class PlaylistByTopicFragment extends BaseFragment<HomeComponent> impleme
     }
 
     @Override
-    public void getPlaylistSuccessed(List<PlayList> playLists) {
+    public void getPlaylistSuccessed(List<Video> playLists) {
         this.playLists = playLists;
         playListAdapter.updateAdapter(this.playLists);
     }

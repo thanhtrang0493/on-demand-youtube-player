@@ -4,21 +4,20 @@ import android.content.Context;
 
 import com.android.volley.VolleyError;
 import com.vcoders.on_demand_youtube_player.R;
-import com.vcoders.on_demand_youtube_player.architecture.InteractorYoutube;
+import com.vcoders.on_demand_youtube_player.architecture.InteractorYoutube1;
 import com.vcoders.on_demand_youtube_player.services.YoutubeAPI;
-import com.vcoders.on_demand_youtube_player.utils.AccountUtils;
 
 import org.json.JSONObject;
 
-public class GetMyPlaylist extends InteractorYoutube {
+public class GetMyPlaylist1 extends InteractorYoutube1 {
 
     Context context;
 
-    public GetMyPlaylist(Context context){
+    public GetMyPlaylist1(Context context){
         this.context= context;
     }
 
-    public GetMyPlaylist getMyPlaylist() {
+    public GetMyPlaylist1 getMyPlaylist() {
         request(context);
         return this;
     }

@@ -12,7 +12,7 @@ public class Video {
     private String etag;
     @SerializedName("id")
     @Expose
-    private String id;
+    private Object id;
     @SerializedName("snippet")
     @Expose
     private Snippet snippet;
@@ -36,11 +36,11 @@ public class Video {
         this.etag = etag;
     }
 
-    public String getId() {
+    public Object getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Object id) {
         this.id = id;
     }
 

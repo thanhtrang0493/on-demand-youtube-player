@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.vcoders.on_demand_youtube_player.R;
-import com.vcoders.on_demand_youtube_player.features.channels.ChannelsView;
+import com.vcoders.on_demand_youtube_player.features.example.channels.ChannelsView;
 import com.vcoders.on_demand_youtube_player.model.Channel;
 
 import java.util.ArrayList;

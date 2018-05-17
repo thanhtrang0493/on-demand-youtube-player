@@ -8,7 +8,6 @@ import com.vcoders.on_demand_youtube_player.model.Data;
 import com.vcoders.on_demand_youtube_player.model.Video;
 import com.vcoders.on_demand_youtube_player.youtubeApi.base.RequestAPIListener;
 import com.vcoders.on_demand_youtube_player.youtubeApi.response.ResponseAPIListener;
-import com.vcoders.on_demand_youtube_player.model.VideoYoutube;
 
 import java.util.List;
 
@@ -18,7 +17,7 @@ import javax.inject.Inject;
 public class ListVideoPresenter extends BasePresenter<ListVideoView, ListVideoRouter> {
 
     Context context;
-    Data<List<Video>> dataVideo;
+    Data<Video> dataVideo;
 
     @Inject
     public ListVideoPresenter(Context context) {
@@ -33,9 +32,9 @@ public class ListVideoPresenter extends BasePresenter<ListVideoView, ListVideoRo
         getView().showLoading(true);
 
         new GetVideoFromPlaylist(context).execute(playlistId)
-                .onListener(new RequestAPIListener<Data<List<Video>>>() {
+                .onListener(new RequestAPIListener<Data<Video>>() {
                     @Override
-                    public void onResponse(ResponseAPIListener<Data<List<Video>>> response) {
+                    public void onResponse(ResponseAPIListener<Data<Video>> response) {
                         if (response.getErrorMessage() == null) {
                             dataVideo = response.getData();
                             getView().getVideoByPlaylistSuccess(response.getData().getItems());

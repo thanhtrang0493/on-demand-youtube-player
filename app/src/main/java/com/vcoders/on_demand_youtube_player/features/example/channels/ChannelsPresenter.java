@@ -1,4 +1,4 @@
-package com.vcoders.on_demand_youtube_player.features.channels;
+package com.vcoders.on_demand_youtube_player.features.example.channels;
 
 
 import android.content.Context;
@@ -9,7 +9,7 @@ import com.vcoders.on_demand_youtube_player.adapter.ChannelsAdapter;
 import com.vcoders.on_demand_youtube_player.architecture.BasePresenter;
 import com.vcoders.on_demand_youtube_player.youtubeApi.base.RequestAPIListener;
 import com.vcoders.on_demand_youtube_player.youtubeApi.response.ResponseAPIListener;
-import com.vcoders.on_demand_youtube_player.interactor.GetPlaylistFromChannel;
+import com.vcoders.on_demand_youtube_player.interactor.GetPlaylistFromChannel1;
 import com.vcoders.on_demand_youtube_player.model.Channel;
 import com.vcoders.on_demand_youtube_player.model.PlayList;
 
@@ -25,7 +25,7 @@ public class ChannelsPresenter extends BasePresenter<ChannelsView, ChannelsRoute
 
     public void getPlaylistFromChannelId(String channelId) {
         getView().showLoading(true);
-        GetPlaylistFromChannel.getInstance().getPlaylistFromChannel(context, channelId)
+        GetPlaylistFromChannel1.getInstance().getPlaylistFromChannel(context, channelId)
                 .onResponse(new RequestAPIListener<List<PlayList>>() {
                     @Override
                     public void onResponse(ResponseAPIListener<List<PlayList>> response) {

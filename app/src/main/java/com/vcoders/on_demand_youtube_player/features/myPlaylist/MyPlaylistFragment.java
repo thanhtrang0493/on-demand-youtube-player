@@ -1,7 +1,6 @@
 package com.vcoders.on_demand_youtube_player.features.myPlaylist;
 
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -16,8 +15,9 @@ import com.vcoders.on_demand_youtube_player.enums.TypeActionBar;
 import com.vcoders.on_demand_youtube_player.features.home.HomeActivity;
 import com.vcoders.on_demand_youtube_player.features.home.HomeComponent;
 import com.vcoders.on_demand_youtube_player.features.playlistDetail.PlaylistDetailFragment;
-import com.vcoders.on_demand_youtube_player.interactor.GetMyPlaylist;
+import com.vcoders.on_demand_youtube_player.interactor.GetMyPlaylist1;
 import com.vcoders.on_demand_youtube_player.model.PlayList;
+import com.vcoders.on_demand_youtube_player.model.Video;
 
 import java.util.List;
 
@@ -45,7 +45,7 @@ public class MyPlaylistFragment extends BaseFragment<HomeComponent> implements M
     ListPlayListAdapter listPlayListAdapter;
     GridPlayListAdapter gridPlayListAdapter;
     List<PlayList> playListRecentlies;
-    List<PlayList> playLists;
+    List<Video> playLists;
 
     @Override
     protected void initializeView(Bundle savedInstanceState) {
@@ -55,7 +55,7 @@ public class MyPlaylistFragment extends BaseFragment<HomeComponent> implements M
         initRecentlyPlayedAdapter();
         initPlayListAdapter();
 
-        new GetMyPlaylist(getActivity()).getMyPlaylist();
+        new GetMyPlaylist1(getActivity()).getMyPlaylist();
     }
 
     private void initRecentlyPlayedAdapter() {
@@ -75,11 +75,11 @@ public class MyPlaylistFragment extends BaseFragment<HomeComponent> implements M
     }
 
     private void initGridPlayListAdapter() {
-        gridPlayListAdapter = new GridPlayListAdapter(getActivity(), playLists, this);
-        GridLayoutManager manager = new GridLayoutManager(getActivity(), 2);
-        rvPlaylist.setLayoutManager(manager);
-        rvPlaylist.setAdapter(gridPlayListAdapter);
-        rvPlaylist.setPadding(10, 0, 10, 0);
+//        gridPlayListAdapter = new GridPlayListAdapter(getActivity(), playLists, this);
+//        GridLayoutManager manager = new GridLayoutManager(getActivity(), 2);
+//        rvPlaylist.setLayoutManager(manager);
+//        rvPlaylist.setAdapter(gridPlayListAdapter);
+//        rvPlaylist.setPadding(10, 0, 10, 0);
     }
 
     @Override

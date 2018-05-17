@@ -88,8 +88,12 @@ public class ListVideoAdapter extends RecyclerView.Adapter<ListVideoAdapter.List
         holder.txtTitle.setText(video.getSnippet().getTitle());
         holder.txtChannelTitle.setText(video.getSnippet().getChannelTitle());
         holder.txtPublishedAt.setText(time);
-        holder.txtViewCount.setText(video.getContentDetails().getItemCount() != null ?
-                Utils.getInstance().convertIntToString(video.getContentDetails().getItemCount()) : "");
+
+        if (video.getContentDetails() != null) {
+            holder.txtViewCount.setText(video.getContentDetails().getItemCount() != null ?
+                    Utils.getInstance().convertIntToString(video.getContentDetails().getItemCount()) : "");
+        } else
+            holder.txtViewCount.setText("");
     }
 
 

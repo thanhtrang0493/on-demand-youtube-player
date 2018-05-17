@@ -28,6 +28,9 @@ public class Snippet {
     @SerializedName("playlistId")
     @Expose
     private String playlistId;
+    @SerializedName("liveBroadcastContent")
+    @Expose
+    private String liveBroadcastContent;
     @SerializedName("position")
     @Expose
     private Integer position;
@@ -113,5 +116,13 @@ public class Snippet {
 
     public void setResourceId(ResourceId resourceId) {
         this.resourceId = resourceId;
+    }
+
+    public String getLiveBroadcastContent() {
+        return liveBroadcastContent;
+    }
+
+    public void setLiveBroadcastContent(String liveBroadcastContent) {
+        this.liveBroadcastContent = liveBroadcastContent;
     }
 }

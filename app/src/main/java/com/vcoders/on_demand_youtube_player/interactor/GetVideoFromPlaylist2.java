@@ -4,7 +4,7 @@ package com.vcoders.on_demand_youtube_player.interactor;
 import android.content.Context;
 
 import com.android.volley.VolleyError;
-import com.vcoders.on_demand_youtube_player.architecture.InteractorYoutube;
+import com.vcoders.on_demand_youtube_player.architecture.InteractorYoutube1;
 import com.vcoders.on_demand_youtube_player.youtubeApi.base.RequestAPIListener;
 import com.vcoders.on_demand_youtube_player.youtubeApi.response.ResponseAPIListener;
 import com.vcoders.on_demand_youtube_player.model.VideoYoutube;
@@ -17,7 +17,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GetVideoFromPlaylist2 extends InteractorYoutube {
+public class GetVideoFromPlaylist2 extends InteractorYoutube1 {
     private static final GetVideoFromPlaylist2 ourInstance = new GetVideoFromPlaylist2();
 
     private Context context;

@@ -20,7 +20,7 @@ import com.vcoders.on_demand_youtube_player.architecture.BaseRouter;
 import com.vcoders.on_demand_youtube_player.enums.TypeActionBar;
 import com.vcoders.on_demand_youtube_player.features.home.HomeActivity;
 import com.vcoders.on_demand_youtube_player.features.home.HomeComponent;
-import com.vcoders.on_demand_youtube_player.model.VideoYoutube;
+import com.vcoders.on_demand_youtube_player.model.Video;
 import com.vcoders.on_demand_youtube_player.utils.DialogLoading;
 
 import java.util.ArrayList;
@@ -180,7 +180,7 @@ public class SearchVideosFragment extends BaseFragment<HomeComponent> implements
     }
 
     @Override
-    public void searchVideoSuccess(List<VideoYoutube> videoList, String search) {
+    public void searchVideoSuccess(List<Video> videoList, String search) {
         searchVideosPresenter.toDisplayListVideo(videoList, search);
     }
 

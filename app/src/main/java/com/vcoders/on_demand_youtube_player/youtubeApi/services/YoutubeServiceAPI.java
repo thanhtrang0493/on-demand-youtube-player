@@ -19,11 +19,11 @@ import retrofit2.http.QueryMap;
 public interface YoutubeServiceAPI {
     @Headers("Content-Type: application/json;charset=utf-8")
     @GET("playlistItems")
-    Observable<Response<Data<List<Video>>>> getVideoFromPlaylistId(@QueryMap Map<String, Object> body);
+    Observable<Response<Data<Video>>> getVideoFromPlaylistId(@QueryMap Map<String, Object> body);
 
     @Headers("Content-Type: application/json;charset=utf-8")
     @GET("playlists")
-    Observable<Data<PlayList>> getPlaylistFromChannelId(@QueryMap Map<String, String> options, @Body Map<String, Object> body);
+    Observable<Response<Data<Video>>> getPlaylistFromChannelId(@QueryMap Map<String, Object> body);
 
     @Headers("Content-Type: application/json;charset=utf-8")
     @GET("search")
@@ -31,5 +31,5 @@ public interface YoutubeServiceAPI {
 
     @Headers("Content-Type: application/json;charset=utf-8")
     @GET("search")
-    Observable<Data<VideoYoutube>> searchVideoByName(@QueryMap Map<String, String> options, @Body Map<String, Object> body);
+    Observable<Response<Data<Video>>> searchVideoByName(@QueryMap Map<String, Object> body);
 }

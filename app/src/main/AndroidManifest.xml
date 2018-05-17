@@ -22,7 +22,7 @@
 
         <activity android:name=".features.playlist.PlaylistActivity" />
         <activity android:name=".features.playVideo.PlayVideoActivity" />
-        <activity android:name=".features.channels.ChannelsActivity" />
+        <activity android:name=".features.example.channels.ChannelsActivity" />
         <activity android:name=".features.selectTopics.SelectTopicsActivity" />
         <activity android:name=".features.splashScreen.SplashScreenActivity">
             <intent-filter>

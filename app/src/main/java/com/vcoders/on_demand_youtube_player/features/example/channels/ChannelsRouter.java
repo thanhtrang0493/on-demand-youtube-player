@@ -1,4 +1,4 @@
-package com.vcoders.on_demand_youtube_player.features.channels;
+package com.vcoders.on_demand_youtube_player.features.example.channels;
 
 
 import android.content.Context;

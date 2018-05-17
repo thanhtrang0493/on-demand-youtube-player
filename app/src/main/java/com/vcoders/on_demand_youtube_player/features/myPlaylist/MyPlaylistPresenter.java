@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.vcoders.on_demand_youtube_player.architecture.BasePresenter;
 import com.vcoders.on_demand_youtube_player.model.PlayList;
+import com.vcoders.on_demand_youtube_player.model.Video;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,16 +30,16 @@ public class MyPlaylistPresenter extends BasePresenter<MyPlaylistView, MyPlaylis
         return playListRecentlies;
     }
 
-    public List<PlayList> getListPlayList(){
-        List<PlayList> playLists=new ArrayList<>();
-        playLists.add(new PlayList());
-        playLists.add(new PlayList());
-        playLists.add(new PlayList());
-        playLists.add(new PlayList());
-        playLists.add(new PlayList());
-        playLists.add(new PlayList());
-        playLists.add(new PlayList());
-        playLists.add(new PlayList());
+    public List<Video> getListPlayList(){
+        List<Video> playLists=new ArrayList<>();
+        playLists.add(new Video());
+        playLists.add(new Video());
+        playLists.add(new Video());
+        playLists.add(new Video());
+        playLists.add(new Video());
+        playLists.add(new Video());
+        playLists.add(new Video());
+        playLists.add(new Video());
         return playLists;
     }
 }

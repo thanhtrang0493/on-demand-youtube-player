@@ -14,6 +14,8 @@ import com.squareup.picasso.Picasso;
 import com.vcoders.on_demand_youtube_player.R;
 import com.vcoders.on_demand_youtube_player.interfaces.ISelectPlaylist;
 import com.vcoders.on_demand_youtube_player.model.PlayList;
+import com.vcoders.on_demand_youtube_player.model.Video;
+import com.vcoders.on_demand_youtube_player.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,10 +24,10 @@ import java.util.List;
 public class ListPlayListAdapter extends RecyclerView.Adapter<ListPlayListAdapter.ListPlayListHolder> {
 
     Context context;
-    List<PlayList> playLists;
+    List<Video> playLists;
     ISelectPlaylist listener;
 
-    public ListPlayListAdapter(Context context, List<PlayList> playLists, ISelectPlaylist listener) {
+    public ListPlayListAdapter(Context context, List<Video> playLists, ISelectPlaylist listener) {
         this.context = context;
         this.playLists = playLists;
         this.listener = listener;
@@ -33,7 +35,7 @@ public class ListPlayListAdapter extends RecyclerView.Adapter<ListPlayListAdapte
             this.playLists = new ArrayList<>();
     }
 
-    public void updateAdapter(List<PlayList> playLists) {
+    public void updateAdapter(List<Video> playLists) {
         this.playLists = playLists;
         if (this.playLists == null)
             this.playLists = new ArrayList<>();
@@ -65,12 +67,14 @@ public class ListPlayListAdapter extends RecyclerView.Adapter<ListPlayListAdapte
         });
     }
 
-    private void bindData(ListPlayListHolder holder, PlayList playList) {
-        Picasso.with(context).load(playList.getThumbnails()).into(holder.imgThumbnails);
-        holder.txtItemCount.setText(playList.getVideoCount());
-        holder.txtVideoCount.setText(playList.getVideoCount() + " " + context.getResources().getString(R.string.videos));
-        holder.txtTitle.setText(playList.getTitle());
-        holder.txtType.setText("#" + playList.getLocalized());
+    private void bindData(ListPlayListHolder holder, Video playList) {
+        Picasso.with(context).load(playList.getSnippet().getThumbnails().getMedium().getUrl()).into(holder.imgThumbnails);
+        String videoCount = playList.getContentDetails().getItemCount() != null ?
+                Utils.getInstance().convertIntToString(playList.getContentDetails().getItemCount()) : "";
+        holder.txtItemCount.setText(videoCount);
+        holder.txtVideoCount.setText(videoCount + " " + context.getResources().getString(R.string.videos));
+        holder.txtTitle.setText(playList.getSnippet().getTitle());
+        holder.txtType.setText("#" + playList.getSnippet().getLocalized().getTitle());
     }
 
     @Override

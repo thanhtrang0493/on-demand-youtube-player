@@ -21,6 +21,7 @@ import com.vcoders.on_demand_youtube_player.features.playlist.DialogAddPlaylist;
 import com.vcoders.on_demand_youtube_player.model.PlayList;
 import com.vcoders.on_demand_youtube_player.model.Video;
 import com.vcoders.on_demand_youtube_player.utils.Constant;
+import com.vcoders.on_demand_youtube_player.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -143,12 +144,12 @@ public class ListVideoFragment extends BaseFragment<HomeComponent> implements Li
 
     @Override
     public void showError(String error) {
-
+        Utils.getInstance().showError(getActivity(), error);
     }
 
     @Override
     public void showLoading(boolean isShow) {
-
+        Utils.getInstance().showLoading(getActivity(), isShow);
     }
 
     @Override

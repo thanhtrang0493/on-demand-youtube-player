@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.vcoders.on_demand_youtube_player.features.channels.ChannelsActivity">
+    tools:context=".features.example.channels.ChannelsActivity">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvChannels"

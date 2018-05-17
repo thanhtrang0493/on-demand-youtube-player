@@ -3,13 +3,12 @@ package com.vcoders.on_demand_youtube_player.features.playlistByTopic;
 import android.content.Context;
 
 import com.vcoders.on_demand_youtube_player.architecture.BasePresenter;
+import com.vcoders.on_demand_youtube_player.interactor.GetPlaylistFromChannel;
+import com.vcoders.on_demand_youtube_player.model.Data;
+import com.vcoders.on_demand_youtube_player.model.Video;
 import com.vcoders.on_demand_youtube_player.youtubeApi.base.RequestAPIListener;
 import com.vcoders.on_demand_youtube_player.youtubeApi.response.ResponseAPIListener;
-import com.vcoders.on_demand_youtube_player.interactor.GetPlaylistFromChannel;
-import com.vcoders.on_demand_youtube_player.model.PlayList;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -17,28 +16,23 @@ import javax.inject.Inject;
 public class PlaylistByTopicPresenter extends BasePresenter<PlaylistByTopicView, PlaylistByTopicRouter> {
 
     Context context;
+    Data<Video> dataVideo;
 
     @Inject
     public PlaylistByTopicPresenter(Context context) {
         this.context = context;
     }
 
-    public List<PlayList> getListPlayList() {
-        List<PlayList> playLists = new ArrayList<>();
-        playLists.add(new PlayList());
-        playLists.add(new PlayList());
-        playLists.add(new PlayList());
-        return playLists;
-    }
-
     public void getPlaylistByChannelId(String channelId) {
         getView().showLoading(true);
-        GetPlaylistFromChannel.getInstance().getPlaylistFromChannel(context, channelId)
-                .onResponse(new RequestAPIListener<List<PlayList>>() {
+
+        new GetPlaylistFromChannel(context).execute(channelId)
+                .onListener(new RequestAPIListener<Data<Video>>() {
                     @Override
-                    public void onResponse(ResponseAPIListener<List<PlayList>> response) {
+                    public void onResponse(ResponseAPIListener<Data<Video>> response) {
                         if (response.getErrorMessage() == null) {
-                            getView().getPlaylistSuccessed(response.getData());
+                            dataVideo = response.getData();
+                            getView().getPlaylistSuccessed(response.getData().getItems());
                         } else
                             getView().showError(response.getErrorMessage());
                         getView().showLoading(false);
@@ -46,7 +40,7 @@ public class PlaylistByTopicPresenter extends BasePresenter<PlaylistByTopicView,
                 });
     }
 
-    public void toListVideo(String playlistId){
+    public void toListVideo(String playlistId) {
         getRouter().toListVideo(playlistId);
     }
 }

@@ -121,7 +121,8 @@ public class PlayerFragment extends BaseFragment<HomeComponent> implements Playe
 
     @Override
     public void selectPlayVideo(int position) {
-        youtubePlayerView.playVideo(youTubePlayer, listVideo.get(position).getId());
+        String videoId = listVideo.get(position).getId().toString();
+        youtubePlayerView.playVideo(youTubePlayer, videoId);
     }
 
     @Override
@@ -132,8 +133,10 @@ public class PlayerFragment extends BaseFragment<HomeComponent> implements Playe
     @Override
     public void onInitYoutubePlayerSuccess(YouTubePlayer youTubePlayer) {
         this.youTubePlayer = youTubePlayer;
-        if (listVideo != null && listVideo.size() > 0)
-            youtubePlayerView.playVideo(youTubePlayer, listVideo.get(0).getId());
+        if (listVideo != null && listVideo.size() > 0) {
+            String videoId = listVideo.get(0).getId().toString();
+            youtubePlayerView.playVideo(youTubePlayer, videoId);
+        }
     }
 
     @Override
