@@ -1,11 +1,13 @@
-package com.vcoders.on_demand_youtube_player.architecture;
-
+package com.vcoders.on_demand_youtube_player.youtubeApi.base;
 
 import android.content.Context;
 
-import com.vcoders.on_demand_youtube_player.services.ServicesAPI;
+import com.vcoders.on_demand_youtube_player.services.YoutubeAPI;
+import com.vcoders.on_demand_youtube_player.utils.Constant;
+import com.vcoders.on_demand_youtube_player.youtubeApi.response.BaseResponse;
+import com.vcoders.on_demand_youtube_player.youtubeApi.response.ResponseAPIListener;
 import com.vcoders.on_demand_youtube_player.youtubeApi.services.APIRequestInterceptor;
-import com.vcoders.on_demand_youtube_player.youtubeApi.base.RequestAPIListener;
+import com.vcoders.on_demand_youtube_player.youtubeApi.services.YoutubeServiceAPI;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,48 +23,41 @@ import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public abstract class Interactor<ResultType> {
+public abstract class InteractorYoutube<ResultType> {
+
     protected final CompositeDisposable compositeDisposable = new CompositeDisposable();
-    protected ServicesAPI servicesAPI;
+    protected YoutubeServiceAPI youtubeServiceAPI;
     protected Map<String, Object> body = new HashMap<>();
     private boolean isHeader = true;
     public Context context;
-    private RequestAPIListener listener;
+    private RequestAPIListener requestAPIListener;
+    private ResponseAPIListener responseAPIListener = new ResponseAPIListener();
 
-    public Interactor(Context context) {
+    public InteractorYoutube(Context context) {
         this.context = context;
+        body.put("key", YoutubeAPI.API_KEY);
+        body.put("maxResults", 50);
     }
 
-    protected ServicesAPI getServicesAPI() {
-        return servicesAPI;
+    protected YoutubeServiceAPI getYoutubeService() {
+        return youtubeServiceAPI;
     }
 
     protected abstract Observable<ResultType> buildObservable();
-
-    protected abstract void response(ResultType resultType);
-
-    protected abstract void error(int errorCode, String errorMessage);
-
-    private void postResponse(ResultType resultType) {
-        response(resultType);
-    }
-
-    private void postError(Throwable throwable) {
-        error(0, throwable.getMessage());
-    }
 
     protected void run() {
         setUpRequest();
         compositeDisposable.add(buildObservable()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<ResultType>() {
+                .subscribe((Consumer<? super ResultType>) new Consumer<Response<ResultType>>() {
                     @Override
-                    public void accept(@NonNull ResultType resultType) throws Exception {
+                    public void accept(@NonNull Response<ResultType> resultType) throws Exception {
                         postResponse(resultType);
                     }
                 }, new Consumer<Throwable>() {
@@ -73,13 +68,54 @@ public abstract class Interactor<ResultType> {
                 }));
     }
 
-    protected void setServicesListener(RequestAPIListener listener) {
-        this.listener = listener;
+    private void postResponse(Response<ResultType> resultType) {
+        if (resultType instanceof Response) {
+            postSuccess(resultType.body());
+            return;
+        }
+
+        BaseResponse baseResponse = (BaseResponse) resultType.body();
+
+        if (baseResponse.getResponseCode() != 0) {
+            String message = baseResponse.getResponseMessage();
+            int code = baseResponse.getResponseCode();
+            postError(code, message);
+            return;
+        }
+
+        postSuccess(resultType.body());
+    }
+
+    private void postError(Throwable throwable) {
+        if (requestAPIListener != null) {
+            responseAPIListener.setErrorCode(0);
+            responseAPIListener.setErrorMessage(throwable.getMessage());
+            requestAPIListener.onResponse(responseAPIListener);
+        }
+    }
+
+    private void postError(int errorCode, String errorMessage) {
+        if (requestAPIListener != null) {
+            responseAPIListener.setErrorCode(errorCode);
+            responseAPIListener.setErrorMessage(errorMessage);
+            requestAPIListener.onResponse(responseAPIListener);
+        }
+    }
+
+    private void postSuccess(ResultType resultType) {
+        if (requestAPIListener != null) {
+            responseAPIListener.setData(resultType);
+            requestAPIListener.onResponse(responseAPIListener);
+        }
     }
 
     public void unSubscribe() {
         compositeDisposable.clear();
         compositeDisposable.dispose();
+    }
+
+    protected void setRequestAPIListener(RequestAPIListener listener) {
+        this.requestAPIListener = listener;
     }
 
     private void setUpRequest() {
@@ -92,12 +128,12 @@ public abstract class Interactor<ResultType> {
             okHttpClientBuilder.addInterceptor(new APIRequestInterceptor(isHeader))
                     .addInterceptor(logging)
                     .readTimeout(60 * 1000, TimeUnit.MILLISECONDS);
-            servicesAPI = new Retrofit.Builder()
-                    .baseUrl(ServicesConfig.getInstance().getDOMAIN())
+            youtubeServiceAPI = new Retrofit.Builder()
+                    .baseUrl(Constant.BASE_URL_YOUTUBE)
                     .client(okHttpClientBuilder.build())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
-                    .build().create(ServicesAPI.class);
+                    .build().create(YoutubeServiceAPI.class);
 
         } catch (Exception e) {
 

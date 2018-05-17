@@ -7,9 +7,9 @@ import android.support.v7.widget.RecyclerView;
 
 import com.vcoders.on_demand_youtube_player.adapter.VideoYoutubeAdapter;
 import com.vcoders.on_demand_youtube_player.architecture.BasePresenter;
-import com.vcoders.on_demand_youtube_player.architecture.RequestAPIListener;
-import com.vcoders.on_demand_youtube_player.architecture.RequestAPIResponse;
-import com.vcoders.on_demand_youtube_player.interactor.GetVideoFromPlaylist;
+import com.vcoders.on_demand_youtube_player.youtubeApi.base.RequestAPIListener;
+import com.vcoders.on_demand_youtube_player.youtubeApi.response.ResponseAPIListener;
+import com.vcoders.on_demand_youtube_player.interactor.GetVideoFromPlaylist2;
 import com.vcoders.on_demand_youtube_player.model.VideoYoutube;
 
 import java.util.List;
@@ -24,10 +24,10 @@ public class PlaylistPresenter extends BasePresenter<PlaylistView, PlaylistRoute
 
     public void getVideoYoutubeFromPlaylistId(String playlistId) {
         getView().showLoading(true);
-        GetVideoFromPlaylist.getInstance().getVideoFromPlaylist(context, playlistId)
+        GetVideoFromPlaylist2.getInstance().getVideoFromPlaylist(context, playlistId)
                 .onResponse(new RequestAPIListener<List<VideoYoutube>>() {
                     @Override
-                    public void onResponse(RequestAPIResponse<List<VideoYoutube>> response) {
+                    public void onResponse(ResponseAPIListener<List<VideoYoutube>> response) {
                         if (response.getErrorMessage() == null) {
                             getView().getVideoYoutubeSuccess(response.getData());
                             getView().showLoading(false);

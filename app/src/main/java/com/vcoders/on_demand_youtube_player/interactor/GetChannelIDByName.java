@@ -5,8 +5,8 @@ import android.content.Context;
 
 import com.android.volley.VolleyError;
 import com.vcoders.on_demand_youtube_player.architecture.InteractorYoutube;
-import com.vcoders.on_demand_youtube_player.architecture.RequestAPIListener;
-import com.vcoders.on_demand_youtube_player.architecture.RequestAPIResponse;
+import com.vcoders.on_demand_youtube_player.youtubeApi.base.RequestAPIListener;
+import com.vcoders.on_demand_youtube_player.youtubeApi.response.ResponseAPIListener;
 import com.vcoders.on_demand_youtube_player.model.Channel;
 import com.vcoders.on_demand_youtube_player.services.YoutubeAPI;
 
@@ -27,12 +27,12 @@ public class GetChannelIDByName extends InteractorYoutube {
     String name;
     Context context;
     RequestAPIListener<List<Channel>> listener;
-    RequestAPIResponse<List<Channel>> requestAPIResponse;
+    ResponseAPIListener<List<Channel>> responseAPIListener;
 
     public GetChannelIDByName getChannelIDByName(Context context, String name) {
         this.context = context;
         this.name = name;
-        requestAPIResponse = new RequestAPIResponse<>();
+        responseAPIListener = new ResponseAPIListener<>();
 
         request(context);
         return this;
@@ -51,9 +51,9 @@ public class GetChannelIDByName extends InteractorYoutube {
     @Override
     public void error(VolleyError error) {
         if (listener != null) {
-            requestAPIResponse.setErrorCode(error.networkResponse.statusCode);
-            requestAPIResponse.setErrorMessage(error.getMessage());
-            listener.onResponse(requestAPIResponse);
+            responseAPIListener.setErrorCode(error.networkResponse.statusCode);
+            responseAPIListener.setErrorMessage(error.getMessage());
+            listener.onResponse(responseAPIListener);
         }
     }
 
@@ -61,8 +61,8 @@ public class GetChannelIDByName extends InteractorYoutube {
     public void response(JSONObject response) {
         if (listener != null) {
             List<Channel> channelList = readJsonResponse(response);
-            requestAPIResponse.setData(channelList);
-            listener.onResponse(requestAPIResponse);
+            responseAPIListener.setData(channelList);
+            listener.onResponse(responseAPIListener);
         }
     }
 

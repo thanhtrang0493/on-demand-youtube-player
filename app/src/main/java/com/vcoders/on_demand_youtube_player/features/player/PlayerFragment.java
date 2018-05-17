@@ -1,5 +1,6 @@
 package com.vcoders.on_demand_youtube_player.features.player;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +16,8 @@ import com.vcoders.on_demand_youtube_player.architecture.BaseRouter;
 import com.vcoders.on_demand_youtube_player.customView.YoutubePlayerCustom;
 import com.vcoders.on_demand_youtube_player.enums.TypeActionBar;
 import com.vcoders.on_demand_youtube_player.features.home.HomeComponent;
+import com.vcoders.on_demand_youtube_player.features.login.LoginActivity;
+import com.vcoders.on_demand_youtube_player.model.Video;
 import com.vcoders.on_demand_youtube_player.model.VideoYoutube;
 import com.vcoders.on_demand_youtube_player.utils.Constant;
 
@@ -34,7 +37,7 @@ public class PlayerFragment extends BaseFragment<HomeComponent> implements Playe
     PlayerRouter playerRouter;
 
     ListVideoAdapter adapter;
-    List<VideoYoutube> listVideo;
+    List<Video> listVideo;
     int positionVideoSelected;
     YouTubePlayer youTubePlayer;
 
@@ -65,7 +68,7 @@ public class PlayerFragment extends BaseFragment<HomeComponent> implements Playe
     }
 
     private void getBundle() {
-        listVideo = (List<VideoYoutube>) getArguments().getSerializable(Constant.VIDEOS);
+        listVideo = (List<Video>) getArguments().getSerializable(Constant.VIDEOS);
         positionVideoSelected = getArguments().getInt(Constant.POSITION);
     }
 

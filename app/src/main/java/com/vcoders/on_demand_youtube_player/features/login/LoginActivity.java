@@ -1,5 +1,6 @@
 package com.vcoders.on_demand_youtube_player.features.login;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.vcoders.on_demand_youtube_player.R;
@@ -9,10 +10,13 @@ import com.vcoders.on_demand_youtube_player.architecture.BaseComponent;
 import com.vcoders.on_demand_youtube_player.architecture.BasePresenter;
 import com.vcoders.on_demand_youtube_player.architecture.BaseRouter;
 import com.vcoders.on_demand_youtube_player.enums.TypeActionBar;
+import com.vcoders.on_demand_youtube_player.utils.Utils;
 
 import javax.inject.Inject;
 
-public class LoginActivity extends BaseActivity {
+import butterknife.OnClick;
+
+public class LoginActivity extends BaseActivity implements LoginView {
 
     LoginComponent loginComponent;
 
@@ -22,9 +26,20 @@ public class LoginActivity extends BaseActivity {
     @Inject
     LoginRouter loginRouter;
 
+    public static final int GOOGLE_SIGN_IN_CODE = 200;
+
     @Override
     protected void initializeView(Bundle savedInstanceState) {
+        loginPresenter.initGoogleApi();
+    }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == GOOGLE_SIGN_IN_CODE) {
+            loginPresenter.handleSignInResult(data);
+        }
     }
 
     @Override
@@ -62,5 +77,30 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected BaseComponent getActivityComponent() {
         return loginComponent;
+    }
+
+    @OnClick(R.id.llLogin)
+    public void onLLLoginClick() {
+        loginPresenter.signInGoogle();
+    }
+
+    @Override
+    public void showError(String error) {
+        Utils.getInstance().showError(this, error);
+    }
+
+    @Override
+    public void showLoading(boolean isShow) {
+        Utils.getInstance().showLoading(this, isShow);
+    }
+
+    @Override
+    public void onLoginSuccess() {
+        finish();
+    }
+
+    @Override
+    public void onLoginFail(int errorCode, String errorMessage) {
+        showError(errorMessage);
     }
 }

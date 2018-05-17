@@ -1,5 +1,8 @@
 <resources>
 
+    <!--<string name="google_client_id">230219820111-dmechksjcf0bfusru5gru02klel3i55d.apps.googleusercontent.com</string>-->
+    <string name="google_client_id">230219820111-69tifv19m2h5hrpma9urc66lc6d7uq6p.apps.googleusercontent.com</string>
+
     <!-- ==============================FONT====================================== -->
     <string name="regular">Montserrat-Regular.ttf</string>
     <string name="bold">Montserrat-Bold.ttf</string>

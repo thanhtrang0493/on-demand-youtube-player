@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import com.vcoders.on_demand_youtube_player.R;
 import com.vcoders.on_demand_youtube_player.adapter.ListMyPlaylistAdapter;
 import com.vcoders.on_demand_youtube_player.architecture.BaseDialog;
+import com.vcoders.on_demand_youtube_player.interfaces.IAddNewPlaylist;
 import com.vcoders.on_demand_youtube_player.interfaces.ISelectItem;
 import com.vcoders.on_demand_youtube_player.model.PlayList;
 import com.vcoders.on_demand_youtube_player.utils.Utils;
@@ -27,10 +28,12 @@ public class DialogAddPlaylist extends BaseDialog implements ISelectItem {
     Context context;
     List<PlayList> playLists;
     ListMyPlaylistAdapter adapter;
+    IAddNewPlaylist listener;
 
-    public DialogAddPlaylist(Context context, List<PlayList> playLists) {
+    public DialogAddPlaylist(Context context, List<PlayList> playLists, IAddNewPlaylist listener) {
         super(context);
         this.context = context;
+        this.listener = listener;
         this.playLists = playLists;
     }
 
@@ -67,6 +70,6 @@ public class DialogAddPlaylist extends BaseDialog implements ISelectItem {
 
     @Override
     public void onSelectedItem(int position) {
-
+        listener.onAddNewPlaylist(position);
     }
 }

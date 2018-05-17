@@ -4,8 +4,8 @@ import android.content.Context;
 
 import com.android.volley.VolleyError;
 import com.vcoders.on_demand_youtube_player.architecture.InteractorYoutube;
-import com.vcoders.on_demand_youtube_player.architecture.RequestAPIListener;
-import com.vcoders.on_demand_youtube_player.architecture.RequestAPIResponse;
+import com.vcoders.on_demand_youtube_player.youtubeApi.base.RequestAPIListener;
+import com.vcoders.on_demand_youtube_player.youtubeApi.response.ResponseAPIListener;
 import com.vcoders.on_demand_youtube_player.model.VideoYoutube;
 import com.vcoders.on_demand_youtube_player.services.YoutubeAPI;
 
@@ -27,13 +27,13 @@ public class SearchVideoByName extends InteractorYoutube {
 
     Context context;
     String name;
-    RequestAPIResponse<List<VideoYoutube>> requestAPIResponse;
+    ResponseAPIListener<List<VideoYoutube>> responseAPIListener;
     RequestAPIListener<List<VideoYoutube>> listener;
 
     public SearchVideoByName searchVideoByName(Context context, String name) {
         this.context = context;
         this.name = name;
-        requestAPIResponse = new RequestAPIResponse<>();
+        responseAPIListener = new ResponseAPIListener<>();
 
         request(context);
         return this;
@@ -52,9 +52,9 @@ public class SearchVideoByName extends InteractorYoutube {
     @Override
     public void error(VolleyError error) {
         if (listener != null) {
-            requestAPIResponse.setErrorCode(error.networkResponse.statusCode);
-            requestAPIResponse.setErrorMessage(error.getMessage());
-            listener.onResponse(requestAPIResponse);
+            responseAPIListener.setErrorCode(error.networkResponse.statusCode);
+            responseAPIListener.setErrorMessage(error.getMessage());
+            listener.onResponse(responseAPIListener);
         }
     }
 
@@ -62,8 +62,8 @@ public class SearchVideoByName extends InteractorYoutube {
     public void response(JSONObject response) {
         if (listener != null) {
             List<VideoYoutube> videos = readJsonResponse(response);
-            requestAPIResponse.setData(videos);
-            listener.onResponse(requestAPIResponse);
+            responseAPIListener.setData(videos);
+            listener.onResponse(responseAPIListener);
         }
     }
 

@@ -3,8 +3,8 @@ package com.vcoders.on_demand_youtube_player.features.searchVideos;
 import android.content.Context;
 
 import com.vcoders.on_demand_youtube_player.architecture.BasePresenter;
-import com.vcoders.on_demand_youtube_player.architecture.RequestAPIListener;
-import com.vcoders.on_demand_youtube_player.architecture.RequestAPIResponse;
+import com.vcoders.on_demand_youtube_player.youtubeApi.base.RequestAPIListener;
+import com.vcoders.on_demand_youtube_player.youtubeApi.response.ResponseAPIListener;
 import com.vcoders.on_demand_youtube_player.interactor.SearchSuggestName;
 import com.vcoders.on_demand_youtube_player.interactor.SearchVideoByName;
 import com.vcoders.on_demand_youtube_player.model.VideoYoutube;
@@ -32,7 +32,7 @@ public class SearchVideosPresenter extends BasePresenter<SearchVideosView, Searc
         searchSuggestName.searchSuggestName(context, name)
                 .response(new RequestAPIListener<List<String>>() {
                     @Override
-                    public void onResponse(RequestAPIResponse<List<String>> response) {
+                    public void onResponse(ResponseAPIListener<List<String>> response) {
                         if (response.getErrorMessage() == null) {
                             getView().searchSuggestNameSuccess(response.getData());
                         } else
@@ -47,7 +47,7 @@ public class SearchVideosPresenter extends BasePresenter<SearchVideosView, Searc
         SearchVideoByName.getInstance().searchVideoByName(context, name)
                 .response(new RequestAPIListener<List<VideoYoutube>>() {
                     @Override
-                    public void onResponse(RequestAPIResponse<List<VideoYoutube>> response) {
+                    public void onResponse(ResponseAPIListener<List<VideoYoutube>> response) {
                         if (response.getErrorMessage() == null) {
                             getView().searchVideoSuccess(response.getData(), name);
                         } else

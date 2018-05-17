@@ -10,6 +10,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.vcoders.on_demand_youtube_player.model.VideoYoutube;
+import com.vcoders.on_demand_youtube_player.youtubeApi.response.ResponseAPIListener;
 
 import org.json.JSONObject;
 
@@ -24,7 +25,7 @@ public abstract class InteractorYoutube {
         String url = setUrlYoutubeService();
 
         RequestQueue requestQueue = Volley.newRequestQueue(context);
-        final RequestAPIResponse<List<VideoYoutube>> requestAPIResponse = new RequestAPIResponse<>();
+        final ResponseAPIListener<List<VideoYoutube>> responseAPIListener = new ResponseAPIListener<>();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {

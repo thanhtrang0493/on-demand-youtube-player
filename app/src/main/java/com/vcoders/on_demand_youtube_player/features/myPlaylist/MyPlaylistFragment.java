@@ -16,6 +16,7 @@ import com.vcoders.on_demand_youtube_player.enums.TypeActionBar;
 import com.vcoders.on_demand_youtube_player.features.home.HomeActivity;
 import com.vcoders.on_demand_youtube_player.features.home.HomeComponent;
 import com.vcoders.on_demand_youtube_player.features.playlistDetail.PlaylistDetailFragment;
+import com.vcoders.on_demand_youtube_player.interactor.GetMyPlaylist;
 import com.vcoders.on_demand_youtube_player.model.PlayList;
 
 import java.util.List;
@@ -53,6 +54,8 @@ public class MyPlaylistFragment extends BaseFragment<HomeComponent> implements M
 
         initRecentlyPlayedAdapter();
         initPlayListAdapter();
+
+        new GetMyPlaylist(getActivity()).getMyPlaylist();
     }
 
     private void initRecentlyPlayedAdapter() {

@@ -5,8 +5,8 @@ import android.content.Context;
 
 import com.android.volley.VolleyError;
 import com.vcoders.on_demand_youtube_player.architecture.InteractorYoutube;
-import com.vcoders.on_demand_youtube_player.architecture.RequestAPIListener;
-import com.vcoders.on_demand_youtube_player.architecture.RequestAPIResponse;
+import com.vcoders.on_demand_youtube_player.youtubeApi.base.RequestAPIListener;
+import com.vcoders.on_demand_youtube_player.youtubeApi.response.ResponseAPIListener;
 import com.vcoders.on_demand_youtube_player.model.PlayList;
 import com.vcoders.on_demand_youtube_player.services.YoutubeAPI;
 
@@ -22,7 +22,7 @@ public class GetPlaylistFromChannel extends InteractorYoutube {
     private Context context;
     private String channelId;
     private RequestAPIListener<List<PlayList>> listener;
-    private RequestAPIResponse<List<PlayList>> requestAPIResponse = new RequestAPIResponse<>();
+    private ResponseAPIListener<List<PlayList>> responseAPIListener = new ResponseAPIListener<>();
 
     private static final GetPlaylistFromChannel ourInstance = new GetPlaylistFromChannel();
 
@@ -54,9 +54,9 @@ public class GetPlaylistFromChannel extends InteractorYoutube {
     @Override
     public void error(VolleyError error) {
         if (listener != null) {
-            requestAPIResponse.setErrorCode(error != null ? error.networkResponse.statusCode : 0);
-            requestAPIResponse.setErrorMessage(error != null ? error.getMessage() : "");
-            listener.onResponse(requestAPIResponse);
+            responseAPIListener.setErrorCode(error != null ? error.networkResponse.statusCode : 0);
+            responseAPIListener.setErrorMessage(error != null ? error.getMessage() : "");
+            listener.onResponse(responseAPIListener);
         }
     }
 
@@ -64,8 +64,8 @@ public class GetPlaylistFromChannel extends InteractorYoutube {
     public void response(JSONObject response) {
         if (listener != null) {
             List<PlayList> playLists = readJsonResponse(response);
-            requestAPIResponse.setData(playLists);
-            listener.onResponse(requestAPIResponse);
+            responseAPIListener.setData(playLists);
+            listener.onResponse(responseAPIListener);
         }
     }
 

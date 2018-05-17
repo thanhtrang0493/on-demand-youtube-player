@@ -1,6 +1,8 @@
-package com.vcoders.on_demand_youtube_player.architecture;
+package com.vcoders.on_demand_youtube_player.youtubeApi.services;
 
 import android.content.Context;
+
+import com.vcoders.on_demand_youtube_player.architecture.ServicesConfig;
 
 import java.io.IOException;
 

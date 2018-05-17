@@ -15,6 +15,7 @@ import com.vcoders.on_demand_youtube_player.enums.TypeActionBar;
 import com.vcoders.on_demand_youtube_player.features.home.HomeActivity;
 import com.vcoders.on_demand_youtube_player.features.home.HomeComponent;
 import com.vcoders.on_demand_youtube_player.features.player.PlayerFragment;
+import com.vcoders.on_demand_youtube_player.model.Video;
 import com.vcoders.on_demand_youtube_player.model.VideoYoutube;
 
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ public class PlaylistDetailFragment extends BaseFragment<HomeComponent> implemen
     RecyclerView rvListVideo;
 
     ListVideoAdapter adapter;
-    List<VideoYoutube> listVideo;
+    List<Video> listVideo;
 
     @Override
     protected void initializeView(Bundle savedInstanceState) {
@@ -47,11 +48,11 @@ public class PlaylistDetailFragment extends BaseFragment<HomeComponent> implemen
 
     private void getBundle() {
         listVideo = new ArrayList<>();
-        listVideo.add(new VideoYoutube());
-        listVideo.add(new VideoYoutube());
-        listVideo.add(new VideoYoutube());
-        listVideo.add(new VideoYoutube());
-        listVideo.add(new VideoYoutube());
+        listVideo.add(new Video());
+        listVideo.add(new Video());
+        listVideo.add(new Video());
+        listVideo.add(new Video());
+        listVideo.add(new Video());
     }
 
     private void initListVideoAdapter() {

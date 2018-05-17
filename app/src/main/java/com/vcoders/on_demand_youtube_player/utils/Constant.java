@@ -8,4 +8,5 @@ public class Constant {
     public static String VIDEOS = "videos";
     public static String SEARCH_NAME = "name";
     public static String POSITION = "position";
+    public static String BASE_URL_YOUTUBE = "https://www.googleapis.com/youtube/v3/";
 }

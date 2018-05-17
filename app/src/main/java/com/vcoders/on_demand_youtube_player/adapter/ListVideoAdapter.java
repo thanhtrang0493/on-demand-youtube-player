@@ -16,6 +16,7 @@ import com.squareup.picasso.Picasso;
 import com.vcoders.on_demand_youtube_player.R;
 import com.vcoders.on_demand_youtube_player.features.listVideo.ListVideoView;
 import com.vcoders.on_demand_youtube_player.interfaces.ISelectVideo;
+import com.vcoders.on_demand_youtube_player.model.Video;
 import com.vcoders.on_demand_youtube_player.model.VideoYoutube;
 import com.vcoders.on_demand_youtube_player.utils.Utils;
 
@@ -25,10 +26,10 @@ import java.util.List;
 public class ListVideoAdapter extends RecyclerView.Adapter<ListVideoAdapter.ListVideoHolder> {
 
     Context context;
-    List<VideoYoutube> listVideo;
+    List<Video> listVideo;
     ISelectVideo listener;
 
-    public ListVideoAdapter(Context context, List<VideoYoutube> listVideo, ISelectVideo listener) {
+    public ListVideoAdapter(Context context, List<Video> listVideo, ISelectVideo listener) {
         this.context = context;
         this.listener = listener;
         this.listVideo = listVideo;
@@ -36,7 +37,7 @@ public class ListVideoAdapter extends RecyclerView.Adapter<ListVideoAdapter.List
             this.listVideo = new ArrayList<>();
     }
 
-    public void updateAdapter(List<VideoYoutube> videoYoutubeList) {
+    public void updateAdapter(List<Video> videoYoutubeList) {
         listVideo = videoYoutubeList;
         if (this.listVideo == null)
             this.listVideo = new ArrayList<>();
@@ -68,9 +69,9 @@ public class ListVideoAdapter extends RecyclerView.Adapter<ListVideoAdapter.List
         });
     }
 
-    private void bindData(ListVideoHolder holder, VideoYoutube video) {
+    private void bindData(ListVideoHolder holder, Video video) {
         String time = context.getResources().getString(R.string.today);
-        int days = Utils.getInstance().calculateDays(video.getPublishedAt());
+        int days = Utils.getInstance().calculateDays(video.getSnippet().getPublishedAt());
         if (days > 0) {
             if (days < 365) {
                 time = Utils.getInstance().convertIntToString(days) + " " +
@@ -82,12 +83,13 @@ public class ListVideoAdapter extends RecyclerView.Adapter<ListVideoAdapter.List
             }
         }
 
-        Picasso.with(context).load(video.getThumbnails()).into(holder.imgThumbnails);
-        holder.txtTime.setText(video.getTime());
-        holder.txtTitle.setText(video.getTitle());
-        holder.txtChannelTitle.setText(video.getChannelTitle());
+        Picasso.with(context).load(video.getSnippet().getThumbnails().getMedium().getUrl()).into(holder.imgThumbnails);
+        holder.txtTime.setText("");
+        holder.txtTitle.setText(video.getSnippet().getTitle());
+        holder.txtChannelTitle.setText(video.getSnippet().getChannelTitle());
         holder.txtPublishedAt.setText(time);
-        holder.txtViewCount.setText(video.getViewCount());
+        holder.txtViewCount.setText(video.getContentDetails().getItemCount() != null ?
+                Utils.getInstance().convertIntToString(video.getContentDetails().getItemCount()) : "");
     }
 
 

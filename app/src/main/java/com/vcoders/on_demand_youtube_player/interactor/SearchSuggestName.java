@@ -3,12 +3,11 @@ package com.vcoders.on_demand_youtube_player.interactor;
 import android.content.Context;
 
 import com.vcoders.on_demand_youtube_player.architecture.Interactor;
-import com.vcoders.on_demand_youtube_player.architecture.RequestAPIListener;
-import com.vcoders.on_demand_youtube_player.architecture.RequestAPIResponse;
+import com.vcoders.on_demand_youtube_player.youtubeApi.base.RequestAPIListener;
+import com.vcoders.on_demand_youtube_player.youtubeApi.response.ResponseAPIListener;
 import com.vcoders.on_demand_youtube_player.utils.Utils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,12 +27,12 @@ public class SearchSuggestName extends Interactor<List<Object>> {
     String name;
     Context context;
     RequestAPIListener<List<String>> listener;
-    RequestAPIResponse<List<String>> requestAPIResponse;
+    ResponseAPIListener<List<String>> responseAPIListener;
 
     public SearchSuggestName searchSuggestName(Context context, String name) {
         this.context = context;
         this.name = name;
-        requestAPIResponse = new RequestAPIResponse<>();
+        responseAPIListener = new ResponseAPIListener<>();
 
         run();
         return this;
@@ -55,8 +54,8 @@ public class SearchSuggestName extends Interactor<List<Object>> {
 
     @Override
     protected void response(List<Object> s) {
-        requestAPIResponse.setData(getListNameResponse(s));
-        listener.onResponse(requestAPIResponse);
+        responseAPIListener.setData(getListNameResponse(s));
+        listener.onResponse(responseAPIListener);
     }
 
     private List<String> getListNameResponse(List<Object> s) {
@@ -71,8 +70,8 @@ public class SearchSuggestName extends Interactor<List<Object>> {
 
     @Override
     protected void error(int errorCode, String errorMessage) {
-        requestAPIResponse.setErrorCode(errorCode);
-        requestAPIResponse.setErrorMessage(errorMessage);
-        listener.onResponse(requestAPIResponse);
+        responseAPIListener.setErrorCode(errorCode);
+        responseAPIListener.setErrorMessage(errorMessage);
+        listener.onResponse(responseAPIListener);
     }
 }

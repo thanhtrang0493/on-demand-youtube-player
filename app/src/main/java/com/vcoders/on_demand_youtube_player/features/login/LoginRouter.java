@@ -9,6 +9,8 @@ import javax.inject.Inject;
 
 public class LoginRouter extends BaseRouter {
 
+    private Context context;
+
     @Inject
     public LoginRouter(Context context) {
         super(context);

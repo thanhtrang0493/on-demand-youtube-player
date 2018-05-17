@@ -1,17 +1,12 @@
 package com.vcoders.on_demand_youtube_player.features.listVideo;
 
 import android.app.Activity;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.vcoders.on_demand_youtube_player.R;
 import com.vcoders.on_demand_youtube_player.adapter.ListVideoAdapter;
@@ -24,7 +19,7 @@ import com.vcoders.on_demand_youtube_player.features.home.HomeActivity;
 import com.vcoders.on_demand_youtube_player.features.home.HomeComponent;
 import com.vcoders.on_demand_youtube_player.features.playlist.DialogAddPlaylist;
 import com.vcoders.on_demand_youtube_player.model.PlayList;
-import com.vcoders.on_demand_youtube_player.model.VideoYoutube;
+import com.vcoders.on_demand_youtube_player.model.Video;
 import com.vcoders.on_demand_youtube_player.utils.Constant;
 
 import java.util.ArrayList;
@@ -44,7 +39,7 @@ public class ListVideoFragment extends BaseFragment<HomeComponent> implements Li
     ListVideoRouter listVideoRouter;
 
     ListVideoAdapter adapter;
-    List<VideoYoutube> listVideo;
+    List<Video> listVideo;
     EditText edtSearch;
     String searchName;
     String playlistId;
@@ -72,7 +67,7 @@ public class ListVideoFragment extends BaseFragment<HomeComponent> implements Li
     }
 
     private void getBundle() {
-        listVideo = (List<VideoYoutube>) getArguments().getSerializable(Constant.VIDEOS);
+        listVideo = (List<Video>) getArguments().getSerializable(Constant.VIDEOS);
         searchName = getArguments().getString(Constant.SEARCH_NAME);
         playlistId = getArguments().getString(Constant.PLAYLIST_ID);
 
@@ -173,14 +168,19 @@ public class ListVideoFragment extends BaseFragment<HomeComponent> implements Li
         myPlaylists.add(new PlayList("Favorite Songs"));
         myPlaylists.add(new PlayList("How-to"));
         myPlaylists.add(new PlayList("Education"));
-        new DialogAddPlaylist(getActivity(), myPlaylists).show();
+        new DialogAddPlaylist(getActivity(), myPlaylists, this).show();
     }
 
     @Override
-    public void getVideoByPlaylistSuccess(List<VideoYoutube> videoYoutubeList) {
+    public void getVideoByPlaylistSuccess(List<Video> videoYoutubeList) {
         if (videoYoutubeList != null) {
             this.listVideo = videoYoutubeList;
             adapter.updateAdapter(this.listVideo);
         }
+    }
+
+    @Override
+    public void onAddNewPlaylist(int position) {
+        listVideoPresenter.toLogin();
     }
 }

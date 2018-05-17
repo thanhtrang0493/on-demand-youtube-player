@@ -3,9 +3,11 @@ package com.vcoders.on_demand_youtube_player.features.listVideo;
 import android.content.Context;
 
 import com.vcoders.on_demand_youtube_player.architecture.BasePresenter;
-import com.vcoders.on_demand_youtube_player.architecture.RequestAPIListener;
-import com.vcoders.on_demand_youtube_player.architecture.RequestAPIResponse;
 import com.vcoders.on_demand_youtube_player.interactor.GetVideoFromPlaylist;
+import com.vcoders.on_demand_youtube_player.model.Data;
+import com.vcoders.on_demand_youtube_player.model.Video;
+import com.vcoders.on_demand_youtube_player.youtubeApi.base.RequestAPIListener;
+import com.vcoders.on_demand_youtube_player.youtubeApi.response.ResponseAPIListener;
 import com.vcoders.on_demand_youtube_player.model.VideoYoutube;
 
 import java.util.List;
@@ -16,26 +18,36 @@ import javax.inject.Inject;
 public class ListVideoPresenter extends BasePresenter<ListVideoView, ListVideoRouter> {
 
     Context context;
+    Data<List<Video>> dataVideo;
 
     @Inject
     public ListVideoPresenter(Context context) {
         this.context = context;
     }
 
-    public void playVideo(List<VideoYoutube> videoYoutubes, int position) {
+    public void playVideo(List<Video> videoYoutubes, int position) {
         getRouter().toPlayer(videoYoutubes, position);
     }
 
     public void getVideoByPlaylistId(String playlistId) {
-        new GetVideoFromPlaylist().getVideoFromPlaylist(context, playlistId)
-                .onResponse(new RequestAPIListener<List<VideoYoutube>>() {
+        getView().showLoading(true);
+
+        new GetVideoFromPlaylist(context).execute(playlistId)
+                .onListener(new RequestAPIListener<Data<List<Video>>>() {
                     @Override
-                    public void onResponse(RequestAPIResponse<List<VideoYoutube>> response) {
+                    public void onResponse(ResponseAPIListener<Data<List<Video>>> response) {
                         if (response.getErrorMessage() == null) {
-                            getView().getVideoByPlaylistSuccess(response.getData());
+                            dataVideo = response.getData();
+                            getView().getVideoByPlaylistSuccess(response.getData().getItems());
                         } else
                             getView().showError(response.getErrorMessage());
+
+                        getView().showLoading(false);
                     }
                 });
+    }
+
+    public void toLogin() {
+        getRouter().toLogin();
     }
 }

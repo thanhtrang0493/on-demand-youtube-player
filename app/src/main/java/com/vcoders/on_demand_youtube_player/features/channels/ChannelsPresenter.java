@@ -7,8 +7,8 @@ import android.support.v7.widget.RecyclerView;
 
 import com.vcoders.on_demand_youtube_player.adapter.ChannelsAdapter;
 import com.vcoders.on_demand_youtube_player.architecture.BasePresenter;
-import com.vcoders.on_demand_youtube_player.architecture.RequestAPIListener;
-import com.vcoders.on_demand_youtube_player.architecture.RequestAPIResponse;
+import com.vcoders.on_demand_youtube_player.youtubeApi.base.RequestAPIListener;
+import com.vcoders.on_demand_youtube_player.youtubeApi.response.ResponseAPIListener;
 import com.vcoders.on_demand_youtube_player.interactor.GetPlaylistFromChannel;
 import com.vcoders.on_demand_youtube_player.model.Channel;
 import com.vcoders.on_demand_youtube_player.model.PlayList;
@@ -28,7 +28,7 @@ public class ChannelsPresenter extends BasePresenter<ChannelsView, ChannelsRoute
         GetPlaylistFromChannel.getInstance().getPlaylistFromChannel(context, channelId)
                 .onResponse(new RequestAPIListener<List<PlayList>>() {
                     @Override
-                    public void onResponse(RequestAPIResponse<List<PlayList>> response) {
+                    public void onResponse(ResponseAPIListener<List<PlayList>> response) {
                         if (response.getErrorMessage() == null) {
 //                            getView().getPlaylistSuccess(response.getData());
                             getView().showLoading(false);

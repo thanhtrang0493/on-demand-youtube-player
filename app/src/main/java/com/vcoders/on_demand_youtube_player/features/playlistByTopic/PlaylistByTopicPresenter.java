@@ -3,8 +3,8 @@ package com.vcoders.on_demand_youtube_player.features.playlistByTopic;
 import android.content.Context;
 
 import com.vcoders.on_demand_youtube_player.architecture.BasePresenter;
-import com.vcoders.on_demand_youtube_player.architecture.RequestAPIListener;
-import com.vcoders.on_demand_youtube_player.architecture.RequestAPIResponse;
+import com.vcoders.on_demand_youtube_player.youtubeApi.base.RequestAPIListener;
+import com.vcoders.on_demand_youtube_player.youtubeApi.response.ResponseAPIListener;
 import com.vcoders.on_demand_youtube_player.interactor.GetPlaylistFromChannel;
 import com.vcoders.on_demand_youtube_player.model.PlayList;
 
@@ -36,7 +36,7 @@ public class PlaylistByTopicPresenter extends BasePresenter<PlaylistByTopicView,
         GetPlaylistFromChannel.getInstance().getPlaylistFromChannel(context, channelId)
                 .onResponse(new RequestAPIListener<List<PlayList>>() {
                     @Override
-                    public void onResponse(RequestAPIResponse<List<PlayList>> response) {
+                    public void onResponse(ResponseAPIListener<List<PlayList>> response) {
                         if (response.getErrorMessage() == null) {
                             getView().getPlaylistSuccessed(response.getData());
                         } else
