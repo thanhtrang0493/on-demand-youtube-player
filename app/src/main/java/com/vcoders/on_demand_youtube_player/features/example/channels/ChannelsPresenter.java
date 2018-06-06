@@ -9,7 +9,6 @@ import com.vcoders.on_demand_youtube_player.adapter.ChannelsAdapter;
 import com.vcoders.on_demand_youtube_player.architecture.BasePresenter;
 import com.vcoders.on_demand_youtube_player.youtubeApi.base.RequestAPIListener;
 import com.vcoders.on_demand_youtube_player.youtubeApi.response.ResponseAPIListener;
-import com.vcoders.on_demand_youtube_player.interactor.GetPlaylistFromChannel1;
 import com.vcoders.on_demand_youtube_player.model.Channel;
 import com.vcoders.on_demand_youtube_player.model.PlayList;
 
@@ -25,18 +24,18 @@ public class ChannelsPresenter extends BasePresenter<ChannelsView, ChannelsRoute
 
     public void getPlaylistFromChannelId(String channelId) {
         getView().showLoading(true);
-        GetPlaylistFromChannel1.getInstance().getPlaylistFromChannel(context, channelId)
-                .onResponse(new RequestAPIListener<List<PlayList>>() {
-                    @Override
-                    public void onResponse(ResponseAPIListener<List<PlayList>> response) {
-                        if (response.getErrorMessage() == null) {
-//                            getView().getPlaylistSuccess(response.getData());
-                            getView().showLoading(false);
-                        } else {
-                            getView().showError(response.getErrorMessage());
-                        }
-                    }
-                });
+//        GetPlaylistFromChannel1.getInstance().getPlaylistFromChannel(context, channelId)
+//                .onResponse(new RequestAPIListener<List<PlayList>>() {
+//                    @Override
+//                    public void onResponse(ResponseAPIListener<List<PlayList>> response) {
+//                        if (response.getErrorMessage() == null) {
+////                            getView().getPlaylistSuccess(response.getData());
+//                            getView().showLoading(false);
+//                        } else {
+//                            getView().showError(response.getErrorMessage());
+//                        }
+//                    }
+//                });
     }
 
     public ChannelsAdapter initChannelAdapter(RecyclerView rvChannels, List<Channel> channels,

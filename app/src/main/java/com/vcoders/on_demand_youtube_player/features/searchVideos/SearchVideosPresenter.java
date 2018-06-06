@@ -9,8 +9,6 @@ import com.vcoders.on_demand_youtube_player.model.Data;
 import com.vcoders.on_demand_youtube_player.model.Video;
 import com.vcoders.on_demand_youtube_player.youtubeApi.base.RequestAPIListener;
 import com.vcoders.on_demand_youtube_player.youtubeApi.response.ResponseAPIListener;
-import com.vcoders.on_demand_youtube_player.interactor.SearchVideoByName1;
-import com.vcoders.on_demand_youtube_player.model.VideoYoutube;
 
 import java.util.List;
 

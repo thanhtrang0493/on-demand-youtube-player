@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import com.vcoders.on_demand_youtube_player.R;
 import com.vcoders.on_demand_youtube_player.interfaces.ISelectPlaylist;
 import com.vcoders.on_demand_youtube_player.model.PlayList;
+import com.vcoders.on_demand_youtube_player.model.Video;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,10 +19,10 @@ import java.util.List;
 public class GridPlayListAdapter extends RecyclerView.Adapter<GridPlayListAdapter.GridPlayListHolder> {
 
     Context context;
-    List<PlayList> playLists;
+    List<Video> playLists;
     ISelectPlaylist listener;
 
-    public GridPlayListAdapter(Context context, List<PlayList> playLists, ISelectPlaylist listener) {
+    public GridPlayListAdapter(Context context, List<Video> playLists, ISelectPlaylist listener) {
         this.context = context;
         this.playLists = playLists;
         this.listener = listener;

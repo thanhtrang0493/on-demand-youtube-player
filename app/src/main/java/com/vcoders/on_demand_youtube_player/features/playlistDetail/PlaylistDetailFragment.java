@@ -3,7 +3,6 @@ package com.vcoders.on_demand_youtube_player.features.playlistDetail;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.vcoders.on_demand_youtube_player.R;
@@ -16,7 +15,6 @@ import com.vcoders.on_demand_youtube_player.features.home.HomeActivity;
 import com.vcoders.on_demand_youtube_player.features.home.HomeComponent;
 import com.vcoders.on_demand_youtube_player.features.player.PlayerFragment;
 import com.vcoders.on_demand_youtube_player.model.Video;
-import com.vcoders.on_demand_youtube_player.model.VideoYoutube;
 
 import java.util.ArrayList;
 import java.util.List;

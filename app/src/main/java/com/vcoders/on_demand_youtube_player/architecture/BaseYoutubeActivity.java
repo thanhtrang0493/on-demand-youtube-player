@@ -7,8 +7,6 @@ import android.util.Log;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
-import com.google.android.youtube.player.YouTubePlayerView;
-import com.vcoders.on_demand_youtube_player.services.YoutubeAPI;
 
 import butterknife.ButterKnife;
 

@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.vcoders.on_demand_youtube_player.R;
 import com.vcoders.on_demand_youtube_player.interfaces.ISelectSuggestName;
-import com.vcoders.on_demand_youtube_player.model.VideoYoutube;
 
 import java.util.ArrayList;
 import java.util.List;

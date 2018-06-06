@@ -1,6 +1,5 @@
 package com.vcoders.on_demand_youtube_player.features.player;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,9 +15,7 @@ import com.vcoders.on_demand_youtube_player.architecture.BaseRouter;
 import com.vcoders.on_demand_youtube_player.customView.YoutubePlayerCustom;
 import com.vcoders.on_demand_youtube_player.enums.TypeActionBar;
 import com.vcoders.on_demand_youtube_player.features.home.HomeComponent;
-import com.vcoders.on_demand_youtube_player.features.login.LoginActivity;
 import com.vcoders.on_demand_youtube_player.model.Video;
-import com.vcoders.on_demand_youtube_player.model.VideoYoutube;
 import com.vcoders.on_demand_youtube_player.utils.Constant;
 
 import java.util.List;

@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.vcoders.on_demand_youtube_player.model.Data;
 import com.vcoders.on_demand_youtube_player.model.Video;
+import com.vcoders.on_demand_youtube_player.utils.Constant;
 import com.vcoders.on_demand_youtube_player.youtubeApi.base.InteractorYoutube;
 import com.vcoders.on_demand_youtube_player.youtubeApi.base.RequestAPIListener;
 
@@ -27,6 +28,8 @@ public class GetVideoFromPlaylist extends InteractorYoutube<Data<Video>> {
     }
 
     public GetVideoFromPlaylist execute(String playlistId) {
+        body.put("key", Constant.API_KEY);
+        body.put("maxResults", 50);
         body.put("part", "snippet,contentDetails");
         body.put("playlistId", playlistId);
 

@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.vcoders.on_demand_youtube_player.model.Data;
 import com.vcoders.on_demand_youtube_player.model.Video;
+import com.vcoders.on_demand_youtube_player.utils.Constant;
 import com.vcoders.on_demand_youtube_player.utils.Utils;
 import com.vcoders.on_demand_youtube_player.youtubeApi.base.InteractorYoutube;
 import com.vcoders.on_demand_youtube_player.youtubeApi.base.RequestAPIListener;
@@ -22,6 +23,8 @@ public class SearchVideoByName extends InteractorYoutube<Data<Video>> {
     }
 
     public SearchVideoByName execute(String name) {
+        body.put("key", Constant.API_KEY);
+        body.put("maxResults", 50);
         body.put("part", "snippet");
         body.put("q", Utils.getInstance().includeSpaceIntoString(name));
         body.put("type", "video");

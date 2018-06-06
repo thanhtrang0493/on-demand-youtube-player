@@ -4,7 +4,6 @@ package com.vcoders.on_demand_youtube_player.features.searchVideos;
 import com.vcoders.on_demand_youtube_player.architecture.BaseView;
 import com.vcoders.on_demand_youtube_player.interfaces.ISelectSuggestName;
 import com.vcoders.on_demand_youtube_player.model.Video;
-import com.vcoders.on_demand_youtube_player.model.VideoYoutube;
 
 import java.util.List;
 

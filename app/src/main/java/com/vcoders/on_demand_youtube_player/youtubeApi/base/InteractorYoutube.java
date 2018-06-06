@@ -2,7 +2,6 @@ package com.vcoders.on_demand_youtube_player.youtubeApi.base;
 
 import android.content.Context;
 
-import com.vcoders.on_demand_youtube_player.services.YoutubeAPI;
 import com.vcoders.on_demand_youtube_player.utils.Constant;
 import com.vcoders.on_demand_youtube_player.youtubeApi.response.BaseResponse;
 import com.vcoders.on_demand_youtube_player.youtubeApi.response.ResponseAPIListener;
@@ -33,15 +32,14 @@ public abstract class InteractorYoutube<ResultType> {
     protected final CompositeDisposable compositeDisposable = new CompositeDisposable();
     protected YoutubeServiceAPI youtubeServiceAPI;
     protected Map<String, Object> body = new HashMap<>();
-    private boolean isHeader = true;
+    private boolean isHeader = false;
     public Context context;
     private RequestAPIListener requestAPIListener;
     private ResponseAPIListener responseAPIListener = new ResponseAPIListener();
+    private String BASE_URL = Constant.BASE_URL_YOUTUBE;
 
     public InteractorYoutube(Context context) {
         this.context = context;
-        body.put("key", YoutubeAPI.API_KEY);
-        body.put("maxResults", 50);
     }
 
     protected YoutubeServiceAPI getYoutubeService() {
@@ -49,6 +47,10 @@ public abstract class InteractorYoutube<ResultType> {
     }
 
     protected abstract Observable<Response<ResultType>> buildObservable();
+
+    protected void setBaseURL(String url) {
+        BASE_URL = url;
+    }
 
     protected void run() {
         setUpRequest();
@@ -119,8 +121,6 @@ public abstract class InteractorYoutube<ResultType> {
     }
 
     private void setUpRequest() {
-        //test
-        setHeader(false);
 
         try {
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
@@ -132,7 +132,7 @@ public abstract class InteractorYoutube<ResultType> {
                     .addInterceptor(logging)
                     .readTimeout(60 * 1000, TimeUnit.MILLISECONDS);
             youtubeServiceAPI = new Retrofit.Builder()
-                    .baseUrl(Constant.BASE_URL_YOUTUBE)
+                    .baseUrl(BASE_URL)
                     .client(okHttpClientBuilder.build())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())

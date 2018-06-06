@@ -4,20 +4,16 @@ package com.vcoders.on_demand_youtube_player.adapter;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.vcoders.on_demand_youtube_player.R;
-import com.vcoders.on_demand_youtube_player.features.listVideo.ListVideoView;
 import com.vcoders.on_demand_youtube_player.interfaces.ISelectVideo;
 import com.vcoders.on_demand_youtube_player.model.Video;
-import com.vcoders.on_demand_youtube_player.model.VideoYoutube;
 import com.vcoders.on_demand_youtube_player.utils.Utils;
 
 import java.util.ArrayList;

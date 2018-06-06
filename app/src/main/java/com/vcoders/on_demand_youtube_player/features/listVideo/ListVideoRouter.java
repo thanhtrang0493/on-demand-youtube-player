@@ -8,7 +8,6 @@ import com.vcoders.on_demand_youtube_player.architecture.BaseRouter;
 import com.vcoders.on_demand_youtube_player.features.login.LoginActivity;
 import com.vcoders.on_demand_youtube_player.features.player.PlayerFragment;
 import com.vcoders.on_demand_youtube_player.model.Video;
-import com.vcoders.on_demand_youtube_player.model.VideoYoutube;
 import com.vcoders.on_demand_youtube_player.utils.Constant;
 import com.vcoders.on_demand_youtube_player.utils.Utils;
 

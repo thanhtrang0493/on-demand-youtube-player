@@ -13,10 +13,9 @@ import android.widget.LinearLayout;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerSupportFragment;
-import com.squareup.picasso.Picasso;
 import com.vcoders.on_demand_youtube_player.R;
 import com.vcoders.on_demand_youtube_player.interfaces.IInitYoutubePlayerListener;
-import com.vcoders.on_demand_youtube_player.services.YoutubeAPI;
+import com.vcoders.on_demand_youtube_player.utils.Constant;
 
 public class YoutubePlayerCustom extends LinearLayout implements YouTubePlayer.OnInitializedListener {
 
@@ -61,7 +60,7 @@ public class YoutubePlayerCustom extends LinearLayout implements YouTubePlayer.O
         FragmentTransaction transaction = fragment.getChildFragmentManager().beginTransaction();
         transaction.add(R.id.youtubeLayout, youTubePlayerFragment).commit();
 
-        youTubePlayerFragment.initialize(YoutubeAPI.getInstance().API_KEY, this);
+        youTubePlayerFragment.initialize(Constant.API_KEY, this);
     }
 
     @Override
