@@ -32,7 +32,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".features.onBoarding.OnBoardingActivity" />
+        <activity android:name=".features.onBoarding.OnBoardingActivity"
+            android:exported="true"
+            android:launchMode="singleInstance" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="urn:ietf:wg:oauth:2.0:oob" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".features.home.HomeActivity"
             android:windowSoftInputMode="adjustPan" />
@@ -40,6 +52,18 @@
         <activity android:name=".features.login.LoginActivity" />
         <activity android:name=".features.passwordRecovery.PasswordRecoveryActivity" />
         <activity android:name=".features.setTimer.SetTimerActivity"></activity>
+        <!--<activity android:name="net.openid.appauth.RedirectUriReceiverActivity">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.VIEW" />-->
+
+                <!--<category android:name="android.intent.category.DEFAULT" />-->
+                <!--<category android:name="android.intent.category.BROWSABLE" />-->
+
+                <!--<data-->
+                    <!--android:host="links"-->
+                    <!--android:scheme="on_demand_youtube_player" />-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
     </application>
 
 </manifest>

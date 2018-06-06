@@ -12,5 +12,6 @@ public class Constant {
     public static String BASE_URL_ACCOUNT = "https://accounts.google.com/o/oauth2/";
     public static String API_KEY = "AIzaSyBENTkoHFtO8tDHGC5Mcuzya9kT00kIusg";
     public static String CLIENT_ID = "230219820111-4sppgoniu3psv0hjdh0jc50hkf38jdca.apps.googleusercontent.com";
-    public static String REDIRECT_URI = "http://localhost/oauth2callback";
+//    public static String CLIENT_ID = "230219820111-j7td2ffbc9hrk1ec61qj88kqp2d2v030.apps.googleusercontent.com";
+    public static String REDIRECT_URI = "urn:ietf:wg:oauth:2.0:oob";
 }
