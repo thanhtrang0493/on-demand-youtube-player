@@ -26,20 +26,8 @@ public class LoginActivity extends BaseActivity implements LoginView {
     @Inject
     LoginRouter loginRouter;
 
-    public static final int GOOGLE_SIGN_IN_CODE = 200;
-
     @Override
     protected void initializeView(Bundle savedInstanceState) {
-        loginPresenter.initGoogleApi();
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == GOOGLE_SIGN_IN_CODE) {
-            loginPresenter.handleSignInResult(data);
-        }
     }
 
     @Override
@@ -79,9 +67,17 @@ public class LoginActivity extends BaseActivity implements LoginView {
         return loginComponent;
     }
 
+    boolean isLogin = true;
+
     @OnClick(R.id.llLogin)
     public void onLLLoginClick() {
-        loginPresenter.signInGoogle();
+        if (isLogin) {
+            loginPresenter.login();
+            isLogin = false;
+        } else {
+            loginPresenter.logout();
+            isLogin = true;
+        }
     }
 
     @Override
@@ -102,5 +98,14 @@ public class LoginActivity extends BaseActivity implements LoginView {
     @Override
     public void onLoginFail(int errorCode, String errorMessage) {
         showError(errorMessage);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_CANCELED) {
+            loginPresenter.notifyActivityResponse(data, loginPresenter.app.RC_FAIL);
+        } else {
+            loginPresenter.notifyActivityResponse(data, loginPresenter.app.RC_AUTH);
+        }
     }
 }

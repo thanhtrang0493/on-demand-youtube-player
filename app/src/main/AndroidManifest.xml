@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.vcoders.on_demand_youtube_player">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -10,6 +11,7 @@
         android:maxSdkVersion="22" />
 
     <application
+        android:name=".auth.YoutubeApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -32,38 +34,31 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".features.onBoarding.OnBoardingActivity"
+        <activity
+            android:name=".features.onBoarding.OnBoardingActivity"
             android:exported="true"
-            android:launchMode="singleInstance" >
+            android:launchMode="singleInstance" />
+        <activity
+            android:name=".features.home.HomeActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".features.signup.SignUpActivity" />
+        <activity
+            android:name=".features.login.LoginActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".features.passwordRecovery.PasswordRecoveryActivity" />
+        <activity android:name=".features.setTimer.SetTimerActivity" />
+        <activity
+            android:name="net.openid.appauth.RedirectUriReceiverActivity"
+            tools:node="replace">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data
-                    android:scheme="urn:ietf:wg:oauth:2.0:oob" />
+                <data android:scheme="com.googleusercontent.apps.230219820111-4sppgoniu3psv0hjdh0jc50hkf38jdca" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".features.home.HomeActivity"
-            android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".features.signup.SignUpActivity" />
-        <activity android:name=".features.login.LoginActivity" />
-        <activity android:name=".features.passwordRecovery.PasswordRecoveryActivity" />
-        <activity android:name=".features.setTimer.SetTimerActivity"></activity>
-        <!--<activity android:name="net.openid.appauth.RedirectUriReceiverActivity">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.VIEW" />-->
-
-                <!--<category android:name="android.intent.category.DEFAULT" />-->
-                <!--<category android:name="android.intent.category.BROWSABLE" />-->
-
-                <!--<data-->
-                    <!--android:host="links"-->
-                    <!--android:scheme="on_demand_youtube_player" />-->
-            <!--</intent-filter>-->
-        <!--</activity>-->
     </application>
 
 </manifest>

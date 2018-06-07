@@ -3,75 +3,148 @@ package com.vcoders.on_demand_youtube_player.features.login;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.tasks.Task;
 import com.vcoders.on_demand_youtube_player.R;
 import com.vcoders.on_demand_youtube_player.architecture.BasePresenter;
-import com.vcoders.on_demand_youtube_player.utils.AccountUtils;
+import com.vcoders.on_demand_youtube_player.auth.AuthEvent;
+import com.vcoders.on_demand_youtube_player.auth.AuthException;
+import com.vcoders.on_demand_youtube_player.auth.AuthLoginListener;
+import com.vcoders.on_demand_youtube_player.auth.AuthLogoutListener;
+import com.vcoders.on_demand_youtube_player.auth.AuthRepo;
+import com.vcoders.on_demand_youtube_player.auth.YoutubeApp;
 
 import javax.inject.Inject;
 
+import static android.content.ContentValues.TAG;
 
-public class LoginPresenter extends BasePresenter<LoginView, LoginRouter> implements GoogleApiClient.OnConnectionFailedListener {
+
+public class LoginPresenter extends BasePresenter<LoginView, LoginRouter> {
 
     private Context context;
-    private GoogleApiClient googleApiClient;
-//https://developers.google.com/youtube/v3/guides/auth/installed-apps
+    public YoutubeApp app;
+    private AuthRepo authRepo;
+
     @Inject
-    public LoginPresenter(Context context) {
-        this.context = context;
+    public LoginPresenter(Context context){
+        this.context= context;
+        app = (YoutubeApp) context.getApplicationContext();
+        authRepo = app.getAuthRepo();
     }
 
-    public void initGoogleApi() {
-        // Configure sign-in to request the user's ID, email address, and basic
-        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
-        GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(context.getResources().getString(R.string.google_client_id))
-                .requestEmail()
-                .build();
-
-        // Build a GoogleApiClient with access to the Google Sign-In API and the
-        // options specified by googleSignInOptions.
-        googleApiClient = new GoogleApiClient.Builder(context)
-                .enableAutoManage((FragmentActivity) context, this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, googleSignInOptions)
-                .build();
+    public void login() {
+        authRepo.login(loginListener);
     }
 
-    public void signInGoogle() {
-        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
-        ((Activity) context).startActivityForResult(signInIntent, LoginActivity.GOOGLE_SIGN_IN_CODE);
-    }
-
-    public void handleSignInResult(Intent data) {
-        Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-        try {
-            GoogleSignInAccount account = task.getResult(ApiException.class);
-
-            AccountUtils.getInstance().setEmail(account.getEmail());
-            AccountUtils.getInstance().setLogin(true);
-            AccountUtils.getInstance().setToken(account.getIdToken());
-
-            getView().onLoginSuccess();
-        } catch (ApiException e) {
-            // The ApiException status code indicates the detailed failure reason.
-            // Please refer to the GoogleSignInStatusCodes class reference for more information.
-            getView().onLoginFail(e.getStatusCode(), e.getMessage());
+    private final AuthLoginListener loginListener =  new AuthLoginListener() {
+        public void onStart(AuthRepo repo, AuthEvent event) {
+            String description = event.getDescription();
+            Log.i(TAG, description);
+//            progressObservable.postValue(new ProgressState(true, description));
+//            actionObservable.postValue(new ActionState(app.getString(R.string.search_title),
+//                    false, false, false, true, null));
         }
+
+        public void onEvent(AuthRepo repo, AuthEvent event) {
+            String description = event.getDescription();
+            switch (event) {
+                case AUTH_SERVICE_DISCOVERY_START:
+                    Log.i(TAG, description);
+//                    progressObservable.postValue(new ProgressState(true, description));
+                    break;
+                case AUTH_SERVICE_DISCOVERY_FINISH:
+                    Log.i(TAG, description);
+//                    progressObservable.postValue(new ProgressState());
+                    break;
+                case AUTH_USER_AUTH_START:
+                    Log.i(TAG, description);
+//                    progressObservable.postValue(new ProgressState(true, description));
+                    break;
+                case AUTH_USER_AUTH_FINISH:
+                    Log.i(TAG, description);
+//                    progressObservable.postValue(new ProgressState());
+                    break;
+                case AUTH_CODE_EXCHANGE_START:
+                    Log.i(TAG, description);
+//                    progressObservable.postValue(new ProgressState(true, description));
+                    break;
+                case AUTH_CODE_EXCHANGE_FINISH:
+                    Log.i(TAG, description);
+//                    progressObservable.postValue(new ProgressState());
+                    break;
+                case AUTH_USER_INFO_START:
+                    Log.i(TAG, description);
+//                    progressObservable.postValue(new ProgressState(true, description));
+                    break;
+                case AUTH_USER_INFO_FINISH:
+                    Log.i(TAG, description);
+//                    progressObservable.postValue(new ProgressState());
+                    break;
+                default:
+                    Log.i(TAG, description);
+//                    progressObservable.postValue(new ProgressState());
+                    break;
+            }
+        }
+
+        public void onUserAgentRequest(AuthRepo repo, Intent intent) {
+
+            Log.i(TAG, "User Agent Request!");
+            ((Activity)context).startActivityForResult(intent, app.RC_AUTH);
+//            activityObservable.postValue(new ActivityRequest(intent, app.RC_AUTH));
+        }
+
+        public void onSuccess(AuthRepo repo, AuthEvent event) {
+            String description = event.getDescription();
+            Log.i(TAG, description);
+//            actionObservable.postValue(new ActionState(app.getString(R.string.search_title),
+//                    true, true, true, false, null));
+//            progressObservable.postValue(new ProgressState());
+        }
+
+        public void onFailure(AuthRepo repo, AuthEvent event, AuthException ex) {
+            String description = event.getDescription() + ": " + ex.getMessage();
+            Log.i(TAG, description);
+//            alertObservable.postValue(new AlertTrigger(description, null));
+//            actionObservable.postValue(new ActionState(app.getString(R.string.search_title),
+//                    true, false, true, true, null));
+//            progressObservable.postValue(new ProgressState());
+        }
+    };
+
+    public void logout() {
+        authRepo.logout(logoutListener);
     }
 
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        getView().onLoginFail(connectionResult.getErrorCode(), connectionResult.getErrorMessage());
+    private final AuthLogoutListener logoutListener =  new AuthLogoutListener() {
+        public void onStart(AuthRepo repo, AuthEvent event) {
+            String description = event.getDescription();
+            Log.i(TAG, description);
+//            progressObservable.postValue(new ProgressState(true, description));
+//            actionObservable.postValue(new ActionState(app.getString(R.string.search_title),
+//                    false, false, false, false, null));
+        }
+
+        public void onSuccess(AuthRepo repo, AuthEvent event) {
+            String description = event.getDescription();
+            Log.i(TAG, description);
+//            actionObservable.postValue(new ActionState(app.getString(R.string.search_title),
+//                    true, false, true, true, null));
+//            progressObservable.postValue(new ProgressState());
+        }
+
+        public void onFailure(AuthRepo repo, AuthEvent event, AuthException ex) {
+            String description = event.getDescription() + ": " + ex.getMessage();
+            Log.i(TAG, description);
+//            actionObservable.postValue(new ActionState(app.getString(R.string.search_title),
+//                    true, true, true, false, null));
+//            progressObservable.postValue(new ProgressState());
+//            alertObservable.postValue(new AlertTrigger(description, null));
+        }
+    };
+
+    public void notifyActivityResponse(Intent data, int resultCode) {
+        authRepo.notifyUserAgentResponse(data, resultCode);
     }
+
 }

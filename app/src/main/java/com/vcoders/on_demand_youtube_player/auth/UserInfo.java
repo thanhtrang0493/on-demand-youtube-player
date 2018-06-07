@@ -1,4 +1,4 @@
-package com.vcoders.on_demand_youtube_player.features.myPlaylist;
+package com.vcoders.on_demand_youtube_player.auth;
 
 public class UserInfo {
     private String lastName;

@@ -1,9 +1,8 @@
-package com.vcoders.on_demand_youtube_player.features.myPlaylist;
+
+package com.vcoders.on_demand_youtube_player.auth;
 
 import com.google.gson.annotations.SerializedName;
 
-//@Generated("net.hexar.json2pojo")
-@SuppressWarnings("unused")
 public class UserInfoResult {
 
     @SerializedName("email")
