@@ -69,6 +69,7 @@ android {
             resValue "string", "redirect_uri", "${redirectUri}"
 
             resValue "string", "authorization_scope", "${authorizationScope}"
+            resValue "string", "authorization_scope_profile", "${authorizationScopeProfile}"
         }
         release {
 //            signingConfig signingConfigs.secret
@@ -86,6 +87,7 @@ android {
             resValue "string", "redirect_uri", "${redirectUri}"
 
             resValue "string", "authorization_scope", "${authorizationScope}"
+            resValue "string", "authorization_scope_profile", "${authorizationScopeProfile}"
         }
     }
 

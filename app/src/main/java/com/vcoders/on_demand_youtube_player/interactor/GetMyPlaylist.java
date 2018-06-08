@@ -28,8 +28,8 @@ public class GetMyPlaylist extends InteractorYoutube<Data<Video>> {
         body.put("part", "snippet,contentDetails");
         body.put("mine", "true");
         body.put("maxResults", "25");
-        body.put("onBehalfOfContentOwner", "");
-        body.put("onBehalfOfContentOwnerChannel", "");
+//        body.put("onBehalfOfContentOwner", "");
+//        body.put("onBehalfOfContentOwnerChannel", "");
 
         run();
         return this;

@@ -28,12 +28,14 @@
                     android:orientation="horizontal">
 
                     <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/imgAvatar"
                         android:layout_width="@dimen/d80"
                         android:layout_height="@dimen/d80"
                         android:src="@mipmap/topic_music" />
 
                     <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
                         style="@style/TextSize_15dp"
+                        android:id="@+id/txtUserName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/d20"

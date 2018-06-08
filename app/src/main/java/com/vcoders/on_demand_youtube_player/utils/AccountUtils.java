@@ -13,6 +13,8 @@ public class AccountUtils {
     private String email;
     private boolean isLogin;
     private String token;
+    private String packageName;
+    private String signature;
 
     public String getEmail() {
         return email;
@@ -36,5 +38,21 @@ public class AccountUtils {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getPackageName() {
+        return packageName;
+    }
+
+    public void setPackageName(String packageName) {
+        this.packageName = packageName;
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
     }
 }

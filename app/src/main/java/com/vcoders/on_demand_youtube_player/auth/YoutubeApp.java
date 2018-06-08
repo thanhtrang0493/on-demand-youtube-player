@@ -23,8 +23,6 @@ public class YoutubeApp extends Application {
 
     private AuthRepo authRepo;
 
-//    private BooksRepo booksRepo;
-
     @Override
     public void onCreate (){
         super.onCreate();
@@ -34,17 +32,11 @@ public class YoutubeApp extends Application {
         authRepo = new AuthRepo(this);
         Log.i(TAG, "Auth repo created");
 
-//        booksRepo = new BooksRepo(this, authRepo);
-//        Log.i(TAG, "Books service created");
     }
 
     public AuthRepo getAuthRepo() {
         return authRepo;
     }
-
-//    public BooksRepo getBooksRepo() {
-//        return booksRepo;
-//    }
 
     public boolean isRegisteredUri(Uri uri) {
         Intent redirectIntent = new Intent();

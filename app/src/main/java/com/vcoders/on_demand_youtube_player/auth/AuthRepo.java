@@ -25,6 +25,10 @@ import net.openid.appauth.TokenResponse;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
@@ -70,6 +74,7 @@ public class AuthRepo {
     String clientId;
     String redirectUri;
     String authScope;
+    String authScopeProfile;
 
     public AuthRepo(YoutubeApp app) {
         this.app = app;
@@ -86,6 +91,7 @@ public class AuthRepo {
         clientId = null;
         redirectUri = null;
         authScope = null;
+        authScopeProfile = null;
     }
 
 
@@ -94,7 +100,7 @@ public class AuthRepo {
                 authState.getAuthorizationServiceConfiguration() != null &&
                 clientId != null &&
                 redirectUri != null &&
-                authScope != null);
+                authScope != null && authScopeProfile != null);
     }
 
     public boolean isAuthorized() {
@@ -195,6 +201,7 @@ public class AuthRepo {
         clientId = app.getString(R.string.client_id);
         redirectUri = app.getString(R.string.redirect_uri);
         authScope = app.getString(R.string.authorization_scope);
+        authScopeProfile = app.getString(R.string.authorization_scope_profile);
 
         finishClientConfig();
     }
@@ -215,12 +222,13 @@ public class AuthRepo {
 
         // may need to do this off UI thread?
 
+        Collection<String> scopes = new ArrayList<>(Arrays.asList(authScope, authScopeProfile));
         AuthorizationRequest.Builder authRequestBuilder = new AuthorizationRequest.Builder(
                 authState.getAuthorizationServiceConfiguration(),
                 clientId,
                 ResponseTypeValues.CODE,
                 Uri.parse(redirectUri))
-                .setScope(authScope);
+                .setScopes(scopes);
         AuthorizationRequest authRequest = authRequestBuilder.build();
 
         CustomTabsIntent.Builder intentBuilder =
@@ -279,11 +287,17 @@ public class AuthRepo {
     }
 
     private void finishCodeExchange() {
-        Log.i(TAG, "Finishing code exchange");
-
-        loginListener.onEvent(AuthRepo.this, AUTH_CODE_EXCHANGE_FINISH);
-
+//        Log.i(TAG, "Finishing code exchange");
+//
+//        loginListener.onEvent(AuthRepo.this, AUTH_CODE_EXCHANGE_FINISH);
+//
         startUserInfo();
+
+        AuthResponse response = new AuthResponse();
+        response.setToken(getAccessToken());
+        response.setPackageName(app.getPackageName());
+        response.setSignature(app.getSignature());
+        loginListener.onSuccess(AuthRepo.this, AUTH_LOGIN_SUCCESS, response);
     }
 
     private void startUserInfo() {
@@ -319,7 +333,7 @@ public class AuthRepo {
     private void finishLogin() {
         Log.i(TAG, "Finishing login");
 
-        loginListener.onSuccess(AuthRepo.this, AUTH_LOGIN_SUCCESS);
+//        loginListener.onSuccess(AuthRepo.this, AUTH_LOGIN_SUCCESS);
 
         unlockLogins();
     }

@@ -5,6 +5,7 @@ import android.content.Context;
 import com.vcoders.on_demand_youtube_player.architecture.ApplicationModule;
 import com.vcoders.on_demand_youtube_player.architecture.BaseComponent;
 import com.vcoders.on_demand_youtube_player.features.listVideo.ListVideoFragment;
+import com.vcoders.on_demand_youtube_player.features.menu.MenuFragment;
 import com.vcoders.on_demand_youtube_player.features.myPlaylist.MyPlaylistFragment;
 import com.vcoders.on_demand_youtube_player.features.player.PlayerFragment;
 import com.vcoders.on_demand_youtube_player.features.playlistByTopic.PlaylistByTopicFragment;
@@ -34,4 +35,6 @@ public interface HomeComponent extends BaseComponent {
     void inject(PlaylistDetailFragment playlistDetailFragment);
 
     void inject(PlayerFragment playerFragment);
+
+    void inject(MenuFragment menuFragment);
 }

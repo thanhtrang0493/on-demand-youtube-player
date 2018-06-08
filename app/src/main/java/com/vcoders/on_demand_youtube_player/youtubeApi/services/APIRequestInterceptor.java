@@ -25,7 +25,6 @@ public class APIRequestInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request original = chain.request();
-//        final String basic = "Basic " + "TXlwYXk6TXlwYXk=";
         final String basic = "Bearer ";
 
         Request.Builder requestBuilder = original.newBuilder()
@@ -33,7 +32,9 @@ public class APIRequestInterceptor implements Interceptor {
 
         if (isHeader) {
             requestBuilder.header("Authorization", basic + AccountUtils.getInstance().getToken())
-                    .addHeader("Content-Type", "application/x-www-form-urlencoded");
+                    .addHeader("Content-Type", "application/x-www-form-urlencoded")
+                    .addHeader("X-Android-Package", AccountUtils.getInstance().getPackageName())
+                    .addHeader("X-Android-Cert", AccountUtils.getInstance().getSignature());
         }
 
         Request request = requestBuilder.build();

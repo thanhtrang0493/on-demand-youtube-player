@@ -12,7 +12,9 @@ import com.vcoders.on_demand_youtube_player.auth.AuthException;
 import com.vcoders.on_demand_youtube_player.auth.AuthLoginListener;
 import com.vcoders.on_demand_youtube_player.auth.AuthLogoutListener;
 import com.vcoders.on_demand_youtube_player.auth.AuthRepo;
+import com.vcoders.on_demand_youtube_player.auth.AuthResponse;
 import com.vcoders.on_demand_youtube_player.auth.YoutubeApp;
+import com.vcoders.on_demand_youtube_player.utils.AccountUtils;
 
 import javax.inject.Inject;
 
@@ -26,8 +28,8 @@ public class LoginPresenter extends BasePresenter<LoginView, LoginRouter> {
     private AuthRepo authRepo;
 
     @Inject
-    public LoginPresenter(Context context){
-        this.context= context;
+    public LoginPresenter(Context context) {
+        this.context = context;
         app = (YoutubeApp) context.getApplicationContext();
         authRepo = app.getAuthRepo();
     }
@@ -36,7 +38,7 @@ public class LoginPresenter extends BasePresenter<LoginView, LoginRouter> {
         authRepo.login(loginListener);
     }
 
-    private final AuthLoginListener loginListener =  new AuthLoginListener() {
+    private final AuthLoginListener loginListener = new AuthLoginListener() {
         public void onStart(AuthRepo repo, AuthEvent event) {
             String description = event.getDescription();
             Log.i(TAG, description);
@@ -90,16 +92,17 @@ public class LoginPresenter extends BasePresenter<LoginView, LoginRouter> {
         public void onUserAgentRequest(AuthRepo repo, Intent intent) {
 
             Log.i(TAG, "User Agent Request!");
-            ((Activity)context).startActivityForResult(intent, app.RC_AUTH);
+            ((Activity) context).startActivityForResult(intent, app.RC_AUTH);
 //            activityObservable.postValue(new ActivityRequest(intent, app.RC_AUTH));
         }
 
-        public void onSuccess(AuthRepo repo, AuthEvent event) {
-            String description = event.getDescription();
-            Log.i(TAG, description);
-//            actionObservable.postValue(new ActionState(app.getString(R.string.search_title),
-//                    true, true, true, false, null));
-//            progressObservable.postValue(new ProgressState());
+        public void onSuccess(AuthRepo repo, AuthEvent event, AuthResponse response) {
+            if (response != null) {
+                AccountUtils.getInstance().setToken(response.getToken());
+                AccountUtils.getInstance().setPackageName(response.getPackageName());
+                AccountUtils.getInstance().setSignature(response.getSignature());
+                AccountUtils.getInstance().setLogin(true);
+            }
         }
 
         public void onFailure(AuthRepo repo, AuthEvent event, AuthException ex) {
@@ -116,7 +119,7 @@ public class LoginPresenter extends BasePresenter<LoginView, LoginRouter> {
         authRepo.logout(logoutListener);
     }
 
-    private final AuthLogoutListener logoutListener =  new AuthLogoutListener() {
+    private final AuthLogoutListener logoutListener = new AuthLogoutListener() {
         public void onStart(AuthRepo repo, AuthEvent event) {
             String description = event.getDescription();
             Log.i(TAG, description);
