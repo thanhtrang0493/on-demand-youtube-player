@@ -2,9 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:foo="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <ScrollView
+        android:id="@+id/svUser"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
@@ -224,8 +226,48 @@
                     android:text="@string/app_rating"
                     android:textColor="@color/gray_E2"
                     android:textSize="@dimen/d16" />
+
+                <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+                    style="@style/TextSize_15dp"
+                    android:id="@+id/txtLogout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/d10"
+                    android:text="@string/log_out"
+                    android:textColor="@color/gray_E2"
+                    android:textSize="@dimen/d16" />
             </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/llLogin"
+        android:padding="@dimen/d20"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_centerInParent="true"
+            android:id="@+id/btnLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/d20"
+            android:background="@drawable/bg_gradient_blue"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/d20">
+
+            <com.vcoders.on_demand_youtube_player.customView.TextViewPlus
+                style="@style/TextSize_15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:gravity="center"
+                android:hint="@string/login"
+                android:textColor="@color/white"
+                foo:customFont="@string/medium" />
+        </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>

@@ -1,6 +1,7 @@
 package com.vcoders.on_demand_youtube_player.features.selectTopics;
 
 
+import android.app.Activity;
 import android.content.Context;
 
 import com.vcoders.on_demand_youtube_player.architecture.BasePresenter;
@@ -42,5 +43,6 @@ public class SelectTopicsPresenter extends BasePresenter<SelectTopicsView, Selec
 
     public void toHome(List<Topic> topics) {
         getRouter().toHome(topics);
+        ((Activity) context).finish();
     }
 }

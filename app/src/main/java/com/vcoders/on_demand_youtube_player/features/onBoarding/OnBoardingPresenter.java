@@ -1,5 +1,6 @@
 package com.vcoders.on_demand_youtube_player.features.onBoarding;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.widget.LinearLayout;
@@ -40,13 +41,15 @@ public class OnBoardingPresenter extends BasePresenter<OnBoardingView, OnBoardin
     public void nextPage(int positionPage, List<LinearLayout> linearLayouts, ViewPager viewPager, TextView txtNext) {
         if (positionPage == linearLayouts.size() - 1) {
             getRouter().toSelectTopic();
+            ((Activity) context).finish();
         } else {
             viewPager.setCurrentItem(positionPage);
             selectPage(positionPage, linearLayouts, txtNext);
         }
     }
 
-    public void skipPage(){
+    public void skipPage() {
         getRouter().toSelectTopic();
+        ((Activity) context).finish();
     }
 }

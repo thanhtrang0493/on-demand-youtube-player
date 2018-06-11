@@ -74,7 +74,8 @@ public class ListPlayListAdapter extends RecyclerView.Adapter<ListPlayListAdapte
         holder.txtItemCount.setText(videoCount);
         holder.txtVideoCount.setText(videoCount + " " + context.getResources().getString(R.string.videos));
         holder.txtTitle.setText(playList.getSnippet().getTitle());
-        holder.txtType.setText("#" + playList.getSnippet().getLocalized().getTitle());
+        holder.txtType.setText("#" + playList.getSnippet().getLocalized() != null ?
+                (playList.getSnippet().getLocalized().getTitle() == null ? "" : playList.getSnippet().getLocalized().getTitle()) : "");
     }
 
     @Override

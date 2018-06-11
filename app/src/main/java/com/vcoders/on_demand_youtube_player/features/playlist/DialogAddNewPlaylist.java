@@ -4,11 +4,16 @@ import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.vcoders.on_demand_youtube_player.R;
 import com.vcoders.on_demand_youtube_player.architecture.BaseDialog;
+import com.vcoders.on_demand_youtube_player.interactor.CreateNewPlaylist;
+import com.vcoders.on_demand_youtube_player.model.Data;
 import com.vcoders.on_demand_youtube_player.utils.UtilsConfig;
+import com.vcoders.on_demand_youtube_player.youtubeApi.base.RequestAPIListener;
+import com.vcoders.on_demand_youtube_player.youtubeApi.response.ResponseAPIListener;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -45,6 +50,9 @@ public class DialogAddNewPlaylist extends BaseDialog {
     @BindView(R.id.txtOK)
     TextView txtOK;
 
+    @BindView(R.id.edtTitle)
+    EditText edtTitle;
+
     @OnTextChanged(R.id.edtTitle)
     public void onEdtTitleTextChanged(CharSequence s) {
         if (s.toString().isEmpty()) {
@@ -61,6 +69,18 @@ public class DialogAddNewPlaylist extends BaseDialog {
 
     @OnClick(R.id.txtOK)
     public void onTxtOKClick() {
-        this.dismiss();
+        createNewPlaylist();
+    }
+
+    private void createNewPlaylist() {
+        new CreateNewPlaylist(context).execute(edtTitle.getText().toString())
+                .onListener(new RequestAPIListener<Data<String>>() {
+                    @Override
+                    public void onResponse(ResponseAPIListener<Data<String>> response) {
+                        if (response.getErrorMessage() == null) {
+                            DialogAddNewPlaylist.this.dismiss();
+                        }
+                    }
+                });
     }
 }

@@ -5,8 +5,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.vcoders.on_demand_youtube_player.R;
+import com.vcoders.on_demand_youtube_player.interfaces.ISelectItem;
 import com.vcoders.on_demand_youtube_player.model.PlayList;
 
 import java.util.ArrayList;
@@ -17,9 +19,11 @@ public class RecentlyPlayedAdapter extends RecyclerView.Adapter<RecentlyPlayedAd
 
     Context context;
     List<PlayList> playLists;
+    ISelectItem iSelectItem;
 
-    public RecentlyPlayedAdapter(Context context, List<PlayList> playLists) {
+    public RecentlyPlayedAdapter(Context context, List<PlayList> playLists, ISelectItem iSelectItem) {
         this.context = context;
+        this.iSelectItem = iSelectItem;
         this.playLists = playLists;
         if (this.playLists == null)
             this.playLists = new ArrayList<>();
@@ -31,9 +35,21 @@ public class RecentlyPlayedAdapter extends RecyclerView.Adapter<RecentlyPlayedAd
         return new RecentlyPlayedHolder(view);
     }
 
+    public void updateAdapter(List<PlayList> playLists) {
+        this.playLists = playLists;
+        if (this.playLists == null)
+            this.playLists = new ArrayList<>();
+        notifyDataSetChanged();
+    }
+
     @Override
     public void onBindViewHolder(RecentlyPlayedHolder holder, int position) {
-
+        holder.llItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                iSelectItem.onSelectedItem(position);
+            }
+        });
     }
 
     @Override
@@ -42,8 +58,12 @@ public class RecentlyPlayedAdapter extends RecyclerView.Adapter<RecentlyPlayedAd
     }
 
     public class RecentlyPlayedHolder extends RecyclerView.ViewHolder {
+
+        private RelativeLayout llItem;
+
         public RecentlyPlayedHolder(View itemView) {
             super(itemView);
+            llItem = itemView.findViewById(R.id.llItem);
         }
     }
 }

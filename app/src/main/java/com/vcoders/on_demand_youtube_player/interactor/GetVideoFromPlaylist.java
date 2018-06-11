@@ -4,10 +4,10 @@ import android.content.Context;
 
 import com.vcoders.on_demand_youtube_player.model.Data;
 import com.vcoders.on_demand_youtube_player.model.Video;
+import com.vcoders.on_demand_youtube_player.utils.AccountUtils;
 import com.vcoders.on_demand_youtube_player.utils.Constant;
 import com.vcoders.on_demand_youtube_player.youtubeApi.base.InteractorYoutube;
 import com.vcoders.on_demand_youtube_player.youtubeApi.base.RequestAPIListener;
-
 
 
 import io.reactivex.Observable;
@@ -24,10 +24,15 @@ public class GetVideoFromPlaylist extends InteractorYoutube<Data<Video>> {
 
     @Override
     protected Observable<Response<Data<Video>>> buildObservable() {
-        return getYoutubeService().getVideoFromPlaylistId( body);
+        return getYoutubeService().getVideoFromPlaylistId(body);
     }
 
     public GetVideoFromPlaylist execute(String playlistId) {
+        if (AccountUtils.getInstance().isLogin())
+            setHeader(true);
+        else
+            setHeader(false);
+
         body.put("key", Constant.API_KEY);
         body.put("maxResults", 50);
         body.put("part", "snippet,contentDetails");

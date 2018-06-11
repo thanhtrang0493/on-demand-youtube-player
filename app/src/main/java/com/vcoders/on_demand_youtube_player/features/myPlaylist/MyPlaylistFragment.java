@@ -15,12 +15,12 @@ import com.vcoders.on_demand_youtube_player.architecture.BaseRouter;
 import com.vcoders.on_demand_youtube_player.enums.TypeActionBar;
 import com.vcoders.on_demand_youtube_player.features.home.HomeActivity;
 import com.vcoders.on_demand_youtube_player.features.home.HomeComponent;
-import com.vcoders.on_demand_youtube_player.features.login.LoginActivity;
 import com.vcoders.on_demand_youtube_player.features.playlistDetail.PlaylistDetailFragment;
 import com.vcoders.on_demand_youtube_player.model.PlayList;
 import com.vcoders.on_demand_youtube_player.model.Video;
 import com.vcoders.on_demand_youtube_player.utils.Utils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -46,21 +46,25 @@ public class MyPlaylistFragment extends BaseFragment<HomeComponent> implements M
     RecentlyPlayedAdapter recentlyPlayedAdapter;
     ListPlayListAdapter listPlayListAdapter;
     GridPlayListAdapter gridPlayListAdapter;
-    List<PlayList> playListRecentlies;
-    List<Video> playLists;
+    List<PlayList> playLists;
+    List<Video> videoList;
 
     @Override
     protected void initializeView(Bundle savedInstanceState) {
-        playListRecentlies = myPlaylistPresenter.getListPlayListRecently();
-        playLists = myPlaylistPresenter.getListPlayList();
+        init();
+        myPlaylistPresenter.getMyPlaylist();
+    }
 
-//        initRecentlyPlayedAdapter();
-//        initPlayListAdapter();
-        Utils.getInstance().changeActivity(getActivity(), LoginActivity.class);
+    private void init() {
+        playLists = new ArrayList<>();
+        videoList = new ArrayList<>();
+
+        initRecentlyPlayedAdapter();
+        initPlayListAdapter();
     }
 
     private void initRecentlyPlayedAdapter() {
-        recentlyPlayedAdapter = new RecentlyPlayedAdapter(getActivity(), playListRecentlies);
+        recentlyPlayedAdapter = new RecentlyPlayedAdapter(getActivity(), playLists, this);
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         manager.setOrientation(LinearLayoutManager.HORIZONTAL);
         rvRecentlyPlayed.setLayoutManager(manager);
@@ -68,7 +72,7 @@ public class MyPlaylistFragment extends BaseFragment<HomeComponent> implements M
     }
 
     private void initPlayListAdapter() {
-        listPlayListAdapter = new ListPlayListAdapter(getActivity(), playLists, this);
+        listPlayListAdapter = new ListPlayListAdapter(getActivity(), videoList, this);
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         rvPlaylist.setLayoutManager(manager);
         rvPlaylist.setAdapter(listPlayListAdapter);
@@ -76,7 +80,7 @@ public class MyPlaylistFragment extends BaseFragment<HomeComponent> implements M
     }
 
     private void initGridPlayListAdapter() {
-        gridPlayListAdapter = new GridPlayListAdapter(getActivity(), playLists, this);
+        gridPlayListAdapter = new GridPlayListAdapter(getActivity(), videoList, this);
         GridLayoutManager manager = new GridLayoutManager(getActivity(), 2);
         rvPlaylist.setLayoutManager(manager);
         rvPlaylist.setAdapter(gridPlayListAdapter);
@@ -125,12 +129,12 @@ public class MyPlaylistFragment extends BaseFragment<HomeComponent> implements M
 
     @Override
     public void showError(String error) {
-
+        Utils.getInstance().showError(getActivity(), error);
     }
 
     @Override
     public void showLoading(boolean isShow) {
-
+        Utils.getInstance().showLoading(getActivity(), isShow);
     }
 
     @Override
@@ -141,5 +145,26 @@ public class MyPlaylistFragment extends BaseFragment<HomeComponent> implements M
     @Override
     public void onMorePlayList(int position) {
 
+    }
+
+    @Override
+    public void onGetMyPlaylistSuccess(List<PlayList> playLists) {
+        this.playLists = playLists;
+        recentlyPlayedAdapter.updateAdapter(this.playLists);
+
+        if (this.playLists != null && this.playLists.size() > 0) {
+            myPlaylistPresenter.getVideoByPlaylistId(this.playLists.get(0).getId());
+        }
+    }
+
+    @Override
+    public void onGetListVideoSuccess(List<Video> videoList) {
+        this.videoList = videoList;
+        listPlayListAdapter.updateAdapter(this.videoList);
+    }
+
+    @Override
+    public void onSelectedItem(int position) {
+        myPlaylistPresenter.getVideoByPlaylistId(playLists.get(position).getId());
     }
 }

@@ -70,4 +70,5 @@
     <string name="today">today</string>
     <string name="views">views</string>
     <string name="favorite_songs">Favorite Songs</string>
+    <string name="log_out">Sign out</string>
 </resources>

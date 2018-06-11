@@ -2,7 +2,10 @@ package com.vcoders.on_demand_youtube_player.features.menu;
 
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -12,16 +15,14 @@ import com.vcoders.on_demand_youtube_player.architecture.BasePresenter;
 import com.vcoders.on_demand_youtube_player.architecture.BaseRouter;
 import com.vcoders.on_demand_youtube_player.enums.TypeActionBar;
 import com.vcoders.on_demand_youtube_player.features.home.HomeComponent;
-import com.vcoders.on_demand_youtube_player.interactor.GetMyPlaylist;
-import com.vcoders.on_demand_youtube_player.model.Data;
 import com.vcoders.on_demand_youtube_player.model.User;
-import com.vcoders.on_demand_youtube_player.model.Video;
-import com.vcoders.on_demand_youtube_player.youtubeApi.base.RequestAPIListener;
-import com.vcoders.on_demand_youtube_player.youtubeApi.response.ResponseAPIListener;
+import com.vcoders.on_demand_youtube_player.utils.AccountUtils;
+import com.vcoders.on_demand_youtube_player.utils.Utils;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class MenuFragment extends BaseFragment<HomeComponent> implements MenuView {
 
@@ -37,18 +38,31 @@ public class MenuFragment extends BaseFragment<HomeComponent> implements MenuVie
     @BindView(R.id.imgAvatar)
     ImageView imgAvatar;
 
+    @BindView(R.id.svUser)
+    ScrollView svUser;
+
+    @BindView(R.id.llLogin)
+    RelativeLayout llLogin;
+
     @Override
     protected void initializeView(Bundle savedInstanceState) {
-        menuPresenter.getUserProfile();
+    }
 
-        new GetMyPlaylist(getActivity()).execute().onListener(new RequestAPIListener<Data<Video>>() {
-            @Override
-            public void onResponse(ResponseAPIListener<Data<Video>> response) {
-                if(response.getErrorMessage()==null){
+    @Override
+    public void onResume() {
+        super.onResume();
+        init();
+    }
 
-                }
-            }
-        });
+    private void init() {
+        if (AccountUtils.getInstance().isLogin()) {
+            menuPresenter.getUserProfile();
+            llLogin.setVisibility(View.GONE);
+            svUser.setVisibility(View.VISIBLE);
+        } else {
+            llLogin.setVisibility(View.VISIBLE);
+            svUser.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -90,12 +104,28 @@ public class MenuFragment extends BaseFragment<HomeComponent> implements MenuVie
     }
 
     @Override
-    public void showError(String error) {
+    public void onLogoutSuccess() {
+        llLogin.setVisibility(View.VISIBLE);
+        svUser.setVisibility(View.GONE);
+    }
 
+    @Override
+    public void showError(String error) {
+        Utils.getInstance().showError(getActivity(), error);
     }
 
     @Override
     public void showLoading(boolean isShow) {
+        Utils.getInstance().showLoading(getActivity(), isShow);
+    }
 
+    @OnClick(R.id.txtLogout)
+    public void onLogoutClick() {
+        menuPresenter.logout();
+    }
+
+    @OnClick(R.id.btnLogin)
+    public void onLoginClick() {
+        menuPresenter.toLogin();
     }
 }

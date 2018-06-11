@@ -2,13 +2,10 @@ package com.vcoders.on_demand_youtube_player.auth;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.support.customtabs.CustomTabsIntent;
 import android.util.Log;
 import android.webkit.URLUtil;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.vcoders.on_demand_youtube_player.R;
 
 import net.openid.appauth.AppAuthConfiguration;
@@ -22,28 +19,15 @@ import net.openid.appauth.AuthorizationServiceDiscovery;
 import net.openid.appauth.ResponseTypeValues;
 import net.openid.appauth.TokenResponse;
 
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.HttpUrl;
-import okhttp3.Interceptor;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.logging.HttpLoggingInterceptor;
-import retrofit2.Call;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
-import static com.vcoders.on_demand_youtube_player.auth.AuthEvent.AUTH_CODE_EXCHANGE_FINISH;
 import static com.vcoders.on_demand_youtube_player.auth.AuthEvent.AUTH_CODE_EXCHANGE_START;
 import static com.vcoders.on_demand_youtube_player.auth.AuthEvent.AUTH_LOGIN_FAILURE;
 import static com.vcoders.on_demand_youtube_player.auth.AuthEvent.AUTH_LOGIN_START;
@@ -54,8 +38,6 @@ import static com.vcoders.on_demand_youtube_player.auth.AuthEvent.AUTH_SERVICE_D
 import static com.vcoders.on_demand_youtube_player.auth.AuthEvent.AUTH_SERVICE_DISCOVERY_START;
 import static com.vcoders.on_demand_youtube_player.auth.AuthEvent.AUTH_USER_AUTH_FINISH;
 import static com.vcoders.on_demand_youtube_player.auth.AuthEvent.AUTH_USER_AUTH_START;
-import static com.vcoders.on_demand_youtube_player.auth.AuthEvent.AUTH_USER_INFO_FINISH;
-import static com.vcoders.on_demand_youtube_player.auth.AuthEvent.AUTH_USER_INFO_START;
 
 
 public class AuthRepo {
@@ -287,39 +269,13 @@ public class AuthRepo {
     }
 
     private void finishCodeExchange() {
-//        Log.i(TAG, "Finishing code exchange");
-//
-//        loginListener.onEvent(AuthRepo.this, AUTH_CODE_EXCHANGE_FINISH);
-//
-        startUserInfo();
-
         AuthResponse response = new AuthResponse();
         response.setToken(getAccessToken());
         response.setPackageName(app.getPackageName());
         response.setSignature(app.getSignature());
         loginListener.onSuccess(AuthRepo.this, AUTH_LOGIN_SUCCESS, response);
-    }
 
-    private void startUserInfo() {
-        Log.i(TAG, "Starting user info");
-
-        loginListener.onEvent(AuthRepo.this, AUTH_USER_INFO_START);
-        fetchUserInfo(this::onUserInfoCompleted);
-    }
-
-    private void onUserInfoCompleted(UserInfo userInfo, AuthException ex) {
-        if (userInfo == null) Log.i(TAG, "Unable to obtain user info.");
-
-        finishUserInfo();
-    }
-
-
-    private void finishUserInfo() {
-        Log.i(TAG, "Finishing user info");
-
-        loginListener.onEvent(AuthRepo.this, AUTH_USER_INFO_FINISH);
-
-        finishLogin();
+        unlockLogins();
     }
 
     private void failLogin(AuthException ex) {
@@ -328,106 +284,6 @@ public class AuthRepo {
         loginListener.onFailure(AuthRepo.this, AUTH_LOGIN_FAILURE, ex);
 
         unlockLogins();
-    }
-
-    private void finishLogin() {
-        Log.i(TAG, "Finishing login");
-
-//        loginListener.onSuccess(AuthRepo.this, AUTH_LOGIN_SUCCESS);
-
-        unlockLogins();
-    }
-
-    private UserInfo userInfo;
-
-    private UserInfoAPI createUserInfoAPI() {
-        HttpLoggingInterceptor logger = new HttpLoggingInterceptor();
-        logger.setLevel(HttpLoggingInterceptor.Level.BODY);
-
-        OkHttpClient authClient = new OkHttpClient().newBuilder()
-                .addInterceptor(getAccessTokenInterceptor())
-                .addInterceptor(logger)
-                .build();
-
-        Gson gson = new GsonBuilder().setLenient().create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(userInfoUrl)
-                .client(authClient)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-
-        return retrofit.create(UserInfoAPI.class);
-    }
-
-    class UserInfoTask extends AsyncTask<Void, Void, UserInfo> {
-        private UserInfoCallback callback;
-
-        UserInfoTask(UserInfoCallback callback) {
-            this.callback = callback;
-        }
-
-        protected UserInfo doInBackground(Void... params) {
-            UserInfoAPI userInfoAPI = createUserInfoAPI();
-            Call<UserInfoResult> call = userInfoAPI.getUserInfo();
-            try {
-                Response<UserInfoResult> response = call.execute();
-
-                if (response.isSuccessful()) {
-                    UserInfoResult result = response.body();
-                    userInfo = new UserInfo(result.getFamilyName(), result.getGivenName(),
-                            result.getPicture());
-                } else {
-                    userInfo = null;
-                }
-            } catch (IOException e) {
-                userInfo = null;
-            }
-
-            return userInfo;
-        }
-
-        protected void onPostExecute(UserInfo userInfo) {
-            if (userInfo == null) {
-                callback.call(null, new AuthException("Unable to retrieve user info"));
-                return;
-            }
-
-            callback.call(userInfo, null);
-        }
-    }
-
-    public void fetchUserInfo(UserInfoCallback callback) {
-        if (callback == null) throw new RuntimeException("fetchUserInfo: null callback");
-
-        if (!isAuthorized()) {
-            callback.call(null, new AuthException("Not authorized"));
-            return;
-        }
-
-        new UserInfoTask(callback).execute();
-    }
-
-    public UserInfo getUserInfo() {
-        if (!isAuthorized()) return null;
-
-        if (userInfo != null) return userInfo;
-
-        CountDownLatch fetchComplete = new CountDownLatch(1);
-
-        fetchUserInfo((userInfo, ex) -> {
-            AuthRepo.this.userInfo = userInfo;
-            fetchComplete.countDown();
-        });
-
-        boolean complete;
-        try {
-            complete = fetchComplete.await(5000, TimeUnit.MILLISECONDS);
-        } catch (InterruptedException ex) {
-            complete = false;
-        }
-        if (!complete) userInfo = null;
-
-        return userInfo;
     }
 
     public void logout(AuthLogoutListener logoutListener) {
@@ -442,38 +298,16 @@ public class AuthRepo {
 
         if (isConfigured()) {
             authState = new AuthState(authState.getAuthorizationServiceConfiguration());
-            userInfo = null;
         } else {
             authState = null;
             clientId = null;
             redirectUri = null;
             userInfoUrl = null;
-            userInfo = null;
         }
 
         logoutListener.onSuccess(AuthRepo.this, AUTH_LOGOUT_SUCCESS);
 
         unlockLogins();
-    }
-
-    public Interceptor getApiKeyInterceptor() {
-        return new Interceptor() {
-            @Override
-            public okhttp3.Response intercept(Chain chain) throws IOException {
-                Request request = chain.request();
-
-                HttpUrl url = request.url().newBuilder()
-                        .addQueryParameter("key", app.getString(R.string.api_key)).build();
-
-                request = request.newBuilder()
-                        .url(url)
-                        .header("X-Android-Package", app.getPackageName())
-                        .header("X-Android-Cert", app.getSignature())
-                        .build();
-
-                return chain.proceed(request);
-            }
-        };
     }
 
     private String accessToken;
@@ -504,22 +338,4 @@ public class AuthRepo {
         return token;
     }
 
-    public Interceptor getAccessTokenInterceptor() {
-        return new Interceptor() {
-            @Override
-            public okhttp3.Response intercept(Chain chain) throws IOException {
-                Request request = chain.request();
-
-                request = request.newBuilder()
-                        .header("X-Android-Package", app.getPackageName())
-                        .header("X-Android-Cert", app.getSignature())
-                        .header("Authorization", "Bearer " + getAccessToken())
-                        .build();
-
-                Log.i(TAG, "token: " + getAccessToken());
-
-                return chain.proceed(request);
-            }
-        };
-    }
 }

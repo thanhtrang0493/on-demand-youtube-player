@@ -5,6 +5,7 @@
     android:layout_height="wrap_content">
 
     <RelativeLayout
+        android:id="@+id/llItem"
         android:layout_width="@dimen/d150"
         android:layout_height="@dimen/d80"
         android:background="@mipmap/topic_music">
