@@ -24,4 +24,8 @@
     <color name="brown">#514B37</color>
     <color name="gray_8e">#8E8E8D</color>
     <color name="transparent_black">#D8000000</color>
+
+    <!--audio-->
+    <color name="playback_control_background">#CFCFCF</color>
+    <color name="text_color_seekbar">#333333</color>
 </resources>

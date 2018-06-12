@@ -71,4 +71,36 @@
     <string name="views">views</string>
     <string name="favorite_songs">Favorite Songs</string>
     <string name="log_out">Sign out</string>
+
+    <!-- action labels  -->
+    <string name="action_play">Play</string>
+    <string name="action_pause">Pause</string>
+    <string name="action_previous">Previous</string>
+    <string name="action_next">Next</string>
+
+    <string name="toast_message_playing">Playing: %1$s</string>
+    <string name="toast_message_error_extracting">Error Extracting Audio: %1$s</string>
+    <string name="toast_message_error_playing_url">Error URL Protected: %1$s</string>
+    <string name="fragment_tab_favorites">Favorites</string>
+
+    <!-- Notification Channel -->
+    <string name="notification_channel">YIB_Channel_ID</string>
+    <string name="notification_channel_description">Channel ID for YIB</string>
+
+
+    <!-- Errors -->
+    <string name="error_no_yt_link">Not a valid YouTube link</string>
+    <string name="error_no_yt_video_retrieve">Error Loading YouTube link</string>
+    <string name="error_no_connection">Cannot connect to server. Please, check your Internet connectivity.</string>
+    <string name="error_loading_media">Error Loading Media</string>
+
+
+    <string name="skip_next">skip to next</string>
+    <string name="skip_prev">skip to previous</string>
+    <string name="play_pause">play or pause</string>
+    <string name="currently_playing">YouTube Video currently playing</string>
+    <string name="currently_playing_views_number">Artist of currently playing song</string>
+    <string name="currently_playing_extra_info">Extra info for currently playing song</string>
+    <string name="loading">Loading…</string>
+    <string name="video_thumbnail">Video Thumbnail</string>
 </resources>
