@@ -41,7 +41,7 @@ public class ListMyPlaylistAdapter extends RecyclerView.Adapter<ListMyPlaylistAd
     public void onBindViewHolder(ListMyPlaylistHolder holder, final int position) {
         PlayList playList = playLists.get(position);
         if (playList != null) {
-            holder.txtName.setText(playList.getTitle());
+            holder.txtName.setText(playList.getSnippet()!=null?playList.getSnippet().getTitle():"");
 
             holder.llItemMyPlaylist.setOnClickListener(new View.OnClickListener() {
                 @Override

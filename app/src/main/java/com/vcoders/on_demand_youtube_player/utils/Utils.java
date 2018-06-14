@@ -1,10 +1,13 @@
 package com.vcoders.on_demand_youtube_player.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.SparseArray;
 
+import com.google.gson.Gson;
 import com.vcoders.on_demand_youtube_player.audio.youtubeExtractor.YtFile;
 
 import java.text.ParseException;
@@ -20,6 +23,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static android.content.Context.MODE_PRIVATE;
 import static com.google.android.exoplayer2.mediacodec.MediaCodecInfo.TAG;
 import static com.vcoders.on_demand_youtube_player.audio.config.Config.YOUTUBE_ITAG_140;
 import static com.vcoders.on_demand_youtube_player.audio.config.Config.YOUTUBE_ITAG_141;
@@ -100,8 +104,8 @@ public class Utils {
     }
 
     private final NavigableMap<Long, String> suffixes = new TreeMap<>();
-    public String formatLong(long value)
-    {
+
+    public String formatLong(long value) {
         //Long.MIN_VALUE == -Long.MIN_VALUE so we need an adjustment here
         if (value == Long.MIN_VALUE) return formatLong(Long.MIN_VALUE + 1);
         if (value < 0) return "-" + formatLong(-value);
@@ -116,8 +120,7 @@ public class Utils {
         return hasDecimal ? (truncated / 10d) + suffix : (truncated / 10) + suffix;
     }
 
-    private long segmentToLong(String[] segments)
-    {
+    private long segmentToLong(String[] segments) {
         long number = 0;
         int count = segments.length - 1;
         for (String segment : segments) {
@@ -131,9 +134,8 @@ public class Utils {
         return number;
     }
 
-    public String formatViewCount(String viewCounts)
-    {
-        if(viewCounts!=null) {
+    public String formatViewCount(String viewCounts) {
+        if (viewCounts != null) {
             String[] split = viewCounts.split(" ");
             String[] segments = split[0].split(",");
 
@@ -143,8 +145,7 @@ public class Utils {
         return "";
     }
 
-    public static boolean validateUrl(String url)
-    {
+    public static boolean validateUrl(String url) {
         // https://r8---sn-3u-bh2ee.googlevideo.com/videoplayback
         return url.contains(".googlevideo.com/videoplayback");
     }
@@ -155,8 +156,7 @@ public class Utils {
      * @param ytFiles Array of available streams
      * @return Audio stream with highest bitrate
      */
-    public static YtFile getBestStream(SparseArray<YtFile> ytFiles)
-    {
+    public static YtFile getBestStream(SparseArray<YtFile> ytFiles) {
 //        Log.e(TAG, "ytFiles: " + ytFiles);
         if (ytFiles.get(YOUTUBE_ITAG_141) != null) {
             LogHelper.e(TAG, " gets YOUTUBE_ITAG_141");
@@ -192,5 +192,23 @@ public class Utils {
 
         LogHelper.e(TAG, " gets YOUTUBE_ITAG_17");
         return ytFiles.get(YOUTUBE_ITAG_17);
+    }
+
+    public void saveSharedPreferences(Context context) {
+        SharedPreferences mPrefs = context.getSharedPreferences(Constant.PREFERENCE_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor prefsEditor = mPrefs.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(AccountUtils.getInstance());
+        prefsEditor.putString(Constant.ACCOUNT_UTILS, json);
+        prefsEditor.commit();
+    }
+
+    public void retrieveSharedPreferences(Context context) {
+        SharedPreferences mPrefs = context.getSharedPreferences(Constant.PREFERENCE_NAME, MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = mPrefs.getString(Constant.ACCOUNT_UTILS, "");
+        AccountUtils.ourInstance = gson.fromJson(json, AccountUtils.class);
+        if (AccountUtils.ourInstance == null)
+            AccountUtils.ourInstance = new AccountUtils();
     }
 }

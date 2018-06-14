@@ -30,8 +30,10 @@ import com.vcoders.on_demand_youtube_player.features.searchVideos.SearchVideosFr
 import com.vcoders.on_demand_youtube_player.model.Topic;
 import com.vcoders.on_demand_youtube_player.utils.Constant;
 import com.vcoders.on_demand_youtube_player.utils.LogHelper;
+import com.vcoders.on_demand_youtube_player.utils.Utils;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -45,7 +47,7 @@ import static com.vcoders.on_demand_youtube_player.audio.config.Config.KEY_SESSI
 public class HomeActivity extends BaseActivity implements HomeView {
 
     HomeComponent homeComponent;
-    public static List<Topic> topics;
+    public static List<Topic> topics = new ArrayList<>();
 
     @Inject
     HomePresenter homePresenter;
@@ -63,11 +65,13 @@ public class HomeActivity extends BaseActivity implements HomeView {
     }
 
     private void getBundle() {
-        topics = (List<Topic>) getIntent().getExtras().getSerializable(Constant.TOPICS);
-        if (topics.size() > 0) {
-            Topic topic = topics.get(0);
-            topic.setSelect(true);
-            topics.set(0, topic);
+        if (getIntent().getExtras() != null) {
+            topics = (List<Topic>) getIntent().getExtras().getSerializable(Constant.TOPICS);
+            if (topics.size() > 0) {
+                Topic topic = topics.get(0);
+                topic.setSelect(true);
+                topics.set(0, topic);
+            }
         }
     }
 
@@ -130,7 +134,7 @@ public class HomeActivity extends BaseActivity implements HomeView {
     }
 
 
-//    audio
+    //    audio
     private FragmentTransaction lastTransaction;
     private MediaSessionCompat.Token sessionToken;
     private NetworkHelper networkConf;
@@ -140,8 +144,7 @@ public class HomeActivity extends BaseActivity implements HomeView {
 
 
     @Override
-    protected void onStart()
-    {
+    protected void onStart() {
         super.onStart();
         LogHelper.e(TAG, "Main Activity onStart");
         if (playbackControlsFragment == null) {
@@ -173,8 +176,7 @@ public class HomeActivity extends BaseActivity implements HomeView {
     }
 
     @Override
-    protected void onStop()
-    {
+    protected void onStop() {
         super.onStop();
         LogHelper.d(TAG, "Main Activity onStop");
         MediaControllerCompat controller = MediaControllerCompat.getMediaController(this);
@@ -184,18 +186,15 @@ public class HomeActivity extends BaseActivity implements HomeView {
     }
 
     @Override
-    protected void onPause()
-    {
+    protected void onPause() {
         super.onPause();
         unregisterReceiver(messageReceiver);
     }
 
     // Callback that ensures that we are showing the controls
-    private final MediaControllerCompat.Callback mediaControllerCallback = new MediaControllerCompat.Callback()
-    {
+    private final MediaControllerCompat.Callback mediaControllerCallback = new MediaControllerCompat.Callback() {
         @Override
-        public void onPlaybackStateChanged(@NonNull PlaybackStateCompat state)
-        {
+        public void onPlaybackStateChanged(@NonNull PlaybackStateCompat state) {
             LogHelper.e(TAG, "onPlaybackStateChanged");
             if (shouldShowControls()) {
                 showPlaybackControls();
@@ -206,8 +205,7 @@ public class HomeActivity extends BaseActivity implements HomeView {
         }
 
         @Override
-        public void onMetadataChanged(MediaMetadataCompat metadata)
-        {
+        public void onMetadataChanged(MediaMetadataCompat metadata) {
             LogHelper.e(TAG, "onMetadataChanged");
             if (shouldShowControls()) {
                 showPlaybackControls();
@@ -218,11 +216,9 @@ public class HomeActivity extends BaseActivity implements HomeView {
         }
     };
 
-    private BroadcastReceiver messageReceiver = new BroadcastReceiver()
-    {
+    private BroadcastReceiver messageReceiver = new BroadcastReceiver() {
         @Override
-        public void onReceive(Context context, Intent intent)
-        {
+        public void onReceive(Context context, Intent intent) {
             // Get extra data included in the Intent
             LogHelper.e(TAG, "on BroadcastReceiver receive");
             Bundle b = intent.getBundleExtra(KEY_SESSION_TOKEN);
@@ -239,8 +235,7 @@ public class HomeActivity extends BaseActivity implements HomeView {
         }
     };
 
-    protected void showPlaybackControls()
-    {
+    protected void showPlaybackControls() {
         LogHelper.e(TAG, "showPlaybackControls");
         if (networkConf.isNetworkAvailable(this)) {
             try {
@@ -257,8 +252,7 @@ public class HomeActivity extends BaseActivity implements HomeView {
         }
     }
 
-    protected void hidePlaybackControls()
-    {
+    protected void hidePlaybackControls() {
         LogHelper.e(TAG, "hidePlaybackControls");
         try {
             fragmentManager.beginTransaction()
@@ -278,8 +272,7 @@ public class HomeActivity extends BaseActivity implements HomeView {
      *
      * @return true if the MediaSession's state requires playback controls to be visible.
      */
-    protected boolean shouldShowControls()
-    {
+    protected boolean shouldShowControls() {
         LogHelper.e(TAG, "shouldShowControls");
         MediaControllerCompat mediaController = MediaControllerCompat.getMediaController(this);
         if (mediaController == null ||
@@ -297,8 +290,7 @@ public class HomeActivity extends BaseActivity implements HomeView {
         }
     }
 
-    private void connectToSession(MediaSessionCompat.Token token) throws RemoteException
-    {
+    private void connectToSession(MediaSessionCompat.Token token) throws RemoteException {
         LogHelper.e(TAG, "connectToSession");
         MediaControllerCompat mediaController = new MediaControllerCompat(this, token);
         MediaControllerCompat.setMediaController(this, mediaController);
@@ -315,5 +307,11 @@ public class HomeActivity extends BaseActivity implements HomeView {
         if (playbackControlsFragment != null) {
             playbackControlsFragment.onConnected();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        Utils.getInstance().saveSharedPreferences(this);
+        super.onDestroy();
     }
 }

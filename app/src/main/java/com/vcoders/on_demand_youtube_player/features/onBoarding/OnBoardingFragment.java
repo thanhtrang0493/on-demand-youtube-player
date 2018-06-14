@@ -49,4 +49,5 @@ public class OnBoardingFragment extends Fragment {
     private void bindData() {
         txtDescription.setText(description);
     }
+
 }

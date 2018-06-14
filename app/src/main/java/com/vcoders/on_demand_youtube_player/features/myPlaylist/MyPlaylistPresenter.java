@@ -27,28 +27,6 @@ public class MyPlaylistPresenter extends BasePresenter<MyPlaylistView, MyPlaylis
         this.context = context;
     }
 
-    public List<PlayList> getListPlayListRecently() {
-        List<PlayList> playListRecentlies = new ArrayList<>();
-        playListRecentlies.add(new PlayList());
-        playListRecentlies.add(new PlayList());
-        playListRecentlies.add(new PlayList());
-        playListRecentlies.add(new PlayList());
-        return playListRecentlies;
-    }
-
-    public List<Video> getListPlayList() {
-        List<Video> playLists = new ArrayList<>();
-        playLists.add(new Video());
-        playLists.add(new Video());
-        playLists.add(new Video());
-        playLists.add(new Video());
-        playLists.add(new Video());
-        playLists.add(new Video());
-        playLists.add(new Video());
-        playLists.add(new Video());
-        return playLists;
-    }
-
     public void getMyPlaylist() {
         if (AccountUtils.getInstance().isLogin()) {
             getView().showLoading(true);

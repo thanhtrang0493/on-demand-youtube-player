@@ -1,44 +1,40 @@
 package com.vcoders.on_demand_youtube_player.model;
 
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class PlayList {
+    @SerializedName("kind")
+    @Expose
+    private String kind;
+    @SerializedName("etag")
+    @Expose
+    private String etag;
+    @SerializedName("id")
+    @Expose
     private String id;
-    private String thumbnails;
-    private String channelId;
-    private String description;
-    private String title;
-    private String videoCount;
-    private String localized;
+    @SerializedName("snippet")
+    @Expose
+    private Snippet snippet;
+    @SerializedName("contentDetails")
+    @Expose
+    private ContentDetails contentDetails;
 
-    public PlayList() {
+    public String getKind() {
+        return kind;
     }
 
-    public PlayList(String title) {
-        this.title = title;
+    public void setKind(String kind) {
+        this.kind = kind;
     }
 
-    public String getThumbnails() {
-        return thumbnails;
+    public String getEtag() {
+        return etag;
     }
 
-    public void setThumbnails(String thumbnails) {
-        this.thumbnails = thumbnails;
-    }
-
-    public String getChannelId() {
-        return channelId;
-    }
-
-    public void setChannelId(String channelId) {
-        this.channelId = channelId;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    public void setEtag(String etag) {
+        this.etag = etag;
     }
 
     public String getId() {
@@ -49,27 +45,30 @@ public class PlayList {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public Snippet getSnippet() {
+        return snippet;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setSnippet(Snippet snippet) {
+        this.snippet = snippet;
     }
 
-    public String getVideoCount() {
-        return videoCount;
+    public ContentDetails getContentDetails() {
+        return contentDetails;
     }
 
-    public void setVideoCount(String videoCount) {
-        this.videoCount = videoCount;
+    public void setContentDetails(ContentDetails contentDetails) {
+        this.contentDetails = contentDetails;
     }
 
-    public String getLocalized() {
-        return localized;
+    public PlayList() {
     }
 
-    public void setLocalized(String localized) {
-        this.localized = localized;
+    public PlayList(String title) {
+        Snippet snippet = this.getSnippet();
+        if (snippet == null)
+            snippet = new Snippet();
+        snippet.setTitle(title);
+        this.snippet = snippet;
     }
 }

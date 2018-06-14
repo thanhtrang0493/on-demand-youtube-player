@@ -47,4 +47,8 @@ public interface YoutubeServiceAPI {
     @Headers("Content-Type: application/json;charset=utf-8")
     @POST("playlists")
     Observable<Response<Data<String>>> createNewPlaylist(@QueryMap Map<String, Object> query, @Body JsonObject object);
+
+    @Headers("Content-Type: application/json;charset=utf-8")
+    @POST("playlists")
+    Observable<Response<Data<String>>> addVideoIntoPlaylist(@QueryMap Map<String, Object> query, @Body JsonObject object);
 }
