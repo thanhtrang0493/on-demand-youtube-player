@@ -15,6 +15,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <uses-permission
         android:name="android.permission.MANAGE_ACCOUNTS"
@@ -84,6 +85,9 @@
             android:name=".audio.BackgroundExoAudioService"
             android:process=":youtube">
         </service>
+        <provider android:name=".database.YoutubeContentProvider" android:exported="true"
+            android:readPermission="true" android:writePermission="true"
+            android:authorities="com.vcoders.on_demand_youtube_player.provider" />
     </application>
 
 </manifest>

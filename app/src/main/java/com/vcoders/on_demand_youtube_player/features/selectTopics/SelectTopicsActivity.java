@@ -1,5 +1,6 @@
 package com.vcoders.on_demand_youtube_player.features.selectTopics;
 
+import android.content.ContentValues;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +12,8 @@ import com.vcoders.on_demand_youtube_player.architecture.BaseActivity;
 import com.vcoders.on_demand_youtube_player.architecture.BaseComponent;
 import com.vcoders.on_demand_youtube_player.architecture.BasePresenter;
 import com.vcoders.on_demand_youtube_player.architecture.BaseRouter;
+import com.vcoders.on_demand_youtube_player.database.config.ConfigDatabase;
+import com.vcoders.on_demand_youtube_player.database.tables.topic.TopicColumns;
 import com.vcoders.on_demand_youtube_player.enums.TypeActionBar;
 import com.vcoders.on_demand_youtube_player.model.Topic;
 
@@ -88,6 +91,13 @@ public class SelectTopicsActivity extends BaseActivity {
 
     @OnClick(R.id.txtNext)
     public void onTxtNextClick() {
+        //add
+        ContentValues values = new ContentValues();
+        values.put(TopicColumns.NAME, "name");
+        values.put(TopicColumns.TOPIC_ID, "12");
+        getContentResolver().insert(ConfigDatabase.CONTENT_URI_TABLE_TOPIC, values);
+
+
         List<Topic> selectTopics = adapter.listSelectTopic;
         selectTopicsPresenter.toHome(selectTopics);
     }

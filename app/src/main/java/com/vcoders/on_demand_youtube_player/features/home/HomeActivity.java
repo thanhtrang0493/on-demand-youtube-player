@@ -1,20 +1,25 @@
 package com.vcoders.on_demand_youtube_player.features.home;
 
+import android.app.LoaderManager;
 import android.content.BroadcastReceiver;
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.Loader;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
-import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.vcoders.on_demand_youtube_player.R;
 import com.vcoders.on_demand_youtube_player.architecture.ApplicationModule;
@@ -24,17 +29,17 @@ import com.vcoders.on_demand_youtube_player.architecture.BasePresenter;
 import com.vcoders.on_demand_youtube_player.architecture.BaseRouter;
 import com.vcoders.on_demand_youtube_player.audio.PlaybackControlsFragment;
 import com.vcoders.on_demand_youtube_player.audio.config.NetworkHelper;
+import com.vcoders.on_demand_youtube_player.database.config.ConfigDatabase;
+import com.vcoders.on_demand_youtube_player.database.tables.topic.TopicColumns;
 import com.vcoders.on_demand_youtube_player.enums.TypeActionBar;
-import com.vcoders.on_demand_youtube_player.features.playlistByTopic.PlaylistByTopicFragment;
 import com.vcoders.on_demand_youtube_player.features.searchVideos.SearchVideosFragment;
 import com.vcoders.on_demand_youtube_player.model.Topic;
-import com.vcoders.on_demand_youtube_player.utils.Constant;
 import com.vcoders.on_demand_youtube_player.utils.LogHelper;
 import com.vcoders.on_demand_youtube_player.utils.Utils;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
 
 import javax.inject.Inject;
 
@@ -44,7 +49,7 @@ import static android.support.v4.media.session.PlaybackStateCompat.STATE_STOPPED
 import static com.vcoders.on_demand_youtube_player.audio.config.Config.INTENT_SESSION_TOKEN;
 import static com.vcoders.on_demand_youtube_player.audio.config.Config.KEY_SESSION_TOKEN;
 
-public class HomeActivity extends BaseActivity implements HomeView {
+public class HomeActivity extends BaseActivity implements HomeView, LoaderManager.LoaderCallbacks<Cursor> {
 
     HomeComponent homeComponent;
     public static List<Topic> topics = new ArrayList<>();
@@ -62,17 +67,33 @@ public class HomeActivity extends BaseActivity implements HomeView {
         fragmentManager = getSupportFragmentManager();
         playbackControlsFragment = (PlaybackControlsFragment) fragmentManager
                 .findFragmentById(R.id.fragment_playback_controls);
+
+        getLoaderManager().initLoader(0, null, this);
+
+//        //add
+//        ContentValues values = new ContentValues();
+//        values.put(TopicColumns.NAME, "name");
+//        getContentResolver().insert(ConfigDatabase.CONTENT_URI_TABLE_TOPIC, values);
+//
+//        //update
+//        String id = ""; //id of row topic
+//        Uri uri = Uri.parse(ConfigDatabase.CONTENT_URI_TABLE_TOPIC + "/" + id);
+//        getContentResolver().update(uri, values, null, null);
+//
+//        //delete
+//        getContentResolver().delete(uri, null, null);
     }
 
     private void getBundle() {
-        if (getIntent().getExtras() != null) {
-            topics = (List<Topic>) getIntent().getExtras().getSerializable(Constant.TOPICS);
-            if (topics.size() > 0) {
-                Topic topic = topics.get(0);
-                topic.setSelect(true);
-                topics.set(0, topic);
-            }
-        }
+//        if (getIntent().getExtras() != null) {
+////            topics = (List<Topic>) getIntent().getExtras().getSerializable(Constant.TOPICS);
+////            if (topics.size() > 0) {
+////                Topic topic = topics.get(0);
+////                topic.setSelect(true);
+////                topics.set(0, topic);
+////            }
+////        }
+        topics = new ArrayList<>();
     }
 
     @Override
@@ -131,6 +152,40 @@ public class HomeActivity extends BaseActivity implements HomeView {
     @Override
     public void onCloseClick() {
         super.onCloseClick();
+    }
+
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+        String[] projection = {
+                TopicColumns._ID,
+                TopicColumns.TOPIC_ID,
+                TopicColumns.NAME};
+        CursorLoader cursorLoader = new CursorLoader(this,
+                ConfigDatabase.CONTENT_URI_TABLE_TOPIC, projection, null, null, null);
+        return cursorLoader;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+        if(cursor != null){
+            if(cursor.moveToFirst()){
+                do{
+                    String countryCode =
+                            cursor.getString(cursor.getColumnIndexOrThrow(TopicColumns.NAME));
+                    Toast.makeText(getApplicationContext(),
+                            countryCode, Toast.LENGTH_SHORT).show();
+
+                    String rowId =
+                            cursor.getString(cursor.getColumnIndexOrThrow(TopicColumns._ID));
+                }while(cursor.moveToNext());
+            }
+        }
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+
     }
 
 
