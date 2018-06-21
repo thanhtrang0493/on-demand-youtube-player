@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 
 import com.vcoders.on_demand_youtube_player.architecture.BasePresenter;
+import com.vcoders.on_demand_youtube_player.database.tables.topic.TopicLoader;
 import com.vcoders.on_demand_youtube_player.model.Topic;
 
 import java.util.ArrayList;
@@ -15,10 +16,12 @@ import javax.inject.Inject;
 public class SelectTopicsPresenter extends BasePresenter<SelectTopicsView, SelectTopicsRouter> {
 
     Context context;
+    TopicLoader topicLoader;
 
     @Inject
     public SelectTopicsPresenter(Context context) {
         this.context = context;
+        topicLoader = new TopicLoader(context);
     }
 
     public List<Topic> getListTopic() {
@@ -41,8 +44,22 @@ public class SelectTopicsPresenter extends BasePresenter<SelectTopicsView, Selec
         return topicList;
     }
 
-    public void toHome(List<Topic> topics) {
-        getRouter().toHome(topics);
+    public void toHome() {
+        getRouter().toHome();
         ((Activity) context).finish();
+    }
+
+    public void toHome(List<Topic> topics) {
+        insertTopic(topics);
+        getRouter().toHome();
+        ((Activity) context).finish();
+    }
+
+    private void insertTopic(List<Topic> topics) {
+        if (topics != null) {
+            for (Topic topic : topics) {
+                topicLoader.addTopicLoader(topic);
+            }
+        }
     }
 }

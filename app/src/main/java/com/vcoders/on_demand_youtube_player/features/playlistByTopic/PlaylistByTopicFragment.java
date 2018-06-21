@@ -49,17 +49,21 @@ public class PlaylistByTopicFragment extends BaseFragment<HomeComponent> impleme
 
     @Override
     protected void initializeView(Bundle savedInstanceState) {
-        getBundle();
         playLists = new ArrayList<>();
         initListTopicAdapter();
         initPlayListAdapter();
+        init();
     }
 
-    private void getBundle() {
-        topics = (List<Topic>) getArguments().getSerializable(Constant.TOPICS);
-        if (topics == null)
-            topics = new ArrayList<>();
+    private void init() {
+        playlistByTopicPresenter.getListTopic(this);
     }
+
+//    private void getBundle() {
+//        topics = (List<Topic>) getArguments().getSerializable(Constant.TOPICS);
+//        if (topics == null)
+//            topics = new ArrayList<>();
+//    }
 
 
     private void initPlayListAdapter() {
@@ -77,9 +81,6 @@ public class PlaylistByTopicFragment extends BaseFragment<HomeComponent> impleme
         rvTopics.setLayoutManager(manager);
         rvTopics.setNestedScrollingEnabled(false);
         rvTopics.setAdapter(listTopicAdapter);
-
-        if (topics.size() > 0)
-            playlistByTopicPresenter.getPlaylistByChannelId(topics.get(0).getId());
     }
 
     @Override
@@ -129,7 +130,7 @@ public class PlaylistByTopicFragment extends BaseFragment<HomeComponent> impleme
 
     @Override
     public void onSelectPlayList(int position) {
-        String id= playLists.get(position).getId().toString();
+        String id = playLists.get(position).getId().toString();
         playlistByTopicPresenter.toListVideo(id);
     }
 
@@ -142,5 +143,20 @@ public class PlaylistByTopicFragment extends BaseFragment<HomeComponent> impleme
     public void getPlaylistSuccessed(List<Video> playLists) {
         this.playLists = playLists;
         playListAdapter.updateAdapter(this.playLists);
+    }
+
+    @Override
+    public void onDatabaseResponse(List<Topic> response) {
+        if (response != null) {
+            this.topics = playlistByTopicPresenter.selectFirstTopic(response);
+            if (topics.size() > 0)
+                playlistByTopicPresenter.getPlaylistByChannelId(topics.get(0).getId());
+            listTopicAdapter.updateAdapter(this.topics);
+        }
+    }
+
+    @Override
+    public void onDatabaseError() {
+
     }
 }

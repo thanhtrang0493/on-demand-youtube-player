@@ -31,6 +31,13 @@ public class ListTopicAdapter extends RecyclerView.Adapter<ListTopicAdapter.List
             this.topics = new ArrayList<>();
     }
 
+    public void updateAdapter(List<Topic> topics){
+        this.topics = topics;
+        if (this.topics == null)
+            this.topics = new ArrayList<>();
+        notifyDataSetChanged();
+    }
+
     @Override
     public ListTopicHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_list_topic, parent, false);

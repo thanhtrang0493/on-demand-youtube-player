@@ -56,9 +56,7 @@ public class ActionBarFooterUtils {
         if ((BaseActivity) context != null) {
             selectTabFooter(0);
 
-            Bundle bundle = new Bundle();
-            bundle.putSerializable(Constant.TOPICS, (Serializable) HomeActivity.topics);
-            ((BaseActivity) context).changeFragment(new PlaylistByTopicFragment(), bundle);
+            ((BaseActivity) context).changeFragment(new PlaylistByTopicFragment(), new Bundle());
         }
     }
 

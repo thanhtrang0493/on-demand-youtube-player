@@ -49,10 +49,9 @@ import static android.support.v4.media.session.PlaybackStateCompat.STATE_STOPPED
 import static com.vcoders.on_demand_youtube_player.audio.config.Config.INTENT_SESSION_TOKEN;
 import static com.vcoders.on_demand_youtube_player.audio.config.Config.KEY_SESSION_TOKEN;
 
-public class HomeActivity extends BaseActivity implements HomeView, LoaderManager.LoaderCallbacks<Cursor> {
+public class HomeActivity extends BaseActivity implements HomeView {
 
     HomeComponent homeComponent;
-    public static List<Topic> topics = new ArrayList<>();
 
     @Inject
     HomePresenter homePresenter;
@@ -67,8 +66,6 @@ public class HomeActivity extends BaseActivity implements HomeView, LoaderManage
         fragmentManager = getSupportFragmentManager();
         playbackControlsFragment = (PlaybackControlsFragment) fragmentManager
                 .findFragmentById(R.id.fragment_playback_controls);
-
-        getLoaderManager().initLoader(0, null, this);
 
 //        //add
 //        ContentValues values = new ContentValues();
@@ -93,7 +90,6 @@ public class HomeActivity extends BaseActivity implements HomeView, LoaderManage
 ////                topics.set(0, topic);
 ////            }
 ////        }
-        topics = new ArrayList<>();
     }
 
     @Override
@@ -152,40 +148,6 @@ public class HomeActivity extends BaseActivity implements HomeView, LoaderManage
     @Override
     public void onCloseClick() {
         super.onCloseClick();
-    }
-
-
-    @Override
-    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        String[] projection = {
-                TopicColumns._ID,
-                TopicColumns.TOPIC_ID,
-                TopicColumns.NAME};
-        CursorLoader cursorLoader = new CursorLoader(this,
-                ConfigDatabase.CONTENT_URI_TABLE_TOPIC, projection, null, null, null);
-        return cursorLoader;
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-        if(cursor != null){
-            if(cursor.moveToFirst()){
-                do{
-                    String countryCode =
-                            cursor.getString(cursor.getColumnIndexOrThrow(TopicColumns.NAME));
-                    Toast.makeText(getApplicationContext(),
-                            countryCode, Toast.LENGTH_SHORT).show();
-
-                    String rowId =
-                            cursor.getString(cursor.getColumnIndexOrThrow(TopicColumns._ID));
-                }while(cursor.moveToNext());
-            }
-        }
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-
     }
 
 

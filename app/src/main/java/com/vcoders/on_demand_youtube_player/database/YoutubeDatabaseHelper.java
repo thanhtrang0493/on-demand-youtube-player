@@ -24,4 +24,5 @@ public class YoutubeDatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
         TopicTable.onUpgrade(sqLiteDatabase, oldVersion, newVersion);
     }
+
 }

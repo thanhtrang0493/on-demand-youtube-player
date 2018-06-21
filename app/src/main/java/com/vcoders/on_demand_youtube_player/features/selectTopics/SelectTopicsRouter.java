@@ -22,9 +22,8 @@ public class SelectTopicsRouter extends BaseRouter {
         super(context);
     }
 
-    public void toHome(List<Topic> topics) {
+    public void toHome() {
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Constant.TOPICS, (Serializable) topics);
         Utils.getInstance().changeActivity(context, HomeActivity.class, bundle);
     }
 }
